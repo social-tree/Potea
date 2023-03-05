@@ -1,5 +1,7 @@
-import { Text } from 'react-native'
+import styled from 'styled-components/native'
 
 export const Home = () => {
-  return <Text>Home</Text>
+  return <StyledText>Home</StyledText>
 }
+
+const StyledText = styled.Text``
