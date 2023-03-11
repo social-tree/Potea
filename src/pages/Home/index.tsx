@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 
 export const Home = () => {
-  return <StyledText>Home</StyledText>
+  return <StyledText></StyledText>
 }
 
 const StyledText = styled.Text``
