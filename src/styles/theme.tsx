@@ -48,4 +48,9 @@ export const theme = {
     red: '#F75555',
     cyan: '#00BCD4',
   },
+  darkColors: {
+    dark1: '#181A20',
+    dark2: '#1F222A',
+    dark3: '#35383F',
+  },
 }
