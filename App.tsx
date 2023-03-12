@@ -1,17 +1,15 @@
-import { Home } from 'src/pages/Home'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'src/styles/theme'
 import AuthNavigator from 'src/navigators/Auth'
 import { SplashScreen } from 'src/pages/SplashScreen'
-
-const { Screen, Navigator } = createNativeStackNavigator()
+import { Home } from 'src/pages/Home'
 
 export default function App() {
   const authenticated = false
 
-  const loading = true
+  const loading = false
 
   return (
     <ThemeProvider theme={theme}>
@@ -19,13 +17,7 @@ export default function App() {
         <SplashScreen />
       ) : (
         <NavigationContainer>
-          {authenticated ? (
-            <Navigator>
-              <Screen name="Home" component={Home} />
-            </Navigator>
-          ) : (
-            <AuthNavigator />
-          )}
+          {authenticated ? <Home /> : <AuthNavigator />}
         </NavigationContainer>
       )}
     </ThemeProvider>
