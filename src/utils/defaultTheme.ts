@@ -7,5 +7,5 @@ export const defaultTheme = async () => {
 
     const savedTheme = await AsyncStorage.getItem("theme")
 
-    return preferedTheme || savedTheme;
+    return savedTheme || preferedTheme;
 }
