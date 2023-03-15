@@ -1,5 +1,4 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'src/styles/theme'
 import AuthNavigator from 'src/navigators/Auth'
