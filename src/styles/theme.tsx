@@ -1,4 +1,4 @@
-export const theme = {
+export const theme: themeType = {
   primary: {
     500: '#01B763',
     400: '#34C582',
@@ -53,4 +53,61 @@ export const theme = {
     dark2: '#1F222A',
     dark3: '#35383F',
   },
+}
+
+export type themeType = {
+  primary: {
+    500: string
+    400: string
+    300: string
+    200: string
+    100: string
+  }
+  secondary: {
+    500: string
+    400: string
+    300: string
+    200: string
+    100: string
+  }
+  status: {
+    info: string
+    success: string
+    warning: string
+    error: string
+    disabled: string
+    disabledButton: string
+  }
+  gradients: {
+    green: string
+    blue: string
+    purple: string
+    yellow: string
+    red: string
+    black: string
+  }
+  background: {
+    silver1: string
+    silver2: string
+    green: string
+    purple: string
+    blue: string
+    orange: string
+    yellow: string
+  }
+  transparent: {
+    green: string
+    silver: string
+    purple: string
+    blue: string
+    orange: string
+    yellow: string
+    red: string
+    cyan: string
+  }
+  darkColors: {
+    dark1: string
+    dark2: string
+    dark3: string
+  }
 }

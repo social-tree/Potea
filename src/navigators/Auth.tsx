@@ -7,7 +7,11 @@ const { Navigator, Screen } = createStackNavigator()
 const AuthNavigator = () => {
   return (
     <Navigator>
-      <Screen name="Welcome" component={Welcome} />
+      <Screen
+        options={{ headerShown: false }}
+        name="Welcome"
+        component={Welcome}
+      />
     </Navigator>
   )
 }
