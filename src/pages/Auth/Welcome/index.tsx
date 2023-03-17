@@ -1,4 +1,5 @@
-import { SafeAreaView, StatusBar, Text } from 'react-native'
+import { Image, SafeAreaView, StatusBar, Text } from 'react-native'
+import { Input } from 'src/components/Form/Elements/Input'
 import { Button } from 'src/components/Elements/Button'
 import { theme } from 'src/styles/theme'
 import { Container } from './Welcome.styles'

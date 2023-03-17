@@ -29,6 +29,18 @@ export const theme: themeType = {
     red: '286.17deg, #FF4D67 0%, #FF8A9B 100%',
     black: '286.17deg, #101010 0%, #313130 100%',
   },
+  greyscale: {
+    900: '#212121',
+    800: '#424242',
+    700: '#616161',
+    600: '#757575',
+    500: '#9E9E9E',
+    400: '#BDBDBD',
+    300: '#E0E0E0',
+    200: '#EEEEEE',
+    100: '#F5F5F5',
+    50: '#FAFAFA',
+  },
   background: {
     silver1: '#F8F8F8',
     silver2: '#F3F3F3',
@@ -85,6 +97,18 @@ export type themeType = {
     yellow: string
     red: string
     black: string
+  }
+  greyscale: {
+    900: string
+    800: string
+    700: string
+    600: string
+    500: string
+    400: string
+    300: string
+    200: string
+    100: string
+    50: string
   }
   background: {
     silver1: string
