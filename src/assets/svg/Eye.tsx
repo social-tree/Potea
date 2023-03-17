@@ -1,9 +1,9 @@
-import { Svg, Path } from 'react-native-svg'
+import { Path, Svg } from 'react-native-svg'
 
 interface Props {
   hidden?: boolean
   onPress?: () => void
-  fill: string
+  fill?: string
 }
 
 export const Eye = ({ hidden = true, fill, onPress, ...props }: Props) => {
