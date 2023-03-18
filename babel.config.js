@@ -1,24 +1,25 @@
 module.exports = {
     presets: ['babel-preset-expo'],
-    plugins: [
+    "plugins": [
         [
-            'module-resolver',
+            "module-resolver",
             {
-                root: ['./'],
-                alias: {
-                    'src': './src/',
-                },
-                extensions: [
-                    '.ios.js',
-                    '.android.js',
-                    '.js',
-                    '.jsx',
-                    '.json',
-                    '.tsx',
-                    '.ts',
-                    '.native.js',
+                "root": ["./src"],
+                "extensions": [
+                    ".ios.ts",
+                    ".android.ts",
+                    ".ts",
+                    ".ios.tsx",
+                    ".android.tsx",
+                    ".tsx",
+                    ".jsx",
+                    ".js",
+                    ".json"
                 ],
-            },
-        ],
-    ],
+                "alias": {
+                    "src": "./src/",
+                }
+            }
+        ]
+    ]
 };
