@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": { "src": ["./src/*"] }
+    "baseUrl": "."
   },
   "exclude": ["node_modules"],
   "extends": "expo/tsconfig.base"
