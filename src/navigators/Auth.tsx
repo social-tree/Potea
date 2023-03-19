@@ -1,17 +1,23 @@
+import { Text, View } from 'react-native'
+
+import { AuthMethod } from 'src/pages/Auth/AuthMethod'
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
 import { Welcome } from 'src/pages/Auth/Welcome'
+import { createStackNavigator } from '@react-navigation/stack'
 
 const { Navigator, Screen } = createStackNavigator()
 
 const AuthNavigator = () => {
   return (
-    <Navigator>
+    <Navigator screenOptions={{ headerTitle: '' }}>
       <Screen
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
         name="Welcome"
         component={Welcome}
       />
+      <Screen name="AuthMethod" component={AuthMethod} />
     </Navigator>
   )
 }
