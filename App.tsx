@@ -18,7 +18,19 @@ export default function App() {
         {loading ? (
           <SplashScreen />
         ) : (
-          <NavigationContainer>
+          <NavigationContainer
+            theme={{
+              colors: {
+                primary: 'red',
+                background: theme.darkColors.dark1,
+                text: theme.greyscale[50],
+                border: theme.darkColors.dark1,
+                card: theme.darkColors.dark1,
+                notification: 'red',
+              },
+              dark: true,
+            }}
+           >
             {authenticated ? <Home /> : <AuthNavigator />}
           </NavigationContainer>
         )}
