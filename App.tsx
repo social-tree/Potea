@@ -1,9 +1,11 @@
-import { NavigationContainer } from '@react-navigation/native'
-import { theme } from 'src/styles/theme'
 import AuthNavigator from 'src/navigators/Auth'
-import { SplashScreen } from 'src/pages/SplashScreen'
+import GlobalStyle from 'src/styles/GlobalStyle'
 import { Home } from 'src/pages/Home'
+import { NavigationContainer } from '@react-navigation/native'
+import { SplashScreen } from 'src/pages/SplashScreen'
 import { ThemeProvider } from 'styled-components/native'
+import { View } from 'react-native'
+import { theme } from 'src/styles/theme'
 
 export default function App() {
   const authenticated = false
@@ -12,13 +14,15 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {loading ? (
-        <SplashScreen />
-      ) : (
-        <NavigationContainer>
-          {authenticated ? <Home /> : <AuthNavigator />}
-        </NavigationContainer>
-      )}
+      <View style={GlobalStyle["*"]}>
+        {loading ? (
+          <SplashScreen />
+        ) : (
+          <NavigationContainer>
+            {authenticated ? <Home /> : <AuthNavigator />}
+          </NavigationContainer>
+        )}
+      </View>
     </ThemeProvider>
   )
 }
