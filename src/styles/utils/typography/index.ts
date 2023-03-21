@@ -1,9 +1,8 @@
-
 import { css } from 'styled-components/native'
 
 const primaryHeadingStyles = css`
   font-weight: 700;
-  line-height: 120%;
+  line-height: 120px;
 `
 
 export const HeadingOne = css`
@@ -30,21 +29,13 @@ export const HeadingFive = css`
   font-size: 20px;
 `
 
-
-
 export const HeadingSix = css`
   ${primaryHeadingStyles}
   font-size: 18px;
 `
 
-
-
-
-
-
-
 const primaryParagraphStyles = css`
-  line-height: 140%;
+  line-height: 140px;
   letter-spacing: 0.2px;
 `
 
@@ -56,24 +47,19 @@ export const ParagraphXL = css`
 export const ParagraphL = css`
   ${primaryParagraphStyles}
   font-size: 16px;
-
 `
 
 export const ParagraphM = css`
   ${primaryParagraphStyles}
   font-size: 14px;
-
 `
 
 export const ParagraphS = css`
   ${primaryParagraphStyles}
   font-size: 12px;
-
 `
 
 export const ParagraphXS = css`
   ${primaryParagraphStyles}
   font-size: 10px;
-
 `
-
