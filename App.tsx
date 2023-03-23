@@ -1,3 +1,9 @@
+import {
+  Urbanist_300Light,
+  Urbanist_500Medium,
+  useFonts,
+} from '@expo-google-fonts/urbanist'
+
 import AuthNavigator from 'src/navigators/Auth'
 import GlobalStyle from 'src/styles/GlobalStyle'
 import { Home } from 'src/pages/Home'
@@ -8,16 +14,21 @@ import { View } from 'react-native'
 import { theme } from 'src/styles/theme'
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    Urbanist_500Medium,
+    Urbanist_300Light,
+  })
+
   const authenticated = false
 
-  const loading = false
+  const loading = !fontsLoaded
 
   return (
     <ThemeProvider theme={theme}>
-      <View style={GlobalStyle["*"]}>
-        {loading ? (
-          <SplashScreen />
-        ) : (
+      {loading ? (
+        <SplashScreen />
+      ) : (
+        <View style={GlobalStyle?.['*']}>
           <NavigationContainer
             theme={{
               colors: {
@@ -30,11 +41,11 @@ export default function App() {
               },
               dark: true,
             }}
-           >
+          >
             {authenticated ? <Home /> : <AuthNavigator />}
           </NavigationContainer>
-        )}
-      </View>
+        </View>
+      )}
     </ThemeProvider>
   )
 }

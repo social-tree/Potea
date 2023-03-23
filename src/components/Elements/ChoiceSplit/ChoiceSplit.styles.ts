@@ -1,13 +1,10 @@
-import { generateParagraph } from 'src/styles/utils/typography'
+import { ParagraphXL } from 'src/styles/utils/typography'
 import styled from 'styled-components/native'
 
 export const StyledText = styled.Text`
-  ${({ theme }) =>
-    generateParagraph({
-      color: theme.greyscale[50],
-      fontWeight: 600,
-      size: 18,
-    })};
+  font-weight: 600;
+  color: ${({ theme }) => theme.greyscale[50]};
+  ${ParagraphXL}
 `
 
 export const Line = styled.View`
