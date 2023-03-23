@@ -2,8 +2,10 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import styled from 'styled-components/native'
 
 export const StyledCheckBox = styled(BouncyCheckbox)`
-  width: 30px;
   height: 24px;
+  color: ${({ theme }) => theme.greyscale[50]};
 `
 
-export const Container = styled.View``
+export const Container = styled.View`
+  flex: 1;
+`
