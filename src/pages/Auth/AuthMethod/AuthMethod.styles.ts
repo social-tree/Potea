@@ -1,19 +1,13 @@
-import {
-  HeadingFontSize,
-  ParagraphFontSize,
-} from 'src/styles/utils/typography/typography.types'
-import { generateHeading, generateParagraph } from 'src/styles/utils/typography'
+import { HeadingOne, ParagraphM } from 'src/styles/utils/typography'
 
 import { WindowWithSmoke } from 'src/assets/svg/WindowWithSmoke'
 import styled from 'styled-components/native'
 
 export const SignupButtonText = styled.Text`
-  ${({ theme }) =>
-    generateParagraph({
-      color: theme.primary[500],
-      fontWeight: 400,
-      size: ParagraphFontSize.medium,
-    })};
+  font-weight: 400;
+  ${ParagraphM}
+  color: ${({ theme }) => theme.primary[500]};
+
   padding-top: 10px;
 `
 
@@ -33,12 +27,9 @@ export const SignupWrap = styled.View`
 `
 
 export const SocialLoginText = styled.Text`
-  ${({ theme }) =>
-    generateParagraph({
-      color: theme.greyscale[50],
-      fontWeight: 600,
-      size: ParagraphFontSize.medium,
-    })};
+  font-weight: 600;
+  ${ParagraphM}
+  color: ${({ theme }) => theme.greyscale[50]};
 `
 
 export const SocialLoginButton = styled.TouchableOpacity`
@@ -65,11 +56,8 @@ export const StyledWindowWithSmoke = styled(WindowWithSmoke)`
 `
 
 export const Header = styled.Text`
-  ${({ theme }) =>
-    generateHeading({
-      size: HeadingFontSize.H1,
-      color: theme.greyscale[50],
-    })}
+  ${HeadingOne}
+  color: ${({ theme }) => theme.greyscale[50]};
   padding-bottom: 30px;
 `
 

@@ -14,7 +14,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <View style={GlobalStyle["*"]}>
+      <View style={GlobalStyle['*']}>
         {loading ? (
           <SplashScreen />
         ) : (
@@ -30,7 +30,7 @@ export default function App() {
               },
               dark: true,
             }}
-           >
+          >
             {authenticated ? <Home /> : <AuthNavigator />}
           </NavigationContainer>
         )}
