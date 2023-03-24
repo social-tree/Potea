@@ -27,4 +27,5 @@ export const Container = styled.View`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
+  min-height: 60px;
 `

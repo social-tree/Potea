@@ -6,8 +6,8 @@ const GlobalStyle = StyleSheet.create({
     padding: 0,
     boxSizing: 'border-box',
     WebkitTapHighlightColor: 'unset',
-    fontFamily: 'Urbanist',
     fontStyle: 'normal',
+    flex: 1,
   },
 })
 
