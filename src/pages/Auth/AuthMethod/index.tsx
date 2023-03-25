@@ -8,6 +8,7 @@ import {
   SocialButtonsContainer,
   SocialLoginButton,
   SocialLoginText,
+  StyledChoiceSplit,
   StyledWindowWithSmoke,
 } from './AuthMethod.styles'
 import { SafeAreaView, StatusBar } from 'react-native'
@@ -19,7 +20,7 @@ import { Facebook } from 'src/assets/svg/Facebook'
 import { Google } from 'src/assets/svg/Google'
 import { theme } from 'src/styles/theme'
 
-export const AuthMethod = () => {
+export const AuthMethod = ({ navigation }) => {
   return (
     <SafeAreaView>
       <StatusBar />
@@ -40,7 +41,7 @@ export const AuthMethod = () => {
             <SocialLoginText>Continue with Apple</SocialLoginText>
           </SocialLoginButton>
         </SocialButtonsContainer>
-        <ChoiceSplit />
+        <StyledChoiceSplit />
         <Button
           style={{
             shadowColor: `${theme.primary[500]}90`,
@@ -56,7 +57,7 @@ export const AuthMethod = () => {
         </Button>
         <SignupWrap>
           <SignupText>Don't have an account?</SignupText>
-          <SignupButton>
+          <SignupButton onPress={() => navigation.navigate('CreateAccount')}>
             <SignupButtonText>Sign up</SignupButtonText>
           </SignupButton>
         </SignupWrap>
