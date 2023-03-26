@@ -32,7 +32,7 @@ export const OtherMethods = styled.View`
 
 export const Lock = styled.Image``
 
-export const Inputs = styled.View`
+export const Form = styled.View`
   width: 100%;
   display: flex;
   align-items: center;
@@ -42,11 +42,6 @@ export const Inputs = styled.View`
 export const Title = styled.Text`
   color: ${({ theme }) => theme.greyscale[50]};
   ${HeadingThree}
-`
-
-export const StyledLogo = styled(Logo)`
-  width: 151px;
-  height: 68px;
 `
 
 export const Container = styled.ScrollView`
