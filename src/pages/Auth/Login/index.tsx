@@ -1,19 +1,18 @@
 import {
   Container,
   Form,
+  GreenText,
   Lock,
+  StyledOtherMethods,
+  Title,
+} from './Login.styles'
+import {
   OtherMethods,
   SocialButton,
   SocialButtons,
   StyledSignupWrap,
-  Title,
-} from './CreateAccount.styles'
-import {
-  SignupButton,
-  SignupButtonText,
-  SignupText,
-  SignupWrap,
-} from '../AuthMethod/AuthMethod.styles'
+} from '../CreateAccount/CreateAccount.styles'
+import { SignupButtonText, SignupText } from '../AuthMethod/AuthMethod.styles'
 
 import { Apple } from 'src/assets/svg/Apple'
 import { Button } from 'src/components/Elements/Button'
@@ -24,27 +23,30 @@ import { Facebook } from 'src/assets/svg/Facebook'
 import { Google } from 'src/assets/svg/Google'
 import { Input } from 'src/components/Form/Elements/Input'
 import { Logo } from 'src/assets/svg/Logo'
-import React from 'react'
+import { TouchableHighlight } from 'react-native'
 
-export const CreateAccount = ({ navigation }) => {
+export const Login = ({ navigation }) => {
   return (
     <Container
       contentContainerStyle={{ display: 'flex', alignItems: 'center', gap: 38 }}
     >
       <Logo />
-      <Title>Create Your Account</Title>
+      <Title>Login to Your Account</Title>
       <Form>
         <Input leftIcon={<Email />} placeholder="Email" />
         <Input
           leftIcon={<Lock source={require('src/assets/img/Lock.png')} />}
-          type="password"
           placeholder="Password"
+          type="password"
         />
         <Checkbox label="Remember me" />
-        <Button>Sign up</Button>
+        <Button>Sign in</Button>
+        <TouchableHighlight>
+          <GreenText>Forgot the password?</GreenText>
+        </TouchableHighlight>
       </Form>
-      <ChoiceSplit />
-      <OtherMethods>
+      <StyledOtherMethods>
+        <ChoiceSplit />
         <SocialButtons>
           <SocialButton>
             <Facebook />
@@ -56,13 +58,13 @@ export const CreateAccount = ({ navigation }) => {
             <Apple />
           </SocialButton>
         </SocialButtons>
-      </OtherMethods>
-      <StyledSignupWrap>
-        <SignupText>Already have an account?</SignupText>
-        <SignupButton onPress={() => navigation.navigate('Login')}>
-          <SignupButtonText>Sign in</SignupButtonText>
-        </SignupButton>
-      </StyledSignupWrap>
+        <StyledSignupWrap>
+          <SignupText>Already have an account?</SignupText>
+          <SignupButtonText onPress={() => navigation.navigate('Login')}>
+            <GreenText>Sign in</GreenText>
+          </SignupButtonText>
+        </StyledSignupWrap>
+      </StyledOtherMethods>
     </Container>
   )
 }
