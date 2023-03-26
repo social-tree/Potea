@@ -19,5 +19,5 @@ export const Container = styled.View`
   flex-direction: row;
   align-items: center;
   gap: 16px;
-  padding: 34px 0px;
+  padding: 0px;
 `

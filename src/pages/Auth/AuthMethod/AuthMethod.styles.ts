@@ -1,5 +1,6 @@
 import { HeadingOne, ParagraphM } from 'src/styles/utils/typography'
 
+import { ChoiceSplit } from 'src/components/Elements/ChoiceSplit'
 import { WindowWithSmoke } from 'src/assets/svg/WindowWithSmoke'
 import styled from 'styled-components/native'
 
@@ -24,6 +25,10 @@ export const SignupWrap = styled.View`
   flex-direction: row;
   gap: 8px;
   padding-top: 20px;
+`
+
+export const StyledChoiceSplit = styled(ChoiceSplit)`
+  padding: 34px 0px;
 `
 
 export const SocialLoginText = styled.Text`

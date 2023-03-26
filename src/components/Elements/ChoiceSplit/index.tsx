@@ -1,8 +1,8 @@
 import { Container, Line, StyledText } from './ChoiceSplit.styles'
 
-export const ChoiceSplit = () => {
+export const ChoiceSplit = (props) => {
   return (
-    <Container>
+    <Container {...props}>
       <Line />
       <StyledText>or</StyledText>
       <Line />

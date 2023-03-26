@@ -13,6 +13,4 @@ export const StyledCheckBox = styled(BouncyCheckbox)`
   gap: 12px;
 `
 
-export const Container = styled.View`
-  flex: 1;
-`
+export const Container = styled.View``
