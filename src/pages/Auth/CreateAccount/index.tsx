@@ -24,42 +24,82 @@ import { Facebook } from 'src/assets/svg/Facebook'
 import { Google } from 'src/assets/svg/Google'
 import { Input } from 'src/components/Form/Elements/Input'
 import { Logo } from 'src/assets/svg/Logo'
-import React from 'react'
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { EmailSignup, SocialLogin } from 'src/api/auth'
 
 export const CreateAccount = ({ navigation }) => {
+  const { control, handleSubmit } = useForm()
+  const [loading, setLoading] = useState(false)
+
+  const onFormSubmit = async (formData) => {
+    const { email, password, rememberMe } = formData
+    setLoading(true)
+    await EmailSignup({
+      email,
+      password,
+      rememberMe,
+    })
+    setLoading(false)
+  }
+
   return (
     <Container
-      contentContainerStyle={{ display: 'flex', alignItems: 'center', gap: 38 }}
+      contentContainerStyle={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 38,
+        paddingTop: 30,
+        paddingBottom: 40,
+      }}
     >
       <Logo />
       <Title>Create Your Account</Title>
       <Form>
-        <Input leftIcon={<Email />} placeholder="Email" />
         <Input
+          name={'email'}
+          control={control}
+          leftIcon={<Email />}
+          placeholder="Email"
+          rules={{ required: true }}
+        />
+        <Input
+          name={'password'}
+          control={control}
           leftIcon={<Lock source={require('src/assets/img/Lock.png')} />}
           type="password"
           placeholder="Password"
+          inputProps={{
+            textContentType: 'newPassword',
+          }}
+          rules={{ required: true }}
         />
-        <Checkbox label="Remember me" />
-        <Button>Sign up</Button>
+        <Checkbox name="rememberMe" control={control} label="Remember me" />
+        <Button loading={loading} onPress={handleSubmit(onFormSubmit)}>
+          Sign up
+        </Button>
       </Form>
       <ChoiceSplit />
       <OtherMethods>
         <SocialButtons>
-          <SocialButton>
+          <SocialButton disabled>
             <Facebook />
           </SocialButton>
           <SocialButton>
-            <Google />
+            <Google onPress={() => SocialLogin({ provider: 'google' })} />
           </SocialButton>
-          <SocialButton>
+          <SocialButton disabled>
             <Apple />
           </SocialButton>
         </SocialButtons>
       </OtherMethods>
       <StyledSignupWrap>
         <SignupText>Already have an account?</SignupText>
-        <SignupButton onPress={() => navigation.navigate('Login')}>
+        <SignupButton
+          onPress={() => {
+            navigation.navigate('Login')
+          }}
+        >
           <SignupButtonText>Sign in</SignupButtonText>
         </SignupButton>
       </StyledSignupWrap>

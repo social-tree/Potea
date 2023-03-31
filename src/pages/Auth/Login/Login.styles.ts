@@ -27,5 +27,5 @@ export const Title = styled.Text`
 `
 
 export const Container = styled.ScrollView`
-  padding: 30px 24px 0px 24px;
+  padding: 0px 24px 0px 24px;
 `

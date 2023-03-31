@@ -4,14 +4,29 @@ import { Eye } from 'src/assets/svg/Eye'
 import { TextInputProps } from 'react-native'
 import { theme } from 'src/styles/theme'
 import { useState } from 'react'
+import { Control, UseControllerProps } from 'react-hook-form/dist/types'
+import { Controller } from 'react-hook-form'
 
-interface Props extends TextInputProps {
+interface Props extends UseControllerProps {
   leftIcon?: JSX.Element
   rightIcon?: JSX.Element
   type?: string
+  name: string
+  control: Control
+  placeholder: string
+  inputProps?: TextInputProps
 }
 
-export const Input = ({ leftIcon, rightIcon, type, ...props }: Props) => {
+export const Input = ({
+  leftIcon,
+  rightIcon,
+  control,
+  type,
+  name,
+  inputProps,
+  placeholder,
+  ...props
+}: Props) => {
   const [showPassword, setShowPassword] = useState(
     type === 'password' ? true : false
   )
@@ -24,10 +39,21 @@ export const Input = ({ leftIcon, rightIcon, type, ...props }: Props) => {
     <Container>
       <InputWrap>
         {leftIcon && <IconWrap>{leftIcon}</IconWrap>}
-        <StyledInput
+        <Controller
+          control={control}
           {...props}
-          secureTextEntry={showPassword}
-          placeholderTextColor={theme.greyscale[50]}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <StyledInput
+              {...inputProps}
+              secureTextEntry={showPassword}
+              placeholderTextColor={theme.greyscale[50]}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder={placeholder}
+            />
+          )}
+          name={name}
         />
       </InputWrap>
       <IconWrap>

@@ -25,6 +25,7 @@ export const SignupWrap = styled.View`
   flex-direction: row;
   gap: 8px;
   padding-top: 20px;
+  padding-bottom: 10px;
 `
 
 export const StyledChoiceSplit = styled(ChoiceSplit)`
@@ -37,7 +38,9 @@ export const SocialLoginText = styled.Text`
   color: ${({ theme }) => theme.greyscale[50]};
 `
 
-export const SocialLoginButton = styled.TouchableOpacity`
+export const SocialLoginButton = styled.TouchableOpacity<{
+  disabled?: boolean
+}>`
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -48,6 +51,7 @@ export const SocialLoginButton = styled.TouchableOpacity`
   height: 60px;
   border-radius: 20px;
   border: 1px solid ${({ theme }) => theme.darkColors.dark3};
+  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 `
 
 export const SocialButtonsContainer = styled.View`
@@ -66,10 +70,8 @@ export const Header = styled.Text`
   padding-bottom: 30px;
 `
 
-export const Container = styled.View`
-  display: flex;
-  align-items: center;
+export const Container = styled.ScrollView`
   width: 100%;
   height: 100%;
-  padding: 30px 24px 0px 24px;
+  padding: 0px 24px 0px 24px;
 `

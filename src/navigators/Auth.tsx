@@ -11,10 +11,7 @@ const { Navigator, Screen } = createStackNavigator()
 
 const AuthNavigator = () => {
   return (
-    <Navigator
-      initialRouteName="AuthMethod"
-      screenOptions={{ headerTitle: '' }}
-    >
+    <Navigator initialRouteName="Welcome" screenOptions={{ headerTitle: '' }}>
       <Screen
         options={{
           headerShown: false,
