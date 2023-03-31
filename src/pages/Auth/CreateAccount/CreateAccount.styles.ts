@@ -6,12 +6,13 @@ import { Logo } from 'src/assets/svg/Logo'
 import { SignupWrap } from '../AuthMethod/AuthMethod.styles'
 import styled from 'styled-components/native'
 
-export const SocialButton = styled.TouchableHighlight`
+export const SocialButton = styled.TouchableHighlight<{ disabled?: boolean }>`
   padding: 18px 32px;
   border-radius: 20px;
   overflow: hidden;
   background: ${({ theme }) => theme.darkColors.dark2};
   border: 1px solid ${({ theme }) => theme.darkColors.dark3};
+  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 `
 
 export const SocialButtons = styled.View`
@@ -45,5 +46,5 @@ export const Title = styled.Text`
 `
 
 export const Container = styled.ScrollView`
-  padding: 30px 24px 0px 24px;
+  padding: 0px 24px 0px 24px;
 `

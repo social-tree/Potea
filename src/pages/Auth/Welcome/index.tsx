@@ -5,7 +5,7 @@ import { Container } from './Welcome.styles'
 import { Input } from 'src/components/Form/Elements/Input'
 import { theme } from 'src/styles/theme'
 
-export const Welcome = () => {
+export const Welcome = ({ navigation }) => {
   return (
     <SafeAreaView>
       <StatusBar />
@@ -16,6 +16,7 @@ export const Welcome = () => {
             shadowOpacity: 1,
             elevation: 40,
           }}
+          onPress={() => navigation.navigate('AuthMethod')}
         >
           Next
         </Button>
