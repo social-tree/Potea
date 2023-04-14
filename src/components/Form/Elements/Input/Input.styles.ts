@@ -19,8 +19,13 @@ export const InputWrap = styled.View`
   gap: 14px;
 `
 
-export const Container = styled.View`
+export const TextError = styled.Text`
+  color: ${({ theme }) => theme.status.error};
+`
+
+export const Wrapper = styled.View<{ error: boolean }>`
   background-color: ${({ theme }) => theme.darkColors.dark2};
+  ${({ theme, error }) => error && `border: 1px solid ${theme.status.error}`};
   border-radius: 20px;
   display: flex;
   flex-direction: row;
@@ -28,4 +33,10 @@ export const Container = styled.View`
   justify-content: space-between;
   padding: 20px;
   min-height: 60px;
+`
+
+export const Container = styled.View`
+  display: flex;
+  gap: 7px;
+  width: 100%;
 `

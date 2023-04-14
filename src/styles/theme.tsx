@@ -65,6 +65,10 @@ export const theme: themeType = {
     dark2: '#1F222A',
     dark3: '#35383F',
   },
+  other: {
+    white: '#FFFFFF',
+    black: '#000000',
+  },
 }
 
 export type themeType = {
@@ -133,5 +137,9 @@ export type themeType = {
     dark1: string
     dark2: string
     dark3: string
+  }
+  other: {
+    white: string
+    black: string
   }
 }
