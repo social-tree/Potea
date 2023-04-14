@@ -6,8 +6,9 @@ export const StyledText = styled.Text`
   font-size: 16px;
 `
 
-export const StyledButton = styled.TouchableOpacity`
-  background: ${({ theme }) => theme.primary['500']};
+export const StyledButton = styled.TouchableOpacity<{ loading: boolean }>`
+  background: ${({ theme, loading }) =>
+    loading ? theme.greyscale['800'] : theme.primary['500']};
   border-radius: 100px;
   padding: 15px 0px;
   display: flex;
