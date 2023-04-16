@@ -28,7 +28,11 @@ import { useForm } from 'react-hook-form'
 import { EmailLogin, SocialLogin } from 'src/api/auth'
 
 export const Login = ({ navigation }) => {
-  const { control, handleSubmit } = useForm()
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
   const [loading, setLoading] = useState(false)
 
   const onFormSubmit = async (formData) => {
@@ -64,7 +68,8 @@ export const Login = ({ navigation }) => {
           inputProps={{
             textContentType: 'username',
           }}
-          rules={{ required: true }}
+          rules={{ required: 'Enter an email' }}
+          errors={errors}
         />
         <Input
           name="password"
@@ -75,13 +80,14 @@ export const Login = ({ navigation }) => {
           inputProps={{
             textContentType: 'password',
           }}
-          rules={{ required: true }}
+          rules={{ required: 'Enter a password' }}
+          errors={errors}
         />
         <Checkbox name="rememberMe" control={control} label="Remember me" />
         <Button loading={loading} onPress={handleSubmit(onFormSubmit)}>
           Sign in
         </Button>
-        <TouchableHighlight>
+        <TouchableHighlight onPress={() => navigation.navigate('ResetMethod')}>
           <GreenText>Forgot the password?</GreenText>
         </TouchableHighlight>
       </Form>

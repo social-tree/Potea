@@ -1,4 +1,11 @@
-import { Container, IconWrap, InputWrap, StyledInput } from './Input.styles'
+import {
+  Container,
+  IconWrap,
+  InputWrap,
+  StyledInput,
+  TextError,
+  Wrapper,
+} from './Input.styles'
 
 import { Eye } from 'src/assets/svg/Eye'
 import { TextInputProps } from 'react-native'
@@ -15,6 +22,7 @@ interface Props extends UseControllerProps {
   control: Control
   placeholder: string
   inputProps?: TextInputProps
+  errors?: any
 }
 
 export const Input = ({
@@ -25,6 +33,7 @@ export const Input = ({
   name,
   inputProps,
   placeholder,
+  errors,
   ...props
 }: Props) => {
   const [showPassword, setShowPassword] = useState(
@@ -37,36 +46,39 @@ export const Input = ({
 
   return (
     <Container>
-      <InputWrap>
-        {leftIcon && <IconWrap>{leftIcon}</IconWrap>}
-        <Controller
-          control={control}
-          {...props}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <StyledInput
-              {...inputProps}
-              secureTextEntry={showPassword}
-              placeholderTextColor={theme.greyscale[50]}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder={placeholder}
-            />
-          )}
-          name={name}
-        />
-      </InputWrap>
-      <IconWrap>
-        {type === 'password' ? (
-          <Eye
-            fill={theme.greyscale[500]}
-            onPress={() => toggleShowPassword()}
-            hidden={showPassword}
+      <Wrapper error={!!errors?.[name]?.message}>
+        <InputWrap>
+          {leftIcon && <IconWrap>{leftIcon}</IconWrap>}
+          <Controller
+            control={control}
+            {...props}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <StyledInput
+                {...inputProps}
+                secureTextEntry={showPassword}
+                placeholderTextColor={theme.greyscale[50]}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder={placeholder}
+              />
+            )}
+            name={name}
           />
-        ) : (
-          rightIcon
-        )}
-      </IconWrap>
+        </InputWrap>
+        <IconWrap>
+          {type === 'password' ? (
+            <Eye
+              fill={theme.greyscale[500]}
+              onPress={() => toggleShowPassword()}
+              hidden={showPassword}
+            />
+          ) : (
+            rightIcon
+          )}
+        </IconWrap>
+      </Wrapper>
+      {errors?.[name]?.message && <TextError>{errors[name].message}</TextError>}
     </Container>
   )
 }

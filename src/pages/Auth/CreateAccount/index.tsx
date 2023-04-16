@@ -29,18 +29,25 @@ import { useForm } from 'react-hook-form'
 import { EmailSignup, SocialLogin } from 'src/api/auth'
 
 export const CreateAccount = ({ navigation }) => {
-  const { control, handleSubmit } = useForm()
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
   const [loading, setLoading] = useState(false)
 
   const onFormSubmit = async (formData) => {
     const { email, password, rememberMe } = formData
     setLoading(true)
-    await EmailSignup({
+    const { data, error } = await EmailSignup({
       email,
       password,
       rememberMe,
     })
     setLoading(false)
+    if (data.user.aud) {
+      navigation.navigate('Login')
+    }
   }
 
   return (
@@ -61,7 +68,8 @@ export const CreateAccount = ({ navigation }) => {
           control={control}
           leftIcon={<Email />}
           placeholder="Email"
-          rules={{ required: true }}
+          rules={{ required: 'Enter an email' }}
+          errors={errors}
         />
         <Input
           name={'password'}
@@ -72,7 +80,8 @@ export const CreateAccount = ({ navigation }) => {
           inputProps={{
             textContentType: 'newPassword',
           }}
-          rules={{ required: true }}
+          rules={{ required: 'Enter a password' }}
+          errors={errors}
         />
         <Checkbox name="rememberMe" control={control} label="Remember me" />
         <Button loading={loading} onPress={handleSubmit(onFormSubmit)}>

@@ -1,0 +1,52 @@
+import { AuthMethod } from 'src/pages/Auth/AuthMethod'
+import { CreateAccount } from 'src/pages/Auth/CreateAccount'
+import { Login } from 'src/pages/Auth/Login'
+import React from 'react'
+import { Welcome } from 'src/pages/Auth/Welcome'
+import { createStackNavigator } from '@react-navigation/stack'
+import { ResetMethod } from 'src/pages/Auth/ForgotPassword/ResetMethod'
+import { Confirmation } from 'src/pages/Auth/ForgotPassword/Confirmation'
+
+const { Navigator, Screen } = createStackNavigator()
+
+const defaultOptions = {
+  title: '',
+}
+
+const AuthNavigator = () => {
+  return (
+    <Navigator initialRouteName="Welcome">
+      <Screen
+        options={{
+          headerShown: false,
+          ...defaultOptions,
+        }}
+        name="Welcome"
+        component={Welcome}
+      />
+      <Screen
+        options={defaultOptions}
+        name="AuthMethod"
+        component={AuthMethod}
+      />
+      <Screen
+        options={defaultOptions}
+        name="CreateAccount"
+        component={CreateAccount}
+      />
+      <Screen options={defaultOptions} name="Login" component={Login} />
+      <Screen
+        options={{ title: 'Forgot Password' }}
+        name="ResetMethod"
+        component={ResetMethod}
+      />
+      <Screen
+        options={{ title: 'Forgot Password' }}
+        name="Confirmation"
+        component={Confirmation}
+      />
+    </Navigator>
+  )
+}
+
+export default AuthNavigator

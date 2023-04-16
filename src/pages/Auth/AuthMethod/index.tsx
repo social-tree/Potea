@@ -35,7 +35,6 @@ export const AuthMethod = ({ navigation }) => {
       <Header>Let’s you in</Header>
       <SocialButtonsContainer>
         <SocialLoginButton
-          disabled
           onPress={() => SocialLogin({ provider: 'facebook' })}
         >
           <Facebook />
@@ -45,10 +44,7 @@ export const AuthMethod = ({ navigation }) => {
           <Google />
           <SocialLoginText>Continue with Google</SocialLoginText>
         </SocialLoginButton>
-        <SocialLoginButton
-          disabled
-          onPress={() => SocialLogin({ provider: 'apple' })}
-        >
+        <SocialLoginButton onPress={() => SocialLogin({ provider: 'apple' })}>
           <Apple />
           <SocialLoginText>Continue with Apple</SocialLoginText>
         </SocialLoginButton>
