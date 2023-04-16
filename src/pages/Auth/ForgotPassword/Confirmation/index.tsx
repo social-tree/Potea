@@ -13,17 +13,18 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field'
-import { useEffect, useState } from 'react'
-import { TouchableHighlight } from 'react-native'
+import { useContext, useEffect, useState } from 'react'
 import { Button } from 'src/components/Elements/Button'
 import { MethodTypes } from '../ResetMethod'
 import { ResetPasswordWithEmail } from 'src/api/auth/Email'
 import { SignInWithOtp } from 'src/api/auth/Phone'
+import { AppContext } from 'src/contexts/AppContext'
 import { supabase } from 'src/utils/supabase'
 
 const CELL_COUNT = 6
 
 export const Confirmation = ({ route }) => {
+  const { toggleResetPassword } = useContext(AppContext)
   const [time, setTime] = useState(60)
   const [value, setValue] = useState('')
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT })
@@ -66,6 +67,7 @@ export const Confirmation = ({ route }) => {
   }, [])
 
   const verifyOtp = async () => {
+    console.log('toggling')
     const { data, error } = await supabase.auth.verifyOtp(
       method === MethodTypes.EMAIL
         ? {
@@ -79,6 +81,9 @@ export const Confirmation = ({ route }) => {
             type: 'sms',
           }
     )
+    if (data?.session?.access_token) {
+      toggleResetPassword()
+    }
   }
 
   return (
