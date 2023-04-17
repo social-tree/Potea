@@ -20,8 +20,18 @@ import { Facebook } from 'src/assets/svg/Facebook'
 import { Google } from 'src/assets/svg/Google'
 import { SocialLogin } from 'src/api/auth'
 import { theme } from 'src/styles/theme'
+import { useState } from 'react'
+import { Provider } from '@supabase/supabase-js'
 
 export const AuthMethod = ({ navigation }) => {
+  const [loading, setLoading] = useState(false)
+
+  const handleSocialLogin = async (provider: Provider) => {
+    setLoading(true)
+    await SocialLogin({ provider: provider })
+    setLoading(false)
+  }
+
   return (
     <Container
       contentContainerStyle={{
@@ -35,16 +45,23 @@ export const AuthMethod = ({ navigation }) => {
       <Header>Let’s you in</Header>
       <SocialButtonsContainer>
         <SocialLoginButton
-          onPress={() => SocialLogin({ provider: 'facebook' })}
+          disabled={loading || true}
+          onPress={() => handleSocialLogin('facebook')}
         >
           <Facebook />
           <SocialLoginText>Continue with Facebook</SocialLoginText>
         </SocialLoginButton>
-        <SocialLoginButton onPress={() => SocialLogin({ provider: 'google' })}>
+        <SocialLoginButton
+          disabled={loading}
+          onPress={() => handleSocialLogin('google')}
+        >
           <Google />
           <SocialLoginText>Continue with Google</SocialLoginText>
         </SocialLoginButton>
-        <SocialLoginButton onPress={() => SocialLogin({ provider: 'apple' })}>
+        <SocialLoginButton
+          disabled={loading || true}
+          onPress={() => handleSocialLogin('apple')}
+        >
           <Apple />
           <SocialLoginText>Continue with Apple</SocialLoginText>
         </SocialLoginButton>
