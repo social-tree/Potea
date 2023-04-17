@@ -33,6 +33,7 @@ export const CreateAccount = ({ navigation }) => {
     control,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm()
   const [loading, setLoading] = useState(false)
 
@@ -44,6 +45,11 @@ export const CreateAccount = ({ navigation }) => {
       password,
       rememberMe,
     })
+    if (error) {
+      console.log(error)
+      setError('password', { type: 'custom', message: error.message })
+      setError('email', { type: 'custom', message: '' })
+    }
     setLoading(false)
     if (data.user.aud) {
       navigation.navigate('Login')

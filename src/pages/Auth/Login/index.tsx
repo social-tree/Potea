@@ -32,6 +32,7 @@ export const Login = ({ navigation }) => {
     control,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm()
   const [loading, setLoading] = useState(false)
 
@@ -39,13 +40,18 @@ export const Login = ({ navigation }) => {
     console.log('submit')
     const { email, password, rememberMe } = formData
     setLoading(true)
-    await EmailLogin({
+    const { data, error } = await EmailLogin({
       email,
       password,
       rememberMe,
     })
+    if (error) {
+      setError('password', { type: 'custom', message: error.message })
+      setError('email', { type: 'custom', message: '' })
+    }
     setLoading(false)
   }
+  console.log(errors)
 
   return (
     <Container
@@ -84,7 +90,11 @@ export const Login = ({ navigation }) => {
           errors={errors}
         />
         <Checkbox name="rememberMe" control={control} label="Remember me" />
-        <Button loading={loading} onPress={handleSubmit(onFormSubmit)}>
+        <Button
+          disabled={loading}
+          loading={loading}
+          onPress={handleSubmit(onFormSubmit)}
+        >
           Sign in
         </Button>
         <TouchableHighlight onPress={() => navigation.navigate('ResetMethod')}>
