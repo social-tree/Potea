@@ -80,7 +80,13 @@ export const CreateAccount = ({ navigation }) => {
           inputProps={{
             textContentType: 'newPassword',
           }}
-          rules={{ required: 'Enter a password' }}
+          rules={{
+            required: 'Enter a password',
+            minLength: {
+              value: 6,
+              message: 'The minimum length is 6 characters',
+            },
+          }}
           errors={errors}
         />
         <Checkbox name="rememberMe" control={control} label="Remember me" />
