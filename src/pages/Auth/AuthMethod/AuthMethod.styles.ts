@@ -12,7 +12,7 @@ export const SignupButtonText = styled.Text`
   padding-top: 10px;
 `
 
-export const SignupButton = styled.TouchableOpacity``
+export const SignupButton = styled.TouchableOpacity<{ disabled?: boolean }>``
 
 export const SignupText = styled.Text`
   padding-top: 10px;
