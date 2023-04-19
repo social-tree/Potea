@@ -1,6 +1,6 @@
-import { Path, Svg } from 'react-native-svg'
+import { Path, Svg, SvgProps } from 'react-native-svg'
 
-export const Apple = (props) => {
+export const Apple = (props: SvgProps) => {
   return (
     <Svg {...props} width="24" height="27" viewBox="0 0 21 25" fill="none">
       <Path

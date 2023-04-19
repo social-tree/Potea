@@ -3,7 +3,7 @@ import { ClipPath, Defs, G, Path, Rect, Svg } from 'react-native-svg'
 export const Google = (props) => {
   return (
     <Svg {...props} width="24" height="27" viewBox="0 0 24 25" fill="none">
-      <G clip-path="url(#clip0_1549_3244)">
+      <G clipPath="url(#clip0_1549_3244)">
         <Path
           d="M23.5088 12.9747C23.5088 11.9914 23.4304 11.2739 23.2608 10.5298H12.2305V14.9678H18.705C18.5745 16.0707 17.8696 17.7316 16.3032 18.8477L16.2812 18.9963L19.7688 21.7465L20.0104 21.771C22.2295 19.6849 23.5088 16.6154 23.5088 12.9747Z"
           fill="#4285F4"
