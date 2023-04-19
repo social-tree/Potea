@@ -1,8 +1,22 @@
-import { Defs, LinearGradient, Path, Stop, Svg } from 'react-native-svg'
+import {
+  Defs,
+  LinearGradient,
+  Path,
+  Stop,
+  Svg,
+  SvgProps,
+} from 'react-native-svg'
 
-export const Message = () => {
+export const Message = (props: SvgProps) => {
   return (
-    <Svg width="28" opacity={1} height="29" viewBox="0 0 28 30" fill="none">
+    <Svg
+      {...props}
+      width="28"
+      opacity={1}
+      height="29"
+      viewBox="0 0 28 30"
+      fill="none"
+    >
       <Path
         fill-rule="evenodd"
         clip-rule="evenodd"
@@ -18,8 +32,8 @@ export const Message = () => {
           y2="17.8001"
           gradientUnits="userSpaceOnUse"
         >
-          <Stop stop-color="#01B763" />
-          <Stop offset="1" stop-color="#14E685" />
+          <Stop stopColor="#01B763" />
+          <Stop offset="1" stopColor="#14E685" />
         </LinearGradient>
       </Defs>
     </Svg>

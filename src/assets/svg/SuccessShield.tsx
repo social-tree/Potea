@@ -1,8 +1,16 @@
-import { Circle, Defs, LinearGradient, Path, Stop, Svg } from 'react-native-svg'
+import {
+  Circle,
+  Defs,
+  LinearGradient,
+  Path,
+  Stop,
+  Svg,
+  SvgProps,
+} from 'react-native-svg'
 
-export const SuccessShield = () => {
+export const SuccessShield = (props: SvgProps) => {
   return (
-    <Svg width="186" height="180" viewBox="0 0 186 180" fill="none">
+    <Svg {...props} width="186" height="180" viewBox="0 0 186 180" fill="none">
       <Circle
         cx="95.5"
         cy="90.5"

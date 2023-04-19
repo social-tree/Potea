@@ -1,9 +1,9 @@
-import { ClipPath, Defs, G, Path, Rect, Svg } from 'react-native-svg'
+import { ClipPath, Defs, G, Path, Rect, Svg, SvgProps } from 'react-native-svg'
 
-export const LockedPhone = () => {
+export const LockedPhone = (props: SvgProps) => {
   return (
-    <Svg width="276" height="251" viewBox="0 0 276 251" fill="none">
-      <G clip-path="url(#clip0_1437_46624)">
+    <Svg {...props} width="276" height="251" viewBox="0 0 276 251" fill="none">
+      <G clipPath="url(#clip0_1437_46624)">
         <Path
           d="M190.728 249.704H112.414C100.668 249.704 91.1113 240.157 91.1113 228.423V21.6134C91.1113 9.87954 100.668 0.333252 112.414 0.333252H190.728C202.474 0.333252 212.03 9.87954 212.03 21.6134C213.488 104.662 215.974 197.663 212.03 228.423C212.03 240.157 202.474 249.704 190.728 249.704L190.728 249.704Z"
           fill="#3F3D56"

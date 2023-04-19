@@ -1,6 +1,13 @@
-import { Svg, Path, Defs, LinearGradient, Stop } from 'react-native-svg'
+import {
+  Svg,
+  Path,
+  Defs,
+  LinearGradient,
+  Stop,
+  SvgProps,
+} from 'react-native-svg'
 
-export const Logo = (props) => {
+export const Logo = (props: SvgProps) => {
   return (
     <Svg {...props} width="118" height="139" viewBox="0 0 118 139" fill="red">
       <Path
@@ -16,8 +23,8 @@ export const Logo = (props) => {
           y2="102.679"
           gradientUnits="userSpaceOnUse"
         >
-          <Stop stop-color="#01B763" />
-          <Stop offset="1" stop-color="#14E685" />
+          <Stop stopColor="#01B763" />
+          <Stop offset="1" stopColor="#14E685" />
         </LinearGradient>
       </Defs>
     </Svg>
