@@ -20,6 +20,7 @@ interface Props {
   rating: number
   soldAmount: number
   price: number
+  liked: boolean
   size?: 'normal' | 'large'
 }
 
@@ -29,6 +30,7 @@ export const Product = ({
   size,
   rating,
   price,
+  liked,
   soldAmount,
 }: Props) => {
   return (
@@ -38,7 +40,7 @@ export const Product = ({
         <StyledHeart
           width={size === 'large' ? '24' : '15'}
           size={size === 'large' ? '22' : '15'}
-          stroke={theme.primary[500]}
+          stroke={liked ? theme.primary[500] : theme.other.white}
         />
       </ImageContainer>
       <Title size={size}>{name}</Title>
