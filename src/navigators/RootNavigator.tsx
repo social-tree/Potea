@@ -7,12 +7,14 @@ import { Session } from '@supabase/supabase-js'
 import { AppContext } from 'src/contexts/AppContext'
 import { supabase } from 'src/utils/supabase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { SplashScreen } from 'src/pages/SplashScreen'
 
 interface Props {
   setLoading: (state: boolean) => void
+  loading: boolean
 }
 
-export const RootNavigator = ({ setLoading }: Props) => {
+export const RootNavigator = ({ setLoading, loading }: Props) => {
   const navigationRef = React.createRef<any>()
   const [navigationIsReady, setNavigationIsReady] = useState(false)
 
@@ -61,22 +63,25 @@ export const RootNavigator = ({ setLoading }: Props) => {
   }, [resetPassword, navigationRef, navigationIsReady])
 
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      onReady={() => setNavigationIsReady(true)}
-      theme={{
-        colors: {
-          primary: theme.greyscale[50],
-          background: theme.darkColors.dark1,
-          text: theme.greyscale[50],
-          border: theme.darkColors.dark1,
-          card: theme.darkColors.dark1,
-          notification: 'red',
-        },
-        dark: true,
-      }}
-    >
-      {session ? <HomeNavigator /> : <AuthNavigator />}
-    </NavigationContainer>
+    <>
+      {loading && <SplashScreen />}
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={() => setNavigationIsReady(true)}
+        theme={{
+          colors: {
+            primary: theme.greyscale[50],
+            background: theme.darkColors.dark1,
+            text: theme.greyscale[50],
+            border: theme.darkColors.dark1,
+            card: theme.darkColors.dark1,
+            notification: 'red',
+          },
+          dark: true,
+        }}
+      >
+        {session ? <HomeNavigator /> : <AuthNavigator />}
+      </NavigationContainer>
+    </>
   )
 }

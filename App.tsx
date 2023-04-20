@@ -13,7 +13,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <View style={GlobalStyle['*']}>
         <AppProvider>
-          <RootNavigator setLoading={setLoading} />
+          <RootNavigator loading={loading} setLoading={setLoading} />
         </AppProvider>
       </View>
     </ThemeProvider>

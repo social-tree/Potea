@@ -23,6 +23,7 @@ interface Props extends UseControllerProps {
   placeholder: string
   inputProps?: TextInputProps
   errors?: any
+  style?: any
 }
 
 export const Input = ({
@@ -34,6 +35,7 @@ export const Input = ({
   inputProps,
   placeholder,
   errors,
+  style,
   ...props
 }: Props) => {
   const [showPassword, setShowPassword] = useState(
@@ -46,7 +48,7 @@ export const Input = ({
 
   return (
     <Container>
-      <Wrapper error={!!errors?.[name]?.message}>
+      <Wrapper style={style} error={!!errors?.[name]?.message}>
         <InputWrap>
           {leftIcon && <IconWrap>{leftIcon}</IconWrap>}
           <Controller
