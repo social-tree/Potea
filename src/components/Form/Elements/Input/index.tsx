@@ -48,7 +48,7 @@ export const Input = ({
 
   return (
     <Container>
-      <Wrapper style={style} error={!!errors?.[name]?.message}>
+      <Wrapper style={style} error={!!errors?.[name]}>
         <InputWrap>
           {leftIcon && <IconWrap>{leftIcon}</IconWrap>}
           <Controller
