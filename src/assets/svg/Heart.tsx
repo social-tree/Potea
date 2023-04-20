@@ -2,7 +2,7 @@ import { Path, Svg, SvgProps } from 'react-native-svg'
 
 export const Heart = ({ fill, stroke, ...props }: SvgProps) => {
   return (
-    <Svg {...props} width="24" height="22" viewBox="0 0 24 22" fill={fill}>
+    <Svg width="24" height="22" {...props} viewBox="0 0 24 22" fill={fill}>
       <Path
         fillRule="evenodd"
         clipRule="evenodd"
