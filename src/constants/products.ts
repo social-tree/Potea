@@ -1,5 +1,6 @@
-export const products = [
+export const allProducts = [
   {
+    id: 1,
     image: 'https://i.imgur.com/SUAD4By.png',
     name: 'Player Plant',
     soldAmount: 4268,
@@ -7,6 +8,7 @@ export const products = [
     price: 29,
   },
   {
+    id: 2,
     image: 'https://i.imgur.com/tzRUHa5.png',
     name: 'Eve Plant',
     soldAmount: 3884,
@@ -14,6 +16,7 @@ export const products = [
     price: 25,
   },
   {
+    id: 3,
     image: 'https://i.imgur.com/WdcJh8w.png',
     name: 'Zoey Plant',
     soldAmount: 3884,
@@ -21,6 +24,7 @@ export const products = [
     price: 25,
   },
   {
+    id: 4,
     image: 'https://i.imgur.com/doUrTmg.png',
     name: 'Sangy Plant',
     soldAmount: 3884,
@@ -28,6 +32,7 @@ export const products = [
     price: 25,
   },
   {
+    id: 5,
     image: 'https://i.imgur.com/GMUzJsy.png',
     name: 'Zaza Plant',
     soldAmount: 3884,

@@ -2,7 +2,7 @@ import { TouchableOpacity } from 'react-native'
 import { supabase } from 'src/utils/supabase'
 import styled from 'styled-components/native'
 import { ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   Container,
   HomeHeader,
@@ -26,17 +26,21 @@ import { useForm } from 'react-hook-form'
 import { Search } from 'src/assets/svg/Search'
 import { Misc } from 'src/assets/svg/Misc'
 import { Product } from 'src/components/Elements/Product'
-import { products } from 'src/constants/products'
 import { Tag } from 'src/components/Elements/Tag'
 import { filters } from 'src/constants/filters'
+import { AppContext } from 'src/contexts/AppContext'
 
 export const Home = ({ navigation }) => {
   const { control } = useForm()
   const [selectedFilter, setSelectedFilter] = useState('All')
+  const { products, addProductToFavorites, favoriteProducts } =
+    useContext(AppContext)
 
   const handleFilterChange = (filter: string) => {
     setSelectedFilter(filter)
   }
+
+  console.log(favoriteProducts)
 
   return (
     <ScrollView>
@@ -80,13 +84,16 @@ export const Home = ({ navigation }) => {
           >
             {products.map((product) => (
               <Product
-                liked={false}
+                key={product.id}
+                id={product.id}
+                liked={!!favoriteProducts.get(product.id)}
                 size="large"
                 image={product.image}
                 name={product.name}
                 rating={product.rating}
                 soldAmount={product.soldAmount}
                 price={product.price}
+                handleAddToFavorites={addProductToFavorites}
               />
             ))}
           </ScrollView>
@@ -128,12 +135,15 @@ export const Home = ({ navigation }) => {
           >
             {products.map((product) => (
               <Product
-                liked={false}
+                key={product.id}
+                liked={!!favoriteProducts.get(product.id)}
+                id={product.id}
                 image={product.image}
                 name={product.name}
                 rating={product.rating}
                 soldAmount={product.soldAmount}
                 price={product.price}
+                handleAddToFavorites={addProductToFavorites}
               />
             ))}
           </ScrollView>
