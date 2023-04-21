@@ -47,7 +47,9 @@ export const Title = styled.Text<{ size: string }>`
   color: ${({ theme }) => theme.other.white};
 `
 
-export const StyledHeart = styled(Heart)<{ size: string }>`
+export const StyledHeart = styled(Heart)<{ size: string }>``
+
+export const HeartButton = styled.TouchableOpacity`
   position: absolute;
   top: 20px;
   right: 20px;

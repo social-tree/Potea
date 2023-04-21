@@ -33,8 +33,6 @@ export const RootNavigator = ({ setLoading, loading }: Props) => {
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
-      console.log(session, 'session')
-      console.log(_event, '_event')
       if (_event == 'PASSWORD_RECOVERY') {
         if (navigationIsReady) {
           navigationRef?.current?.navigate('ResetPassword')

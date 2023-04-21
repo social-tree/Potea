@@ -10,14 +10,14 @@ import {
   NotificationTitle,
   StyledLoading,
 } from './Notifications.styles'
-import { Allnotifications } from 'src/constants/notifications'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Sale } from 'src/assets/svg/Sale'
 import { Wallet } from 'src/assets/svg/Wallet'
 import { LocationPin } from 'src/assets/svg/LocationPin'
 import { CreditCard } from 'src/assets/svg/CreditCard'
 import { User } from 'src/assets/svg/User'
 import { useHeaderHeight } from '@react-navigation/elements'
+import { AppContext } from 'src/contexts/AppContext'
 
 const screenHeight = Dimensions.get('screen')?.height
 
@@ -25,6 +25,7 @@ export const Notifications = () => {
   const [sortedNotifications, setSortedNotifications] = useState([])
   const [loading, setLoading] = useState(true)
   const headerHeight = useHeaderHeight()
+  const notifications = useContext(AppContext).notifications
 
   useEffect(() => {
     const sortNotifications = () => {
@@ -39,7 +40,7 @@ export const Notifications = () => {
 
       const NotificationGroups = {}
 
-      Allnotifications.forEach((notification) => {
+      notifications.forEach((notification) => {
         const date = notification.date.split('T')[0]
         const determinedDate =
           date === todayDateISO
@@ -61,7 +62,7 @@ export const Notifications = () => {
       setLoading(false)
     }
     sortNotifications()
-  }, [])
+  }, [notifications])
 
   return (
     <ScrollView

@@ -1,4 +1,4 @@
-export const Allnotifications = [
+export const allNotifications = [
   {
     date: '2023-04-21T20:45:22.248Z',
     title: '30% Special Discount',
