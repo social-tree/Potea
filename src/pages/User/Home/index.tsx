@@ -50,7 +50,9 @@ export const Home = ({ navigation }) => {
           <TouchableOpacity>
             <Heart />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Notifications')}
+          >
             <Bell />
           </TouchableOpacity>
         </HomeHeader>
