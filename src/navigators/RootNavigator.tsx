@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { theme } from 'src/styles/theme'
-import HomeNavigator from './HomeNavigator'
+import UserNavigator from './UserNavigator'
 import AuthNavigator from './AuthNavigator'
 import React, { useContext, useEffect, useState } from 'react'
 import { Session } from '@supabase/supabase-js'
@@ -80,7 +80,7 @@ export const RootNavigator = ({ setLoading, loading }: Props) => {
           dark: true,
         }}
       >
-        {session ? <HomeNavigator /> : <AuthNavigator />}
+        {session ? <UserNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     </>
   )
