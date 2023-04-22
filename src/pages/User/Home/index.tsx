@@ -18,7 +18,6 @@ import {
   MostPopularContainer,
   MostPopularHeader,
   MostPopularTitle,
-  TagsContainer,
 } from './Home.styles'
 import { Bell } from 'src/assets/svg/Bell'
 import { Heart } from 'src/assets/svg/Heart'
@@ -26,9 +25,10 @@ import { useForm } from 'react-hook-form'
 import { Search } from 'src/assets/svg/Search'
 import { Misc } from 'src/assets/svg/Misc'
 import { Product } from 'src/components/Elements/Product'
-import { Tag } from 'src/components/Elements/Tag'
+import { Chip } from 'src/components/Elements/Chip'
 import { filters } from 'src/constants/filters'
 import { AppContext } from 'src/contexts/AppContext'
+import { theme } from 'src/styles/theme'
 
 export const Home = ({ navigation }) => {
   const { control } = useForm()
@@ -40,8 +40,6 @@ export const Home = ({ navigation }) => {
     setSelectedFilter(filter)
   }
 
-  console.log(favoriteProducts)
-
   return (
     <ScrollView>
       <Container>
@@ -51,7 +49,7 @@ export const Home = ({ navigation }) => {
             <WelcomeText>Good Morning 👋</WelcomeText>
             <Username>Andrew Ainsley</Username>
           </UserInfo>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Wishlist')}>
             <Heart />
           </TouchableOpacity>
           <TouchableOpacity
@@ -65,6 +63,7 @@ export const Home = ({ navigation }) => {
           name="search"
           placeholder="Search"
           control={control}
+          inputProps={{ placeholderTextColor: theme.greyscale[600] }}
           rightIcon={
             <TouchableOpacity>
               <Misc />
@@ -82,7 +81,7 @@ export const Home = ({ navigation }) => {
             horizontal
             contentContainerStyle={{ display: 'flex', gap: 16 }}
           >
-            {products.map((product) => (
+            {products?.map((product) => (
               <Product
                 key={product.id}
                 id={product.id}
@@ -114,8 +113,8 @@ export const Home = ({ navigation }) => {
             }}
             horizontal
           >
-            {filters.map((filter) => (
-              <Tag
+            {filters?.map((filter) => (
+              <Chip
                 onPress={() => handleFilterChange(filter)}
                 selected={selectedFilter === filter}
                 text={filter}
@@ -133,7 +132,7 @@ export const Home = ({ navigation }) => {
               flexWrap: 'wrap',
             }}
           >
-            {products.map((product) => (
+            {products?.map((product) => (
               <Product
                 key={product.id}
                 liked={!!favoriteProducts.get(product.id)}

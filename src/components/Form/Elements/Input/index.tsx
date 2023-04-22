@@ -13,6 +13,7 @@ import { theme } from 'src/styles/theme'
 import { useState } from 'react'
 import { Control, UseControllerProps } from 'react-hook-form/dist/types'
 import { Controller } from 'react-hook-form'
+import { InputProps } from 'react-native-elements'
 
 interface Props extends UseControllerProps {
   leftIcon?: JSX.Element
@@ -56,13 +57,13 @@ export const Input = ({
             {...props}
             render={({ field: { onChange, onBlur, value } }) => (
               <StyledInput
-                {...inputProps}
                 secureTextEntry={showPassword}
                 placeholderTextColor={theme.greyscale[50]}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
                 placeholder={placeholder}
+                {...inputProps}
               />
             )}
             name={name}
