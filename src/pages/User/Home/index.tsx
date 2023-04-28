@@ -1,4 +1,4 @@
-import { TouchableOpacity } from 'react-native'
+import { FlatList, TouchableOpacity } from 'react-native'
 import { supabase } from 'src/utils/supabase'
 import styled from 'styled-components/native'
 import { ScrollView } from 'react-native'
@@ -25,7 +25,7 @@ import { useForm } from 'react-hook-form'
 import { Search } from 'src/assets/svg/Search'
 import { Misc } from 'src/assets/svg/Misc'
 import { Product } from 'src/components/Elements/Product'
-import { Chip } from 'src/components/Elements/Chip'
+import { Chip } from 'src/components/Form/Elements/Chip'
 import { filters } from 'src/constants/filters'
 import { AppContext } from 'src/contexts/AppContext'
 import { theme } from 'src/styles/theme'
@@ -41,7 +41,7 @@ export const Home = ({ navigation }) => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView horizontal={false}>
       <Container>
         <HomeHeader>
           <ProfilePicture source={{ uri: 'https://i.imgur.com/zol9PsV.png' }} />
@@ -77,25 +77,23 @@ export const Home = ({ navigation }) => {
               <SeeAllButton>See All</SeeAllButton>
             </TouchableOpacity>
           </SpecialOffersHeader>
-          <ScrollView
+          <FlatList
+            data={products}
             horizontal
-            contentContainerStyle={{ display: 'flex', gap: 16 }}
-          >
-            {products?.map((product) => (
+            renderItem={({ item, index }) => (
               <Product
-                key={product.id}
-                id={product.id}
-                liked={!!favoriteProducts.get(product.id)}
+                style={{
+                  marginRight: index % 2 !== 0 ? 0 : 15,
+                  marginLeft: index === 0 || index === 1 ? 0 : 15,
+                }}
+                product={item}
+                key={item.id}
                 size="large"
-                image={product.image}
-                name={product.name}
-                rating={product.rating}
-                soldAmount={product.soldAmount}
-                price={product.price}
+                liked={!!favoriteProducts.get(item.id)}
                 handleAddToFavorites={addProductToFavorites}
               />
-            ))}
-          </ScrollView>
+            )}
+          />
         </SpecialOffersContainer>
         <MostPopularContainer>
           <MostPopularHeader>
@@ -121,31 +119,21 @@ export const Home = ({ navigation }) => {
               />
             ))}
           </ScrollView>
-          <ScrollView
-            contentContainerStyle={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: 10,
-              alignItems: 'center',
-              width: '100%',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-            }}
-          >
-            {products?.map((product) => (
+          <FlatList
+            data={products}
+            numColumns={2}
+            renderItem={({ item, index }) => (
               <Product
-                key={product.id}
-                liked={!!favoriteProducts.get(product.id)}
-                id={product.id}
-                image={product.image}
-                name={product.name}
-                rating={product.rating}
-                soldAmount={product.soldAmount}
-                price={product.price}
+                style={{
+                  marginRight: index % 2 !== 0 ? 0 : 15,
+                }}
+                product={item}
+                key={item.id}
+                liked={!!favoriteProducts.get(item.id)}
                 handleAddToFavorites={addProductToFavorites}
               />
-            ))}
-          </ScrollView>
+            )}
+          />
         </MostPopularContainer>
         <TouchableOpacity onPress={() => supabase.auth.signOut()}>
           <StyledText>log out</StyledText>

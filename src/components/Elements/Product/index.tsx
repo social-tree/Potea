@@ -17,37 +17,27 @@ import { theme } from 'src/styles/theme'
 import { productType } from 'src/types/product'
 
 interface Props {
-  image: string
-  name: string
-  rating: number
-  soldAmount: number
-  price: number
-  liked: boolean
   size?: 'normal' | 'large'
-  id: number
   handleAddToFavorites?: (product: productType) => void
+  style?: any
+  liked: boolean
+  product: productType
 }
 
 export const Product = ({
-  image,
-  name,
-  size,
-  rating,
-  price,
-  liked,
-  soldAmount,
+  product,
   handleAddToFavorites,
-  id,
+  liked,
+  size,
+  ...props
 }: Props) => {
+  const { image, id, name, rating, price, soldAmount } = product
+
   return (
-    <Container size={size}>
+    <Container {...props} size={size}>
       <ImageContainer>
         <ProductImage size={size} source={{ uri: image }} />
-        <HeartButton
-          onPress={() =>
-            handleAddToFavorites({ image, id, name, rating, price, soldAmount })
-          }
-        >
+        <HeartButton onPress={() => handleAddToFavorites(product)}>
           <StyledHeart
             width={size === 'large' ? '24' : '15'}
             size={size === 'large' ? '22' : '15'}

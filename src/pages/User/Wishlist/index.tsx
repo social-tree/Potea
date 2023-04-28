@@ -1,11 +1,10 @@
-import { ScrollView } from 'react-native'
+import { ScrollView, FlatList } from 'react-native'
 import { Container, Products } from './Wishlist.styles'
 import { filters } from 'src/constants/filters'
-import { Chip } from 'src/components/Elements/Chip'
+import { Chip } from 'src/components/Form/Elements/Chip'
 import { useContext, useEffect, useState } from 'react'
 import { AppContext } from 'src/contexts/AppContext'
 import { Product } from 'src/components/Elements/Product'
-import { Input } from 'src/components/Form/Elements/Input'
 import { SearchInput } from '../Home/Home.styles'
 import { Search } from 'src/assets/svg/Search'
 import { useForm } from 'react-hook-form'
@@ -37,7 +36,6 @@ export const Wishlist = () => {
           name="search"
           placeholder="Search"
           inputProps={{
-            autoFocus: true,
             placeholderTextColor: theme.greyscale[600],
           }}
           control={control}
@@ -60,20 +58,21 @@ export const Wishlist = () => {
           ))}
         </ScrollView>
         <Products>
-          {wishlistProducts.map((product) => (
-            <Product
-              key={product.id}
-              id={product.id}
-              liked={!!favoriteProducts.get(product.id)}
-              size="normal"
-              image={product.image}
-              name={product.name}
-              rating={product.rating}
-              soldAmount={product.soldAmount}
-              price={product.price}
-              handleAddToFavorites={addProductToFavorites}
-            />
-          ))}
+          <FlatList
+            data={wishlistProducts}
+            numColumns={2}
+            renderItem={({ item, index }) => (
+              <Product
+                style={{
+                  marginRight: index % 2 !== 0 ? 0 : 15,
+                }}
+                product={item}
+                key={item.id}
+                liked={!!favoriteProducts.get(item.id)}
+                handleAddToFavorites={addProductToFavorites}
+              />
+            )}
+          />
         </Products>
       </Container>
     </ScrollView>
