@@ -42,6 +42,7 @@ export const Home = ({ navigation }) => {
   const [selectedFilter, setSelectedFilter] = useState('All')
   const [specialOffers, setSpecialOffers] = useState([])
   const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
 
@@ -69,6 +70,13 @@ export const Home = ({ navigation }) => {
       data={[]}
       keyExtractor={() => 'key'}
       renderItem={null}
+      onRefresh={() => {
+        setLoading(true)
+        getSpecialOfferProducts()
+        getAllProducts()
+        setLoading(false)
+      }}
+      refreshing={loading}
       ListHeaderComponent={() => (
         <Container>
           <HomeHeader>
