@@ -18,10 +18,10 @@ import { Button } from 'src/components/Elements/Button'
 import { ChoiceSplit } from 'src/components/Elements/ChoiceSplit'
 import { Facebook } from 'src/assets/svg/Facebook'
 import { Google } from 'src/assets/svg/Google'
+import { Provider } from '@supabase/supabase-js'
 import { SocialLogin } from 'src/api/auth'
 import { theme } from 'src/styles/theme'
 import { useState } from 'react'
-import { Provider } from '@supabase/supabase-js'
 
 export const AuthMethod = ({ navigation }) => {
   const [loading, setLoading] = useState(false)

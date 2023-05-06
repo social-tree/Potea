@@ -1,4 +1,3 @@
-import { PhoneSuccess } from 'src/assets/svg/PhoneSuccess'
 import {
   Container,
   Info,
@@ -8,16 +7,18 @@ import {
   SuccessModal,
   Wrapper,
 } from './ResetPassword.styles'
-import { Input } from 'src/components/Form/Elements/Inputs/Input'
-import { useForm } from 'react-hook-form'
 import { Image, KeyboardAvoidingView, Platform } from 'react-native'
+
 import { Button } from 'src/components/Elements/Button'
-import { useHeaderHeight } from '@react-navigation/elements'
-import { updateUserInfo } from 'src/api/auth/User'
-import { Modal } from 'src/components/Elements/Modal'
-import { useState } from 'react'
-import { SuccessShield } from 'src/assets/svg/SuccessShield'
+import { Input } from 'src/components/Form/Elements/Inputs/Input'
 import { Loading } from 'src/assets/animations/Loading'
+import { Modal } from 'src/components/Elements/Modal'
+import { PhoneSuccess } from 'src/assets/svg/PhoneSuccess'
+import { SuccessShield } from 'src/assets/svg/SuccessShield'
+import { updateUserInfo } from 'src/api/auth/User'
+import { useForm } from 'react-hook-form'
+import { useHeaderHeight } from '@react-navigation/elements'
+import { useState } from 'react'
 
 export const ResetPassword = ({ route, navigation }) => {
   const { control, handleSubmit } = useForm()

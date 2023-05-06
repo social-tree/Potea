@@ -1,7 +1,8 @@
-import { ButtonProps } from 'react-native-elements'
-import { View } from 'react-native'
 import { StyledButton, StyledText } from './Button.styles'
+
+import { ButtonProps } from 'react-native-elements'
 import { Loading } from 'src/assets/animations/Loading'
+import { View } from 'react-native'
 
 interface Props extends ButtonProps {
   loading?: boolean

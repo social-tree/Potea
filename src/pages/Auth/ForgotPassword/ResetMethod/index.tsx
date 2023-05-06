@@ -1,4 +1,3 @@
-import { Message } from 'src/assets/svg/Message'
 import {
   Container,
   IconShadow,
@@ -10,13 +9,15 @@ import {
   MethodText,
   Methods,
 } from './ResetMethod.styles'
-import { LockedPhone } from 'src/assets/svg/LockedPhone'
-import { Email } from 'src/assets/svg/Email'
-import { theme } from 'src/styles/theme'
+
 import { Button } from 'src/components/Elements/Button'
-import { useState } from 'react'
+import { Email } from 'src/assets/svg/Email'
 import { Input } from 'src/components/Form/Elements/Inputs/Input'
+import { LockedPhone } from 'src/assets/svg/LockedPhone'
+import { Message } from 'src/assets/svg/Message'
+import { theme } from 'src/styles/theme'
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 
 export enum MethodTypes {
   EMAIL,

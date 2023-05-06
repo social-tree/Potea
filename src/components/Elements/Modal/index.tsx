@@ -1,5 +1,5 @@
-import { Touchable, TouchableWithoutFeedback } from 'react-native'
 import { BackShadowDrop, Container, ModalContainer } from './Modal.styles'
+import { Touchable, TouchableWithoutFeedback } from 'react-native'
 
 interface Props {
   children?: JSX.Element | JSX.Element[]

@@ -1,6 +1,7 @@
+import { Container, StyledLoading, StyledLogo } from './SplashScreen.styles'
+
 import { SafeAreaView } from 'react-native'
 import { StatusBar } from 'react-native'
-import { Container, StyledLogo, StyledLoading } from './SplashScreen.styles'
 
 export const SplashScreen = () => {
   return (

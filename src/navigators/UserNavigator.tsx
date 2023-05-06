@@ -1,10 +1,11 @@
-import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { ResetPassword } from 'src/pages/User/ResetPassword'
-import { Home as HomeIcon } from 'src/assets/svg/Home'
-import styled from 'styled-components/native'
 import { BlurView } from 'expo-blur'
+import { Home as HomeIcon } from 'src/assets/svg/Home'
 import HomeNavigator from './HomeNavigator'
+import React from 'react'
+import { ResetPassword } from 'src/pages/User/ResetPassword'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import styled from 'styled-components/native'
+
 const { Navigator, Screen } = createBottomTabNavigator()
 
 const UserNavigator = () => {

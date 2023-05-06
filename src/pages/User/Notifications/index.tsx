@@ -1,4 +1,3 @@
-import { ScrollView, Dimensions } from 'react-native'
 import {
   Container,
   DateTitle,
@@ -10,14 +9,16 @@ import {
   NotificationTitle,
   StyledLoading,
 } from './Notifications.styles'
-import { useEffect, useState, useContext } from 'react'
-import { Sale } from 'src/assets/svg/Sale'
-import { Wallet } from 'src/assets/svg/Wallet'
-import { LocationPin } from 'src/assets/svg/LocationPin'
-import { CreditCard } from 'src/assets/svg/CreditCard'
-import { User } from 'src/assets/svg/User'
-import { useHeaderHeight } from '@react-navigation/elements'
+import { Dimensions, ScrollView } from 'react-native'
+import { useContext, useEffect, useState } from 'react'
+
 import { AppContext } from 'src/contexts/AppContext'
+import { CreditCard } from 'src/assets/svg/CreditCard'
+import { LocationPin } from 'src/assets/svg/LocationPin'
+import { Sale } from 'src/assets/svg/Sale'
+import { User } from 'src/assets/svg/User'
+import { Wallet } from 'src/assets/svg/Wallet'
+import { useHeaderHeight } from '@react-navigation/elements'
 
 const screenHeight = Dimensions.get('screen')?.height
 

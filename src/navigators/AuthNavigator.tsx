@@ -1,11 +1,11 @@
 import { AuthMethod } from 'src/pages/Auth/AuthMethod'
+import { Confirmation } from 'src/pages/Auth/ForgotPassword/Confirmation'
 import { CreateAccount } from 'src/pages/Auth/CreateAccount'
 import { Login } from 'src/pages/Auth/Login'
 import React from 'react'
+import { ResetMethod } from 'src/pages/Auth/ForgotPassword/ResetMethod'
 import { Welcome } from 'src/pages/Auth/Welcome'
 import { createStackNavigator } from '@react-navigation/stack'
-import { ResetMethod } from 'src/pages/Auth/ForgotPassword/ResetMethod'
-import { Confirmation } from 'src/pages/Auth/ForgotPassword/Confirmation'
 
 const { Navigator, Screen } = createStackNavigator()
 

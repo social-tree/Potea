@@ -1,4 +1,3 @@
-import { RatingStar } from 'src/assets/svg/RatingStar'
 import {
   AmountSoldText,
   Container,
@@ -12,9 +11,11 @@ import {
   StyledHeart,
   Title,
 } from './Product.styles'
+
+import { RatingStar } from 'src/assets/svg/RatingStar'
 import React from 'react'
-import { theme } from 'src/styles/theme'
 import { productType } from 'src/types/product'
+import { theme } from 'src/styles/theme'
 
 interface Props {
   size?: 'normal' | 'large'

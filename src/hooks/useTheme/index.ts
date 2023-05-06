@@ -7,11 +7,10 @@ export const useTheme = () => {
   const [theme, setTheme] = useState(defaultTheme)
 
   useEffect(() => {
-    (async () => {
-        await AsyncStorage.setItem("theme",  await theme)
+    ;(async () => {
+      await AsyncStorage.setItem('theme', await theme)
     })()
   }, [theme])
 
   return { theme, setTheme }
 }
-

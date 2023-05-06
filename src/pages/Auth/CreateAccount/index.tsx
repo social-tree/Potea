@@ -8,6 +8,8 @@ import {
   StyledSignupWrap,
   Title,
 } from './CreateAccount.styles'
+import { EmailSignup, SocialLogin } from 'src/api/auth'
+import React, { useState } from 'react'
 import {
   SignupButton,
   SignupButtonText,
@@ -24,9 +26,7 @@ import { Facebook } from 'src/assets/svg/Facebook'
 import { Google } from 'src/assets/svg/Google'
 import { Input } from 'src/components/Form/Elements/Inputs/Input'
 import { Logo } from 'src/assets/svg/Logo'
-import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { EmailSignup, SocialLogin } from 'src/api/auth'
 
 export const CreateAccount = ({ navigation }) => {
   const {

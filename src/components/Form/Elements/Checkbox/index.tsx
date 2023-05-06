@@ -1,9 +1,9 @@
 import { Container, Label, StyledCheckBox } from './Checkbox.styles'
 
-import { IBouncyCheckboxProps } from 'react-native-bouncy-checkbox'
-import { theme } from 'src/styles/theme'
 import { Control } from 'react-hook-form/dist/types/form'
 import { Controller } from 'react-hook-form'
+import { IBouncyCheckboxProps } from 'react-native-bouncy-checkbox'
+import { theme } from 'src/styles/theme'
 
 interface Props extends IBouncyCheckboxProps {
   label: string

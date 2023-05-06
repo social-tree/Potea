@@ -14,11 +14,12 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field'
 import { useContext, useEffect, useState } from 'react'
+
+import { AppContext } from 'src/contexts/AppContext'
 import { Button } from 'src/components/Elements/Button'
 import { MethodTypes } from '../ResetMethod'
 import { ResetPasswordWithEmail } from 'src/api/auth/Email'
 import { SignInWithOtp } from 'src/api/auth/Phone'
-import { AppContext } from 'src/contexts/AppContext'
 import { supabase } from 'src/utils/supabase'
 
 const CELL_COUNT = 6

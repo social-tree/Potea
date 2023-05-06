@@ -1,4 +1,5 @@
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
+
 import { ChipText } from './Chip.styles'
 
 interface Props extends TouchableOpacityProps {
