@@ -1,6 +1,10 @@
-import { Input } from 'src/components/Form/Elements/Input'
+import { Input } from 'src/components/Form/Elements/Inputs/Input'
 import { HeadingFive, ParagraphL } from 'src/styles/utils/typography'
 import styled from 'styled-components/native'
+
+export const HideOnTrue = styled.View<{ hide?: boolean }>`
+  display: ${({ hide }) => (hide ? 'none' : 'flex')};
+`
 
 export const TagsContainer = styled.View`
   display: flex;
@@ -25,7 +29,7 @@ export const MostPopularContainer = styled.View`
   gap: 24px;
 `
 
-export const SeeAllButton = styled.Text`
+export const GreenButton = styled.Text`
   color: ${({ theme }) => theme.primary[500]};
   ${ParagraphL}
 `
@@ -45,11 +49,6 @@ export const SpecialOffersHeader = styled.View`
 export const SpecialOffersContainer = styled.View`
   display: flex;
   gap: 24px;
-`
-
-export const SearchInput = styled(Input)`
-  max-height: 56px !important;
-  height: 56px !important;
 `
 
 export const WelcomeText = styled.Text`

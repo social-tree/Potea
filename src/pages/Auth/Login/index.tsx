@@ -6,6 +6,7 @@ import {
   StyledOtherMethods,
   Title,
 } from './Login.styles'
+import { EmailLogin, SocialLogin } from 'src/api/auth'
 import {
   OtherMethods,
   SocialButton,
@@ -13,7 +14,7 @@ import {
   StyledSignupWrap,
 } from '../CreateAccount/CreateAccount.styles'
 import { SignupButtonText, SignupText } from '../AuthMethod/AuthMethod.styles'
-import { useState } from 'react'
+
 import { Apple } from 'src/assets/svg/Apple'
 import { Button } from 'src/components/Elements/Button'
 import { Checkbox } from 'src/components/Form/Elements/Checkbox'
@@ -21,11 +22,11 @@ import { ChoiceSplit } from 'src/components/Elements/ChoiceSplit'
 import { Email } from 'src/assets/svg/Email'
 import { Facebook } from 'src/assets/svg/Facebook'
 import { Google } from 'src/assets/svg/Google'
-import { Input } from 'src/components/Form/Elements/Input'
+import { Input } from 'src/components/Form/Elements/Inputs/Input'
 import { Logo } from 'src/assets/svg/Logo'
 import { TouchableHighlight } from 'react-native'
 import { useForm } from 'react-hook-form'
-import { EmailLogin, SocialLogin } from 'src/api/auth'
+import { useState } from 'react'
 
 export const Login = ({ navigation }) => {
   const {
@@ -46,12 +47,12 @@ export const Login = ({ navigation }) => {
       rememberMe,
     })
     if (error) {
+      console.log(error)
       setError('password', { type: 'custom', message: error.message })
       setError('email', { type: 'custom', message: '' })
     }
     setLoading(false)
   }
-  console.log(errors)
 
   return (
     <Container

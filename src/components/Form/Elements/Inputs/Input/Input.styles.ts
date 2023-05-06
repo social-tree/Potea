@@ -23,8 +23,9 @@ export const TextError = styled.Text`
   color: ${({ theme }) => theme.status.error};
 `
 
-export const Wrapper = styled.View<{ error: boolean }>`
-  background-color: ${({ theme }) => theme.darkColors.dark2};
+export const Wrapper = styled.View<{ error: boolean; focused: boolean }>`
+  background-color: ${({ theme, focused }) =>
+    focused ? `${theme.transparent.green}20` : theme.darkColors.dark2};
   ${({ theme, error }) => error && `border: 1px solid ${theme.status.error}`};
   border-radius: 20px;
   display: flex;
@@ -32,7 +33,9 @@ export const Wrapper = styled.View<{ error: boolean }>`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  min-height: 60px;
+  min-height: ${({ focused }) => (focused ? '61px' : '60px')};
+  border: ${({ focused, theme }) =>
+    focused ? `1px solid ${theme.primary[500]}` : 'none'};
 `
 
 export const Container = styled.View`

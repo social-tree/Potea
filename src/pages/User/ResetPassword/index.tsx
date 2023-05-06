@@ -8,7 +8,7 @@ import {
   SuccessModal,
   Wrapper,
 } from './ResetPassword.styles'
-import { Input } from 'src/components/Form/Elements/Input'
+import { Input } from 'src/components/Form/Elements/Inputs/Input'
 import { useForm } from 'react-hook-form'
 import { Image, KeyboardAvoidingView, Platform } from 'react-native'
 import { Button } from 'src/components/Elements/Button'

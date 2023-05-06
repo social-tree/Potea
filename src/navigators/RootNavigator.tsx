@@ -1,13 +1,14 @@
-import { NavigationContainer } from '@react-navigation/native'
-import { theme } from 'src/styles/theme'
-import UserNavigator from './UserNavigator'
-import AuthNavigator from './AuthNavigator'
 import React, { useContext, useEffect, useState } from 'react'
-import { Session } from '@supabase/supabase-js'
+
 import { AppContext } from 'src/contexts/AppContext'
-import { supabase } from 'src/utils/supabase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import AuthNavigator from './AuthNavigator'
+import { NavigationContainer } from '@react-navigation/native'
+import { Session } from '@supabase/supabase-js'
 import { SplashScreen } from 'src/pages/SplashScreen'
+import UserNavigator from './UserNavigator'
+import { supabase } from 'src/utils/supabase'
+import { theme } from 'src/styles/theme'
 
 interface Props {
   setLoading: (state: boolean) => void
@@ -24,9 +25,12 @@ export const RootNavigator = ({ setLoading, loading }: Props) => {
   useEffect(() => {
     const getUserSession = async () => {
       setLoading(true)
-      await supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-      })
+      await supabase.auth
+        .getSession()
+        .then(({ data: { session } }) => {
+          setSession(session)
+        })
+        .catch((error) => console.log(error))
       setLoading(false)
     }
     getUserSession()

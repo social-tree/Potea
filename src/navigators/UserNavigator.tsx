@@ -1,11 +1,9 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { ResetPassword } from 'src/pages/User/ResetPassword'
-import { Home } from 'src/pages/User/Home'
 import { Home as HomeIcon } from 'src/assets/svg/Home'
 import styled from 'styled-components/native'
 import { BlurView } from 'expo-blur'
-import { Notifications } from 'src/pages/User/Notifications'
 import HomeNavigator from './HomeNavigator'
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -14,7 +12,7 @@ const UserNavigator = () => {
     <Navigator
       initialRouteName="Home"
       screenOptions={({ route }) => {
-        const toExclude: typeof route.name[] = ['ResetPassword']
+        const toExclude: (typeof route.name)[] = ['ResetPassword']
         return {
           tabBarButton: toExclude.includes(route.name)
             ? () => {
@@ -23,6 +21,7 @@ const UserNavigator = () => {
             : undefined,
           tabBarBackground: () => <BlurView intensity={100} tint="dark" />,
           tabBarStyle: { position: 'absolute' },
+          tabBarHideOnKeyboard: true,
         }
       }}
     >

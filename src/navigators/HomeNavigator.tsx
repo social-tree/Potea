@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
+
 import { Home } from 'src/pages/User/Home'
-import styled from 'styled-components/native'
 import { Notifications } from 'src/pages/User/Notifications'
-import { createStackNavigator } from '@react-navigation/stack'
+import { Search } from 'src/pages/User/Search'
 import { Wishlist } from 'src/pages/User/Wishlist'
+import { createStackNavigator } from '@react-navigation/stack'
+import styled from 'styled-components/native'
 
 const { Navigator, Screen } = createStackNavigator()
 
 const HomeNavigator = () => {
-  const [searching, setSearching] = useState(false)
-
   return (
     <Navigator
       screenOptions={{
@@ -20,15 +20,12 @@ const HomeNavigator = () => {
           marginTop: 5,
         },
       }}
-      initialRouteName="ResetPassword"
+      initialRouteName="Home"
     >
       <Screen options={{ headerShown: false }} name="Home" component={Home} />
+      <Screen options={{ headerTitle: '' }} name="Search" component={Search} />
       <Screen name="Notifications" component={Notifications} />
-      <Screen
-        name="Wishlist"
-        initialParams={{ setSearching, searching }}
-        component={Wishlist}
-      />
+      <Screen name="Wishlist" component={Wishlist} />
     </Navigator>
   )
 }

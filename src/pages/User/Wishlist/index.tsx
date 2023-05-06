@@ -1,14 +1,15 @@
-import { ScrollView, FlatList } from 'react-native'
 import { Container, Products } from './Wishlist.styles'
-import { filters } from 'src/constants/filters'
-import { Chip } from 'src/components/Form/Elements/Chip'
+import { FlatList, ScrollView } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
+
 import { AppContext } from 'src/contexts/AppContext'
+import { Chip } from 'src/components/Form/Elements/Chip'
 import { Product } from 'src/components/Elements/Product'
-import { SearchInput } from '../Home/Home.styles'
 import { Search } from 'src/assets/svg/Search'
-import { useForm } from 'react-hook-form'
+import { SearchInput } from 'src/components/Form/Elements/Inputs'
+import { filters } from 'src/constants/filters'
 import { theme } from 'src/styles/theme'
+import { useForm } from 'react-hook-form'
 
 export const Wishlist = () => {
   const { control } = useForm()

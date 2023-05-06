@@ -6,14 +6,13 @@ import {
   TextError,
   Wrapper,
 } from './Input.styles'
-
-import { Eye } from 'src/assets/svg/Eye'
-import { TextInputProps } from 'react-native'
-import { theme } from 'src/styles/theme'
-import { useState } from 'react'
 import { Control, UseControllerProps } from 'react-hook-form/dist/types'
+import { Ref, useState } from 'react'
+import { TextInput, TextInputProps } from 'react-native'
+
 import { Controller } from 'react-hook-form'
-import { InputProps } from 'react-native-elements'
+import { Eye } from 'src/assets/svg/Eye'
+import { theme } from 'src/styles/theme'
 
 interface Props extends UseControllerProps {
   leftIcon?: JSX.Element
@@ -23,6 +22,7 @@ interface Props extends UseControllerProps {
   control: Control
   placeholder: string
   inputProps?: TextInputProps
+  ref?: Ref<TextInput>
   errors?: any
   style?: any
 }
@@ -33,12 +33,14 @@ export const Input = ({
   control,
   type,
   name,
-  inputProps,
+  inputProps: { onFocus, onBlur, ...inputProps },
   placeholder,
   errors,
+  ref,
   style,
   ...props
 }: Props) => {
+  const [focused, setFocused] = useState(false)
   const [showPassword, setShowPassword] = useState(
     type === 'password' ? true : false
   )
@@ -49,20 +51,29 @@ export const Input = ({
 
   return (
     <Container>
-      <Wrapper style={style} error={!!errors?.[name]}>
+      <Wrapper focused={focused} style={style} error={!!errors?.[name]}>
         <InputWrap>
           {leftIcon && <IconWrap>{leftIcon}</IconWrap>}
           <Controller
             control={control}
             {...props}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({ field }) => (
               <StyledInput
                 secureTextEntry={showPassword}
                 placeholderTextColor={theme.greyscale[50]}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
+                onBlur={(e) => {
+                  setFocused(false)
+                  field.onBlur()
+                  onBlur && onBlur(e)
+                }}
+                ref={ref}
+                onChangeText={field.onChange}
+                value={field.value}
                 placeholder={placeholder}
+                onFocus={(e) => {
+                  setFocused(true)
+                  onFocus && onFocus(e)
+                }}
                 {...inputProps}
               />
             )}

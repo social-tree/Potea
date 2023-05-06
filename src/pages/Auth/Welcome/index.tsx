@@ -2,7 +2,7 @@ import { SafeAreaView, StatusBar } from 'react-native'
 
 import { Button } from 'src/components/Elements/Button'
 import { Container } from './Welcome.styles'
-import { Input } from 'src/components/Form/Elements/Input'
+import { Input } from 'src/components/Form/Elements/Inputs/Input'
 import { theme } from 'src/styles/theme'
 
 export const Welcome = ({ navigation }) => {
