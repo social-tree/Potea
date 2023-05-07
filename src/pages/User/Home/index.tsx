@@ -25,6 +25,7 @@ import { AppContext } from 'src/contexts/AppContext'
 import { Bell } from 'src/assets/svg/Bell'
 import { Chip } from 'src/components/Form/Elements/Chip'
 import { Heart } from 'src/assets/svg/Heart'
+import { Loading } from 'src/assets/animations/Loading'
 import { Misc } from 'src/assets/svg/Misc'
 import { Product } from 'src/components/Elements/Product'
 import { ScrollView } from 'react-native'
@@ -53,15 +54,23 @@ export const Home = ({ navigation }) => {
   const getSpecialOfferProducts = async () => {
     const { data, error } = await getProducts({ type: 'specialOffer' })
     setSpecialOffers(data)
+    return
   }
 
-  const getAllProducts = async () => {
+  const getNormalProducts = async () => {
     const { data, error } = await getProducts({ type: 'normal' })
+    console.log({ data, error }, 'all')
     setProducts(data)
+    return
   }
 
   useEffect(() => {
-    getSpecialOfferProducts()
+    const getAllProducts = async () => {
+      setLoading(true)
+      await getSpecialOfferProducts()
+      await getNormalProducts()
+      setLoading(false)
+    }
     getAllProducts()
   }, [])
 
@@ -70,10 +79,10 @@ export const Home = ({ navigation }) => {
       data={[]}
       keyExtractor={() => 'key'}
       renderItem={null}
-      onRefresh={() => {
+      onRefresh={async () => {
         setLoading(true)
-        getSpecialOfferProducts()
-        getAllProducts()
+        await getSpecialOfferProducts()
+        await getNormalProducts()
         setLoading(false)
       }}
       refreshing={loading}
@@ -126,23 +135,27 @@ export const Home = ({ navigation }) => {
                 <GreenButton>See All</GreenButton>
               </TouchableOpacity>
             </SpecialOffersHeader>
-            <FlatList
-              data={specialOffers}
-              horizontal
-              renderItem={({ item, index }) => (
-                <Product
-                  style={{
-                    marginRight: index % 2 !== 0 ? 0 : 15,
-                    marginLeft: index === 0 || index === 1 ? 0 : 15,
-                  }}
-                  product={item}
-                  key={item.id}
-                  size="large"
-                  liked={!!favoriteProducts.get(item.id)}
-                  handleAddToFavorites={addProductToFavorites}
-                />
-              )}
-            />
+            {loading ? (
+              <Loading style={{ height: 362 }} />
+            ) : (
+              <FlatList
+                data={specialOffers}
+                horizontal
+                renderItem={({ item, index }) => (
+                  <Product
+                    style={{
+                      marginRight: index % 2 !== 0 ? 0 : 15,
+                      marginLeft: index === 0 || index === 1 ? 0 : 15,
+                    }}
+                    product={item}
+                    key={item.id}
+                    size="large"
+                    liked={!!favoriteProducts.get(item.id)}
+                    handleAddToFavorites={addProductToFavorites}
+                  />
+                )}
+              />
+            )}
           </SpecialOffersContainer>
           <MostPopularContainer>
             <MostPopularHeader>
@@ -169,21 +182,25 @@ export const Home = ({ navigation }) => {
                 />
               ))}
             </ScrollView>
-            <FlatList
-              data={products}
-              numColumns={2}
-              renderItem={({ item, index }) => (
-                <Product
-                  style={{
-                    marginRight: index % 2 !== 0 ? 0 : 15,
-                  }}
-                  product={item}
-                  key={item.id}
-                  liked={!!favoriteProducts.get(item.id)}
-                  handleAddToFavorites={addProductToFavorites}
-                />
-              )}
-            />
+            {loading ? (
+              <Loading style={{ height: 362 }} />
+            ) : (
+              <FlatList
+                data={products}
+                numColumns={2}
+                renderItem={({ item, index }) => (
+                  <Product
+                    style={{
+                      marginRight: index % 2 !== 0 ? 0 : 15,
+                    }}
+                    product={item}
+                    key={item.id}
+                    liked={!!favoriteProducts.get(item.id)}
+                    handleAddToFavorites={addProductToFavorites}
+                  />
+                )}
+              />
+            )}
           </MostPopularContainer>
           <TouchableOpacity onPress={() => supabase.auth.signOut()}>
             <StyledText>log out</StyledText>
