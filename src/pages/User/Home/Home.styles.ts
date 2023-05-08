@@ -1,5 +1,7 @@
-import { Input } from 'src/components/Form/Elements/Inputs/Input'
 import { HeadingFive, ParagraphL } from 'src/styles/utils/typography'
+
+import { Input } from 'src/components/Form/Elements/Inputs/Input'
+import { SearchInput } from 'src/components/Form/Elements/Inputs'
 import styled from 'styled-components/native'
 
 export const HideOnTrue = styled.View<{ hide?: boolean }>`
@@ -22,6 +24,8 @@ export const MostPopularHeader = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding-top: 24px;
+  padding: 24px 24px 0px 24px;
 `
 
 export const MostPopularContainer = styled.View`
@@ -44,11 +48,18 @@ export const SpecialOffersHeader = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 0px 24px;
 `
 
 export const SpecialOffersContainer = styled.View`
   display: flex;
   gap: 24px;
+  padding-top: 20px;
+`
+
+export const SearchContainer = styled.View`
+  height: 96px;
+  padding: 24px 24px 0px 24px;
 `
 
 export const WelcomeText = styled.Text`
@@ -79,10 +90,9 @@ export const HomeHeader = styled.View`
   gap: 16px;
   flex-direction: row;
   align-items: center;
+  padding: 0px 24px;
 `
 
 export const Container = styled.View`
-  padding: 0px 24px;
   display: flex;
-  gap: 24px;
 `
