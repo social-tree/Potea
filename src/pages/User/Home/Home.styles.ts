@@ -84,13 +84,13 @@ export const UserInfo = styled.View`
 `
 
 export const HomeHeader = styled.View`
-  height: 50px;
-  margin-top: 14px;
+  height: 61px;
   display: flex;
   gap: 16px;
   flex-direction: row;
   align-items: center;
-  padding: 0px 24px;
+  padding: 14px 24px 0px 24px;
+  background-color: ${({ theme }) => theme.darkColors.dark1};
 `
 
 export const Container = styled.View`

@@ -47,6 +47,7 @@ export const Home = ({ navigation }) => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
   const [totalFlatlistHeight, setTotalFlatlistHeight] = useState(0)
+  const [changeFlatListHeight, setChangeFlatListHeight] = useState(true)
 
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
 
@@ -55,16 +56,32 @@ export const Home = ({ navigation }) => {
   }
 
   const getSpecialOfferProducts = async () => {
-    const { data, error } = await getProducts({ type: 'specialOffer' })
+    const { data, error } = await getProducts({ offerType: 'specialOffer' })
     setSpecialOffers(data)
     return
   }
 
   const getNormalProducts = async () => {
-    const { data, error } = await getProducts({ type: 'normal' })
+    const { data, error } = await getProducts({ offerType: 'normal' })
     setProducts(data)
     return
   }
+
+  useEffect(() => {
+    if (selectedFilter) {
+      const getProductsWithFilter = async () => {
+        const { data, error } = await getProducts({
+          offerType: 'normal',
+          type: selectedFilter,
+        })
+        setProducts(data)
+        setChangeFlatListHeight(true)
+        return
+      }
+
+      getProductsWithFilter()
+    }
+  }, [selectedFilter])
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -72,52 +89,13 @@ export const Home = ({ navigation }) => {
       await getSpecialOfferProducts()
       await getNormalProducts()
       setLoading(false)
+      setChangeFlatListHeight(true)
     }
     getAllProducts()
   }, [])
 
   return (
     <Container>
-      <HomeHeader>
-        <ProfilePicture source={{ uri: 'https://i.imgur.com/zol9PsV.png' }} />
-        <UserInfo>
-          <WelcomeText>Good Morning 👋</WelcomeText>
-          <Username>Andrew Ainsley</Username>
-        </UserInfo>
-        <TouchableOpacity onPress={() => navigation.navigate('Wishlist')}>
-          <Heart />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-          <Bell />
-        </TouchableOpacity>
-      </HomeHeader>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          navigation.navigate('Search')
-        }}
-      >
-        <SearchContainer
-          style={{
-            shadowColor: '#0000008d',
-            backgroundColor: theme.darkColors.dark1,
-            elevation: 23,
-          }}
-        >
-          <SearchInput
-            leftIcon={<Search />}
-            name="search"
-            placeholder="Search"
-            control={control}
-            inputProps={{
-              placeholderTextColor: theme.greyscale[600],
-              onFocus: () => {
-                navigation.navigate('Search')
-              },
-            }}
-            rightIcon={<Misc />}
-          />
-        </SearchContainer>
-      </TouchableWithoutFeedback>
       <FlatList
         data={[]}
         keyExtractor={() => 'key'}
@@ -136,17 +114,55 @@ export const Home = ({ navigation }) => {
             progressViewOffset={60}
           />
         }
-        contentContainerStyle={
-          totalFlatlistHeight > 1000
-            ? { height: totalFlatlistHeight + 200 }
-            : {}
-        }
-        onContentSizeChange={(width, height) => {
-          height > 1000 &&
-            totalFlatlistHeight === 0 &&
-            setTotalFlatlistHeight(height)
-        }}
+        contentContainerStyle={[{ minHeight: 1060, paddingBottom: 40 }]}
         ListHeaderComponent={() => (
+          <>
+            <HomeHeader>
+              <ProfilePicture
+                source={{ uri: 'https://i.imgur.com/zol9PsV.png' }}
+              />
+              <UserInfo>
+                <WelcomeText>Good Morning 👋</WelcomeText>
+                <Username>Andrew Ainsley</Username>
+              </UserInfo>
+              <TouchableOpacity onPress={() => navigation.navigate('Wishlist')}>
+                <Heart />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                <Bell />
+              </TouchableOpacity>
+            </HomeHeader>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigation.navigate('Search')
+              }}
+            >
+              <SearchContainer
+                style={{
+                  shadowColor: '#0000008d',
+                  backgroundColor: theme.darkColors.dark1,
+                  elevation: 23,
+                }}
+              >
+                <SearchInput
+                  leftIcon={<Search />}
+                  name="search"
+                  placeholder="Search"
+                  control={control}
+                  inputProps={{
+                    placeholderTextColor: theme.greyscale[600],
+                    onFocus: () => {
+                      navigation.navigate('Search')
+                    },
+                  }}
+                  rightIcon={<Misc />}
+                />
+              </SearchContainer>
+            </TouchableWithoutFeedback>
+          </>
+        )}
+        stickyHeaderIndices={[0]}
+        ListEmptyComponent={() => (
           <>
             <SpecialOffersContainer>
               <SpecialOffersHeader>
