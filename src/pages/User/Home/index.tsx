@@ -46,8 +46,6 @@ export const Home = ({ navigation }) => {
   const [specialOffers, setSpecialOffers] = useState([])
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
-  const [totalFlatlistHeight, setTotalFlatlistHeight] = useState(0)
-  const [changeFlatListHeight, setChangeFlatListHeight] = useState(true)
 
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
 
@@ -75,7 +73,6 @@ export const Home = ({ navigation }) => {
           type: selectedFilter,
         })
         setProducts(data)
-        setChangeFlatListHeight(true)
         return
       }
 
@@ -89,7 +86,6 @@ export const Home = ({ navigation }) => {
       await getSpecialOfferProducts()
       await getNormalProducts()
       setLoading(false)
-      setChangeFlatListHeight(true)
     }
     getAllProducts()
   }, [])
@@ -151,9 +147,11 @@ export const Home = ({ navigation }) => {
                   control={control}
                   inputProps={{
                     placeholderTextColor: theme.greyscale[600],
-                    onFocus: () => {
+                    onPressIn: () => {
                       navigation.navigate('Search')
                     },
+                    editable: false,
+                    focusable: false,
                   }}
                   rightIcon={<Misc />}
                 />
