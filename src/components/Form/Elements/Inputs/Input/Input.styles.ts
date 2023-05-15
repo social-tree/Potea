@@ -17,6 +17,7 @@ export const InputWrap = styled.View`
   align-items: center;
   flex: 100;
   gap: 14px;
+  padding-right: 40px;
 `
 
 export const TextError = styled.Text`
