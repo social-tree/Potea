@@ -15,6 +15,7 @@ import { useContext, useEffect, useState } from 'react'
 import { AppContext } from 'src/contexts/AppContext'
 import { CreditCard } from 'src/assets/svg/CreditCard'
 import { LocationPin } from 'src/assets/svg/LocationPin'
+import React from 'react'
 import { Sale } from 'src/assets/svg/Sale'
 import { User } from 'src/assets/svg/User'
 import { Wallet } from 'src/assets/svg/Wallet'
@@ -58,7 +59,7 @@ export const Notifications = () => {
       // Sort groups by date
       const sortedGroups = Object.entries(NotificationGroups)
         .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
-        .map(([date, notifications]) => ({ date, notifications }))
+        ?.map(([date, notifications]) => ({ date, notifications }))
       setSortedNotifications(sortedGroups)
       setLoading(false)
     }
@@ -75,10 +76,10 @@ export const Notifications = () => {
             <StyledLoading />
           </LoadingContainer>
         ) : (
-          sortedNotifications.map((notificationGroup) => (
+          sortedNotifications?.map((notificationGroup) => (
             <>
               <DateTitle>{notificationGroup.date}</DateTitle>
-              {notificationGroup.notifications.map((notification) => {
+              {notificationGroup.notifications?.map((notification) => {
                 const type = notification.type
                 return (
                   <Notification>

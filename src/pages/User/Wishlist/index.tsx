@@ -5,9 +5,10 @@ import { useContext, useEffect, useState } from 'react'
 import { AppContext } from 'src/contexts/AppContext'
 import { Chip } from 'src/components/Form/Elements/Chip'
 import { Product } from 'src/components/Elements/Product'
+import React from 'react'
 import { Search } from 'src/assets/svg/Search'
 import { SearchInput } from 'src/components/Form/Elements/Inputs'
-import { filters } from 'src/constants/filters'
+import { allFilters } from 'src/constants/filters'
 import { theme } from 'src/styles/theme'
 import { useForm } from 'react-hook-form'
 
@@ -50,7 +51,7 @@ export const Wishlist = () => {
           }}
           horizontal
         >
-          {filters.map((filter) => (
+          {allFilters.map((filter) => (
             <Chip
               onPress={() => handleFilterChange(filter)}
               selected={selectedFilter === filter}
