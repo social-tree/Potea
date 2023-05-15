@@ -1,1 +1,1 @@
-export const filters = ['All', 'Monstera', 'Aloe', 'Palm', 'Cactaceae']
+export const allFilters = ['All', 'Monstera', 'Aloe', 'Palm', 'Cactaceae']

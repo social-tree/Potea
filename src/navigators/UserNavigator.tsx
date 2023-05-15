@@ -1,10 +1,10 @@
-import { BlurView } from 'expo-blur'
 import { Home as HomeIcon } from 'src/assets/svg/Home'
 import HomeNavigator from './HomeNavigator'
 import React from 'react'
 import { ResetPassword } from 'src/pages/User/ResetPassword'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import styled from 'styled-components/native'
+import { theme } from 'src/styles/theme'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -20,8 +20,12 @@ const UserNavigator = () => {
                 return null
               }
             : undefined,
-          tabBarBackground: () => <BlurView intensity={100} tint="dark" />,
-          tabBarStyle: { position: 'absolute' },
+          tabBarStyle: {
+            display: 'flex',
+            backgroundColor: theme.darkColors.dark2,
+            height: 55,
+            paddingBottom: 5,
+          },
           tabBarHideOnKeyboard: true,
         }
       }}
@@ -31,6 +35,7 @@ const UserNavigator = () => {
           headerShown: false,
           tabBarIcon: () => <HomeIcon />,
           title: 'Home',
+          tabBarStyle: { display: 'none' },
         }}
         name="HomeNav"
         component={HomeNavigator}

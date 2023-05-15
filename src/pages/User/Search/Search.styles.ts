@@ -1,6 +1,7 @@
 import {
   HeadingFive,
   HeadingFour,
+  HeadingSix,
   ParagraphXL,
 } from 'src/styles/utils/typography'
 
@@ -92,6 +93,7 @@ export const RecentContainer = styled.View`
   display: flex;
   gap: 24px;
   flex: 1;
+  padding-bottom: 25px;
 `
 
 export const Container = styled.View`

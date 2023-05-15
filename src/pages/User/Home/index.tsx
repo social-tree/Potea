@@ -19,26 +19,26 @@ import {
   RefreshControl,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
 } from 'react-native'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { Bell } from 'src/assets/svg/Bell'
 import { Chip } from 'src/components/Form/Elements/Chip'
 import { Heart } from 'src/assets/svg/Heart'
-import { Loading } from 'src/assets/animations/Loading'
 import { Misc } from 'src/assets/svg/Misc'
 import { Product } from 'src/components/Elements/Product'
 import { ScrollView } from 'react-native'
 import { Search } from 'src/assets/svg/Search'
 import { SearchInput } from 'src/components/Form/Elements/Inputs'
-import { filters } from 'src/constants/filters'
+import { allFilters } from 'src/constants/filters'
 import { getProducts } from 'src/api/products'
 import styled from 'styled-components/native'
 import { supabase } from 'src/utils/supabase'
 import { theme } from 'src/styles/theme'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useForm } from 'react-hook-form'
+import { useNavigation } from '@react-navigation/native'
 
 export const Home = ({ navigation }) => {
   const { control } = useForm()
@@ -46,6 +46,27 @@ export const Home = ({ navigation }) => {
   const [specialOffers, setSpecialOffers] = useState([])
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
+  const bottomTabBarHeight = useBottomTabBarHeight()
+  const { getParent } = useNavigation()
+
+  useEffect(() => {
+    const parent = getParent()
+
+    parent?.setOptions({
+      tabBarStyle: {
+        display: 'flex',
+        backgroundColor: theme.darkColors.dark2,
+        height: 55,
+        paddingBottom: 5,
+      },
+    })
+
+    return () => {
+      parent?.setOptions({
+        tabBarStyle: { display: 'none' },
+      })
+    }
+  }, [])
 
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
 
@@ -110,7 +131,9 @@ export const Home = ({ navigation }) => {
             progressViewOffset={60}
           />
         }
-        contentContainerStyle={[{ minHeight: 1060, paddingBottom: 40 }]}
+        contentContainerStyle={[
+          { minHeight: 1060, paddingBottom: bottomTabBarHeight },
+        ]}
         ListHeaderComponent={() => (
           <>
             <HomeHeader>
@@ -210,7 +233,7 @@ export const Home = ({ navigation }) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
               >
-                {filters?.map((filter, index) => (
+                {allFilters?.map((filter, index) => (
                   <Chip
                     key={index}
                     onPress={() => handleFilterChange(filter)}

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 import { Home } from 'src/pages/User/Home'
 import { Notifications } from 'src/pages/User/Notifications'
