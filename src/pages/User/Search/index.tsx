@@ -1,13 +1,6 @@
 import * as Crypto from 'expo-crypto'
 
-import {
-  FlatList,
-  Keyboard,
-  ScrollView,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { FlatList, Keyboard, TouchableOpacity, View } from 'react-native'
 import {
   Line,
   LoadingContainer,
@@ -24,12 +17,15 @@ import {
   ResultsHeader,
   SearchText,
 } from './Search.styles'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 import { AppContext } from 'src/contexts/AppContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import BottomSheet from '@gorhom/bottom-sheet'
 import { ClipBoards } from 'src/assets/svg/Clipboards'
 import { Container } from './Search.styles'
+import { FiltersSheet } from './components/FiltersSheet'
 import { GreenButton } from '../Home/Home.styles'
 import { GreenText } from 'src/pages/Auth/Login/Login.styles'
 import { Loading } from 'src/assets/animations/Loading'
@@ -49,6 +45,7 @@ export const Search = () => {
     watch,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm()
   const [allRecentSearches, setAllRecentSearches] = useState([])
@@ -56,37 +53,55 @@ export const Search = () => {
   const [searchInputFocused, setSearchInputFocused] = useState(true)
   const [loading, setLoading] = useState(false)
   const [isRecentSearchesFocused, setIsRecentSearchesFocused] = useState(false)
-
+  const [filters, setFilters] = useState({
+    category: 'All',
+    sortBy: 'Most Recent',
+    rating: 0,
+  })
+  const [priceRange, setPriceRange] = useState([0, 100])
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
+  const sheetRef = useRef<BottomSheet>(null)
 
   const handleSearch = async (submitData) => {
     const { searchText } = submitData
-    let storedRecentSearches =
-      JSON.parse(await AsyncStorage.getItem('recentSearches')) || []
-    if (storedRecentSearches[0]?.text === searchText)
-      return setIsRecentSearchesFocused(false)
-    const isSearchAlreadyStored = storedRecentSearches.find(
-      (recentSearch) => recentSearch.text === searchText
-    )
-    if (isSearchAlreadyStored) {
-      storedRecentSearches = storedRecentSearches.filter(
-        (recentSearch) => recentSearch.text !== searchText
-      )
-    }
-    if (storedRecentSearches.length > 12) {
-      storedRecentSearches.pop()
-    }
-    storedRecentSearches.unshift({ id: Crypto.randomUUID(), text: searchText })
-    AsyncStorage.setItem('recentSearches', JSON.stringify(storedRecentSearches))
     setLoading(true)
-    const { data, error } = await getProducts({
-      offerType: 'normal',
-      searchText: searchText,
-    })
-    setProducts(data)
-    setLoading(false)
-    setIsRecentSearchesFocused(false)
-    getAllRecentSearches()
+    try {
+      let storedRecentSearches =
+        JSON.parse(await AsyncStorage.getItem('recentSearches')) || []
+      const isSearchAlreadyStored = storedRecentSearches.find(
+        (recentSearch) => recentSearch.text === searchText
+      )
+      if (isSearchAlreadyStored) {
+        storedRecentSearches = storedRecentSearches.filter(
+          (recentSearch) => recentSearch.text !== searchText
+        )
+      }
+      if (storedRecentSearches.length > 12) {
+        storedRecentSearches.pop()
+      }
+      storedRecentSearches.unshift({
+        id: Crypto.randomUUID(),
+        text: searchText,
+      })
+      AsyncStorage.setItem(
+        'recentSearches',
+        JSON.stringify(storedRecentSearches)
+      )
+      console.log('here')
+      const { data, error } = await getProducts({
+        offerType: 'normal',
+        searchText: searchText,
+        type: filters.category,
+        priceRange: priceRange,
+        rating: filters.rating,
+      })
+      setProducts(data)
+      setLoading(false)
+      setIsRecentSearchesFocused(false)
+      getAllRecentSearches()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const handleRecentSearch = async (search: { id: string; text: string }) => {
@@ -127,8 +142,36 @@ export const Search = () => {
 
   const SearchInputValue = watch('searchText')
 
+  const toggleBottomSheet = () => {
+    sheetRef.current?.snapToIndex(0)
+    Keyboard.dismiss()
+  }
+
+  const handleFilterChange = (filterName, filterValue) => {
+    setFilters((prev) => ({ ...prev, [filterName]: filterValue }))
+  }
+
   return (
     <Container>
+      <FiltersSheet
+        handleFilterChange={handleFilterChange}
+        filters={filters}
+        priceRange={priceRange}
+        handlePriceRange={setPriceRange}
+        sheetRef={sheetRef}
+        handleReset={() => {
+          setFilters({
+            category: 'All',
+            rating: 0,
+            sortBy: 'Most Recent',
+          })
+          setPriceRange([1, 100])
+        }}
+        handleSearch={() => {
+          handleSubmit(handleSearch)()
+          sheetRef.current?.close()
+        }}
+      />
       <SearchInput
         leftIcon={<SearchIcon />}
         name="searchText"
@@ -143,7 +186,7 @@ export const Search = () => {
           onBlur: () => setSearchInputFocused(false),
         }}
         rightIcon={
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleBottomSheet()}>
             <Misc />
           </TouchableOpacity>
         }
