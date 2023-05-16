@@ -12,6 +12,7 @@ import { TextInput, TextInputProps } from 'react-native'
 
 import { Controller } from 'react-hook-form'
 import { Eye } from 'src/assets/svg/Eye'
+import React from 'react'
 import { theme } from 'src/styles/theme'
 
 interface Props extends UseControllerProps {
@@ -33,7 +34,7 @@ export const Input = ({
   control,
   type,
   name,
-  inputProps: { onFocus, onBlur, ...inputProps },
+  inputProps,
   placeholder,
   errors,
   ref,
@@ -61,20 +62,20 @@ export const Input = ({
               <StyledInput
                 secureTextEntry={showPassword}
                 placeholderTextColor={theme.greyscale[50]}
-                onBlur={(e) => {
-                  setFocused(false)
-                  field.onBlur()
-                  onBlur && onBlur(e)
-                }}
                 ref={ref}
                 onChangeText={field.onChange}
                 value={field.value}
                 placeholder={placeholder}
+                {...inputProps}
+                onBlur={(e) => {
+                  setFocused(false)
+                  field.onBlur()
+                  inputProps?.onBlur && inputProps?.onBlur(e)
+                }}
                 onFocus={(e) => {
                   setFocused(true)
-                  onFocus && onFocus(e)
+                  inputProps?.onFocus && inputProps?.onFocus(e)
                 }}
-                {...inputProps}
               />
             )}
             name={name}

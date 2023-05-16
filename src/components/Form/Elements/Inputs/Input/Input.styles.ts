@@ -34,9 +34,11 @@ export const Wrapper = styled.View<{ error: boolean; focused: boolean }>`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  min-height: ${({ focused }) => (focused ? '61px' : '60px')};
+  min-height: 59px;
   border: ${({ focused, theme }) =>
-    focused ? `1px solid ${theme.primary[500]}` : 'none'};
+    focused
+      ? `1px solid ${theme.primary[500]}`
+      : `1px solid ${theme.darkColors.dark2}`};
 `
 
 export const Container = styled.View`

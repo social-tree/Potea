@@ -144,7 +144,9 @@ export const Home = ({ navigation }) => {
                 <WelcomeText>Good Morning 👋</WelcomeText>
                 <Username>Andrew Ainsley</Username>
               </UserInfo>
-              <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Notifications')}
+              >
                 <Bell />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Wishlist')}>
