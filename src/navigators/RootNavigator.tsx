@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
+import { AppState } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AuthNavigator from './AuthNavigator'
 import { NavigationContainer } from '@react-navigation/native'
@@ -43,18 +44,24 @@ export const RootNavigator = ({ setLoading, loading }: Props) => {
         }
       }
     })
+  }, [navigationIsReady])
+
+  useEffect(() => {
+    const appStateId = AppState.addEventListener('change', handleAppStateChange)
 
     return () => {
-      const onAppExit = async () => {
-        const rememberMe = AsyncStorage.getItem('rememberMe')
-        if (!rememberMe) {
-          console.log('signedOut')
-          supabase.auth.signOut()
-        }
-      }
-      onAppExit()
+      appStateId.remove()
     }
-  }, [navigationIsReady])
+  }, [])
+
+  const handleAppStateChange = async (nextAppState) => {
+    if (nextAppState === 'background') {
+      const rememberMe = await AsyncStorage.getItem('rememberMe')
+      if (rememberMe == 'false') {
+        supabase.auth.signOut()
+      }
+    }
+  }
 
   useEffect(() => {
     if (resetPassword) {

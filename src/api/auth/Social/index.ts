@@ -1,22 +1,21 @@
-import { SocialLoginTypes } from './Social.types'
-import { Provider } from '@supabase/supabase-js'
-import { supabase } from 'src/utils/supabase'
 import { makeRedirectUri, startAsync } from 'expo-auth-session'
-import { SUPABASE_URL } from '@env'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Provider } from '@supabase/supabase-js'
+import { SUPABASE_URL } from '@env'
+import { SocialLoginTypes } from './Social.types'
+import { supabase } from 'src/utils/supabase'
 
 export const SocialLogin = async ({
   provider,
   rememberMe,
 }: SocialLoginTypes) => {
-  console.log('hello')
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: provider.toLowerCase() as Provider,
   })
   const redirectUrl = makeRedirectUri({
     path: '/auth/callback',
   })
-  console.log(redirectUrl, 'redirect')
 
   const authResponse = await startAsync({
     authUrl: `${SUPABASE_URL}/auth/v1/authorize?provider=google&redirect_to=${redirectUrl}`,

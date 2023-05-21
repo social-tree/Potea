@@ -1,6 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { EmailLoginTypes } from './Email.types'
 import { supabase } from 'src/utils/supabase'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const EmailSignup = async ({
   email,
@@ -15,8 +15,6 @@ export const EmailSignup = async ({
   if (data?.user?.id && typeof rememberMe === 'boolean') {
     AsyncStorage.setItem('rememberMe', `${rememberMe}`)
   }
-
-  console.log(data, error)
 
   return { data, error }
 }
@@ -34,7 +32,6 @@ export const EmailLogin = async ({
   if (data?.user?.id && typeof rememberMe === 'boolean') {
     AsyncStorage.setItem('rememberMe', `${rememberMe}`)
   }
-  console.log(data, error)
 
   return { data, error }
 }

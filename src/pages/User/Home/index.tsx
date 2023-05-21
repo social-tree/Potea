@@ -48,6 +48,7 @@ export const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const bottomTabBarHeight = useBottomTabBarHeight()
   const { getParent } = useNavigation()
+  const { user } = useContext(AppContext)
 
   useEffect(() => {
     const parent = getParent()
@@ -142,7 +143,7 @@ export const Home = ({ navigation }) => {
               />
               <UserInfo>
                 <WelcomeText>Good Morning 👋</WelcomeText>
-                <Username>Andrew Ainsley</Username>
+                <Username>{user?.user_metadata.full_name}</Username>
               </UserInfo>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Notifications')}

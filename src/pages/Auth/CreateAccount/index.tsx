@@ -51,7 +51,7 @@ export const CreateAccount = ({ navigation }) => {
       setError('email', { type: 'custom', message: '' })
     }
     setLoading(false)
-    if (data.user.aud) {
+    if (data?.user?.aud) {
       navigation.navigate('Login')
     }
   }
