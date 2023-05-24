@@ -1,9 +1,10 @@
+import React, { useContext, useEffect, useState } from 'react'
+
+import { AppContext } from 'src/contexts/AppContext'
 import { Home as HomeIcon } from 'src/assets/svg/Home'
 import HomeNavigator from './HomeNavigator'
-import React from 'react'
 import { ResetPassword } from 'src/pages/User/ResetPassword'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import styled from 'styled-components/native'
 import { theme } from 'src/styles/theme'
 
 const { Navigator, Screen } = createBottomTabNavigator()
@@ -51,7 +52,5 @@ const UserNavigator = () => {
     </Navigator>
   )
 }
-
-const Tabbar = styled.View``
 
 export default UserNavigator

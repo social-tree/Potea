@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
+import { FillProfile } from 'src/pages/User/FillProfile'
 import { Home } from 'src/pages/User/Home'
 import { Notifications } from 'src/pages/User/Notifications'
 import { Search } from 'src/pages/User/Search'
@@ -27,6 +28,11 @@ const HomeNavigator = () => {
       <Screen options={{ headerTitle: '' }} name="Search" component={Search} />
       <Screen name="Notifications" component={Notifications} />
       <Screen name="Wishlist" component={Wishlist} />
+      <Screen
+        options={{ headerTitle: 'Fill Your Profile' }}
+        name="FillProfile"
+        component={FillProfile}
+      />
     </Navigator>
   )
 }
