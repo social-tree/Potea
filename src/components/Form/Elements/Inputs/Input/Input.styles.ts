@@ -33,7 +33,7 @@ export const Wrapper = styled.View<{ error: boolean; focused: boolean }>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 17px 20px;
   min-height: 59px;
   border: ${({ focused, theme }) =>
     focused

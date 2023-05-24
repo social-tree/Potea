@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
+import { FillProfile } from 'src/pages/User/FillProfile'
 import { Home as HomeIcon } from 'src/assets/svg/Home'
 import HomeNavigator from './HomeNavigator'
 import { ResetPassword } from 'src/pages/User/ResetPassword'
@@ -14,7 +15,10 @@ const UserNavigator = () => {
     <Navigator
       initialRouteName="Home"
       screenOptions={({ route }) => {
-        const toExclude: (typeof route.name)[] = ['ResetPassword']
+        const toExclude: (typeof route.name)[] = [
+          'ResetPassword',
+          'FillProfile',
+        ]
         return {
           tabBarButton: toExclude.includes(route.name)
             ? () => {
@@ -48,6 +52,14 @@ const UserNavigator = () => {
         }}
         name="ResetPassword"
         component={ResetPassword}
+      />
+      <Screen
+        options={{
+          headerTitle: 'Fill Your Profile',
+          tabBarStyle: { display: 'none' },
+        }}
+        name="FillProfile"
+        component={FillProfile}
       />
     </Navigator>
   )
