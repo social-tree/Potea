@@ -1,9 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-
-import { AppContext } from 'src/contexts/AppContext'
-import { FillProfile } from 'src/pages/User/FillProfile'
 import { Home as HomeIcon } from 'src/assets/svg/Home'
 import HomeNavigator from './HomeNavigator'
+import React from 'react'
 import { ResetPassword } from 'src/pages/User/ResetPassword'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { theme } from 'src/styles/theme'
@@ -52,14 +49,6 @@ const UserNavigator = () => {
         }}
         name="ResetPassword"
         component={ResetPassword}
-      />
-      <Screen
-        options={{
-          headerTitle: 'Fill Your Profile',
-          tabBarStyle: { display: 'none' },
-        }}
-        name="FillProfile"
-        component={FillProfile}
       />
     </Navigator>
   )
