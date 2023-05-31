@@ -46,7 +46,6 @@ export const CreateAccount = ({ navigation }) => {
       rememberMe,
     })
     if (error) {
-      console.log(error)
       setError('password', { type: 'custom', message: error.message })
       setError('email', { type: 'custom', message: '' })
     }

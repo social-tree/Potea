@@ -38,6 +38,7 @@ import { supabase } from 'src/utils/supabase'
 import { theme } from 'src/styles/theme'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useForm } from 'react-hook-form'
+import { useHideTab } from 'src/hooks/useHideTab'
 import { useNavigation } from '@react-navigation/native'
 
 export const Home = ({ navigation }) => {
@@ -47,27 +48,8 @@ export const Home = ({ navigation }) => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
   const bottomTabBarHeight = useBottomTabBarHeight()
-  const { getParent } = useNavigation()
+  useHideTab({ hide: false })
   const { user } = useContext(AppContext)
-
-  useEffect(() => {
-    const parent = getParent()
-
-    parent?.setOptions({
-      tabBarStyle: {
-        display: 'flex',
-        backgroundColor: theme.darkColors.dark2,
-        height: 55,
-        paddingBottom: 5,
-      },
-    })
-
-    return () => {
-      parent?.setOptions({
-        tabBarStyle: { display: 'none' },
-      })
-    }
-  }, [])
 
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
 

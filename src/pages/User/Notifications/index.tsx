@@ -20,6 +20,7 @@ import { Sale } from 'src/assets/svg/Sale'
 import { User } from 'src/assets/svg/User'
 import { Wallet } from 'src/assets/svg/Wallet'
 import { useHeaderHeight } from '@react-navigation/elements'
+import { useHideTab } from 'src/hooks/useHideTab'
 
 const screenHeight = Dimensions.get('screen')?.height
 
@@ -27,6 +28,7 @@ export const Notifications = () => {
   const [sortedNotifications, setSortedNotifications] = useState([])
   const [loading, setLoading] = useState(true)
   const headerHeight = useHeaderHeight()
+  useHideTab({ hide: true })
   const notifications = useContext(AppContext).notifications
 
   useEffect(() => {
