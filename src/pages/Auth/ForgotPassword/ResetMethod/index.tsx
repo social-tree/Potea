@@ -23,6 +23,7 @@ import { useState } from 'react'
 export enum MethodTypes {
   EMAIL,
   SMS,
+  PHONE_CHANGE,
 }
 
 export enum StageTypes {

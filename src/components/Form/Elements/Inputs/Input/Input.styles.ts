@@ -1,8 +1,15 @@
+import { MaskedTextInput } from 'react-native-mask-text'
 import styled from 'styled-components/native'
 
 export const IconWrap = styled.View`
   flex: 1;
   padding-right: 20px;
+`
+
+export const StyledMaskedTextInput = styled(MaskedTextInput)`
+  width: 100%;
+  color: ${({ theme }) => theme.other.white};
+  font-size: 14px;
 `
 
 export const StyledInput = styled.TextInput`

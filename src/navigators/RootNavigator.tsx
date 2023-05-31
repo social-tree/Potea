@@ -73,11 +73,12 @@ export const RootNavigator = ({ setLoading, loading }: Props) => {
   }, [resetPassword, navigationRef, navigationIsReady])
 
   useEffect(() => {
-    const checkUserMetaData = () => {
-      if (navigationIsReady) {
+    const checkUserMetaData = async () => {
+      if (navigationIsReady && !!user.user_metadata && !!session) {
         for (const key in user.user_metadata) {
           if (user.user_metadata[key] === null || !user.user_metadata[key]) {
             navigationRef?.current?.navigate('FillProfile')
+            return
           }
         }
       }

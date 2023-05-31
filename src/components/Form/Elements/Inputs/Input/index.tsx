@@ -3,6 +3,7 @@ import {
   IconWrap,
   InputWrap,
   StyledInput,
+  StyledMaskedTextInput,
   TextError,
   Wrapper,
 } from './Input.styles'
@@ -26,6 +27,7 @@ interface Props extends UseControllerProps {
   ref?: Ref<TextInput>
   errors?: any
   style?: any
+  mask?: string
 }
 
 export const Input = ({
@@ -38,6 +40,7 @@ export const Input = ({
   placeholder,
   errors,
   ref,
+  mask,
   style,
   ...props
 }: Props) => {
@@ -58,26 +61,52 @@ export const Input = ({
           <Controller
             control={control}
             {...props}
-            render={({ field }) => (
-              <StyledInput
-                secureTextEntry={showPassword}
-                placeholderTextColor={theme.greyscale[50]}
-                ref={ref}
-                onChangeText={field.onChange}
-                value={field.value}
-                placeholder={placeholder}
-                {...inputProps}
-                onBlur={(e) => {
-                  setFocused(false)
-                  field.onBlur()
-                  inputProps?.onBlur && inputProps?.onBlur(e)
-                }}
-                onFocus={(e) => {
-                  setFocused(true)
-                  inputProps?.onFocus && inputProps?.onFocus(e)
-                }}
-              />
-            )}
+            render={({ field }) =>
+              !mask ? (
+                <StyledInput
+                  secureTextEntry={showPassword}
+                  placeholderTextColor={theme.greyscale[50]}
+                  ref={ref}
+                  onChangeText={field.onChange}
+                  value={
+                    !!field?.value?.toLocaleDateString
+                      ? field.value.toLocaleDateString()
+                      : field.value
+                  }
+                  placeholder={placeholder}
+                  {...inputProps}
+                  onBlur={(e) => {
+                    setFocused(false)
+                    field.onBlur()
+                    inputProps?.onBlur && inputProps?.onBlur(e)
+                  }}
+                  onFocus={(e) => {
+                    setFocused(true)
+                    inputProps?.onFocus && inputProps?.onFocus(e)
+                  }}
+                />
+              ) : (
+                <StyledMaskedTextInput
+                  style={{ width: '100%' }}
+                  mask="+9 (999) 999-99-99"
+                  ref={ref}
+                  onChangeText={(text, rawText) => field.onChange(rawText)}
+                  placeholder={placeholder}
+                  placeholderTextColor={theme.other.white}
+                  value={field.value}
+                  onBlur={(e) => {
+                    setFocused(false)
+                    field.onBlur()
+                    inputProps?.onBlur && inputProps?.onBlur(e)
+                  }}
+                  onFocus={(e) => {
+                    setFocused(true)
+                    inputProps?.onFocus && inputProps?.onFocus(e)
+                  }}
+                  {...inputProps}
+                />
+              )
+            }
             name={name}
           />
         </InputWrap>

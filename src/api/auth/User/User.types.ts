@@ -1,6 +1,5 @@
-type updateUserInfoTypes = {
-  password?: string
-  email?: string
-  phone?: string
-  data?: object
-}
+import { UserAttributes, VerifyOtpParams } from '@supabase/supabase-js'
+
+export type updateUserInfoTypes = UserAttributes
+
+export type verifyUserInfoTypes = VerifyOtpParams
