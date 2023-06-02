@@ -1,16 +1,18 @@
 import { Home as HomeIcon } from 'src/assets/svg/Home'
-import HomeNavigator from './HomeNavigator'
+import HomeNavigator from '../HomeNavigator'
 import React from 'react'
 import { ResetPassword } from 'src/pages/User/ResetPassword'
+import { UserBottomStackParamList } from './UserNavigator.types'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { theme } from 'src/styles/theme'
 
-const { Navigator, Screen } = createBottomTabNavigator()
+const { Navigator, Screen } =
+  createBottomTabNavigator<UserBottomStackParamList>()
 
 const UserNavigator = () => {
   return (
     <Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeNav"
       screenOptions={({ route }) => {
         const toExclude: (typeof route.name)[] = [
           'ResetPassword',

@@ -1,4 +1,5 @@
 import { AuthMethod } from 'src/pages/Auth/AuthMethod'
+import { AuthStackParamList } from './AuthNavigator.types'
 import { Confirmation } from 'src/pages/Auth/ForgotPassword/Confirmation'
 import { CreateAccount } from 'src/pages/Auth/CreateAccount'
 import { Login } from 'src/pages/Auth/Login'
@@ -7,7 +8,7 @@ import { ResetMethod } from 'src/pages/Auth/ForgotPassword/ResetMethod'
 import { Welcome } from 'src/pages/Auth/Welcome'
 import { createStackNavigator } from '@react-navigation/stack'
 
-const { Navigator, Screen } = createStackNavigator()
+const { Navigator, Screen } = createStackNavigator<AuthStackParamList>()
 
 const defaultOptions = {
   title: '',

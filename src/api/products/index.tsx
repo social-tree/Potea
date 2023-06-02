@@ -1,4 +1,5 @@
-import { getProductsParams } from './products.types'
+import { getProductParams, getProductsParams } from './products.types'
+
 import { supabase } from 'src/utils/supabase'
 
 export const getProducts = async ({
@@ -25,6 +26,16 @@ export const getProducts = async ({
     query = query.lte('price', priceRange[1])
   }
   const { data, error } = await query
+
+  return { data, error }
+}
+
+export const getProduct = async ({ id }: getProductParams) => {
+  const { data, error } = await supabase
+    .from('products')
+    .select()
+    .eq('id', id)
+    .single()
 
   return { data, error }
 }
