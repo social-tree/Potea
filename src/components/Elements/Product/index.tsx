@@ -12,10 +12,14 @@ import {
   Title,
 } from './Product.styles'
 
+import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { RatingStar } from 'src/assets/svg/RatingStar'
 import React from 'react'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { TouchableHighlight } from 'react-native'
 import { productType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
+import { useNavigation } from '@react-navigation/native'
 
 interface Props {
   size?: 'normal' | 'large'
@@ -32,12 +36,17 @@ export const Product = ({
   size,
   ...props
 }: Props) => {
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>()
   const { image, id, name, rating, price, soldAmount } = product
 
   return (
-    <Container {...props} size={size}>
+    <Container
+      {...props}
+      size={size}
+      onPress={() => navigation.navigate('Product')}
+    >
       <ImageContainer>
-        <ProductImage size={size} source={{ uri: image }} />
+        <ProductImage size={size} source={{ uri: image[0] }} />
         <HeartButton onPress={() => handleAddToFavorites(product)}>
           <StyledHeart
             width={size === 'large' ? '24' : '15'}

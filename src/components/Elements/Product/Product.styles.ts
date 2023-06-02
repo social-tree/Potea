@@ -1,4 +1,3 @@
-import { Heart } from 'src/assets/svg/Heart'
 import {
   HeadingFour,
   HeadingSix,
@@ -6,6 +5,8 @@ import {
   ParagraphM,
   ParagraphXS,
 } from 'src/styles/utils/typography'
+
+import { Heart } from 'src/assets/svg/Heart'
 import styled from 'styled-components/native'
 
 export const Price = styled.Text<{ size: string }>`
@@ -65,7 +66,7 @@ export const ProductImage = styled.Image<{ size: string }>`
 
 export const ImageContainer = styled.View``
 
-export const Container = styled.View<{ size: string }>`
+export const Container = styled.TouchableOpacity<{ size: string }>`
   height: ${({ size }) => (size === 'large' ? '362px' : '298px')};
   width: 100%;
   flex: 1;
