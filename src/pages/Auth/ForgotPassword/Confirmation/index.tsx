@@ -16,11 +16,13 @@ import {
 import { useContext, useEffect, useState } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
+import { AuthStackParamList } from 'src/navigators/AuthNavigator/AuthNavigator.types'
 import { Button } from 'src/components/Elements/Button'
 import { MethodTypes } from '../ResetMethod'
 import React from 'react'
 import { ResetPasswordWithEmail } from 'src/api/auth/Email'
 import { SignInWithOtp } from 'src/api/auth/Phone'
+import { StackScreenProps } from '@react-navigation/stack'
 import { supabase } from 'src/utils/supabase'
 import { updateUserInfo } from 'src/api/auth/User'
 import { useHideTab } from 'src/hooks/useHideTab'
@@ -28,7 +30,9 @@ import { verifyUserInfo } from 'src/api/auth/User'
 
 const CELL_COUNT = 6
 
-export const Confirmation = ({ route }) => {
+export const Confirmation = ({
+  route,
+}: StackScreenProps<AuthStackParamList>) => {
   const { toggleResetPassword } = useContext(AppContext)
   const [time, setTime] = useState(60)
   const [value, setValue] = useState('')
@@ -38,7 +42,7 @@ export const Confirmation = ({ route }) => {
     value,
     setValue,
   })
-  const { credentials, method, onConfirmation } = route.params
+  const { credentials, method, onConfirmation, info } = route.params
 
   useEffect(() => {
     let SmsCounter
@@ -58,7 +62,7 @@ export const Confirmation = ({ route }) => {
         await ResetPasswordWithEmail(credentials)
         setTime(60)
       } else if (method === MethodTypes.SMS) {
-        await SignInWithOtp(credentials)
+        await SignInWithOtp({ phoneNumber: credentials })
         setTime(60)
       } else if (method === MethodTypes.PHONE_CHANGE) {
         await updateUserInfo({ phone: credentials })
@@ -71,7 +75,7 @@ export const Confirmation = ({ route }) => {
     if (method === MethodTypes.EMAIL) {
       ResetPasswordWithEmail(credentials)
     } else if (method === MethodTypes.SMS) {
-      SignInWithOtp(credentials)
+      SignInWithOtp({ phoneNumber: credentials })
     } else if (method === MethodTypes.PHONE_CHANGE) {
       const data = updateUserInfo({ phone: credentials })
         .then((userInfo) => console.log(userInfo))
@@ -116,9 +120,7 @@ export const Confirmation = ({ route }) => {
   return (
     <Container>
       <Wrapper>
-        <ConfirmationText>
-          Code has been send to {route.params.info}
-        </ConfirmationText>
+        <ConfirmationText>Code has been send to {info}</ConfirmationText>
         <StyledCodeField
           ref={ref}
           {...props}

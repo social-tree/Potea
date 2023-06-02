@@ -1,10 +1,11 @@
+import React, { useState } from 'react'
+
+import { AppProvider } from 'src/contexts/AppContext'
 import GlobalStyle from 'src/styles/GlobalStyle'
+import { RootNavigator } from 'src/navigators/RootNavigator'
 import { ThemeProvider } from 'styled-components/native'
 import { View } from 'react-native'
 import { theme } from 'src/styles/theme'
-import React, { useState } from 'react'
-import { AppProvider } from 'src/contexts/AppContext'
-import { RootNavigator } from 'src/navigators/RootNavigator'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
