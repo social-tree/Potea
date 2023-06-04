@@ -28,7 +28,14 @@ const HomeNavigator = () => {
       <Screen options={{ headerTitle: '' }} name="Search" component={Search} />
       <Screen name="Notifications" component={Notifications} />
       <Screen name="Wishlist" component={Wishlist} />
-      <Screen name="Product" component={Product} />
+      <Screen
+        options={{
+          headerTitle: '',
+          headerTransparent: true,
+        }}
+        name="Product"
+        component={Product}
+      />
       <Screen
         options={{ headerLeft: () => <></>, headerTitle: 'Fill Your Profile' }}
         name="FillProfile"

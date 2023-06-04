@@ -11,10 +11,10 @@ import {
   StyledHeart,
   Title,
 } from './Product.styles'
+import React, { useState } from 'react'
 
 import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { RatingStar } from 'src/assets/svg/RatingStar'
-import React from 'react'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TouchableHighlight } from 'react-native'
 import { productType } from 'src/types/product'
@@ -43,7 +43,7 @@ export const Product = ({
     <Container
       {...props}
       size={size}
-      onPress={() => navigation.navigate('Product')}
+      onPress={() => navigation.navigate('Product', { id })}
     >
       <ImageContainer>
         <ProductImage size={size} source={{ uri: image[0] }} />

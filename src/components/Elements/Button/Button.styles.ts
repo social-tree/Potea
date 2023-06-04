@@ -1,3 +1,4 @@
+import { Shadow } from 'react-native-shadow-2'
 import styled from 'styled-components/native'
 
 export const StyledText = styled.Text`
@@ -6,11 +7,18 @@ export const StyledText = styled.Text`
   font-size: 16px;
 `
 
-export const StyledButton = styled.TouchableOpacity<{ loading: boolean }>`
+export const Container = styled(Shadow)`
+  height: 58px;
+  flex: 1;
+  width: 100%;
+`
+
+export const StyledTouchableOpacity = styled.TouchableOpacity<{
+  loading: boolean
+}>`
   background: ${({ theme, loading }) =>
     loading ? theme.greyscale['800'] : theme.primary['500']};
   border-radius: 100px;
-  padding: 15px 0px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -68,18 +68,7 @@ export const AuthMethod = ({ navigation }) => {
         </SocialLoginButton>
       </SocialButtonsContainer>
       <StyledChoiceSplit />
-      <Button
-        onPress={() => navigation.navigate('Login')}
-        style={{
-          shadowColor: `${theme.primary[500]}90`,
-          elevation: 3,
-          shadowRadius: 500,
-          borderColor: 'transparent',
-          shadowOpacity: 0.26,
-          borderWidth: 0,
-          overflow: 'visible',
-        }}
-      >
+      <Button onPress={() => navigation.navigate('Login')} enableShadow>
         Sign in with password
       </Button>
       <SignupWrap>

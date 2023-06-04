@@ -3,6 +3,8 @@ export type HomeStackParamList = {
   Search: undefined
   Notifications: undefined
   Wishlist: undefined
-  Product: undefined
+  Product: {
+    id: number
+  }
   FillProfile: undefined
 }
