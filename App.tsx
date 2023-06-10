@@ -8,13 +8,11 @@ import { View } from 'react-native'
 import { theme } from 'src/styles/theme'
 
 export default function App() {
-  const [loading, setLoading] = useState(true)
-
   return (
     <ThemeProvider theme={theme}>
       <View style={GlobalStyle['*']}>
         <AppProvider>
-          <RootNavigator loading={loading} setLoading={setLoading} />
+          <RootNavigator />
         </AppProvider>
       </View>
     </ThemeProvider>

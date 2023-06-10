@@ -11,18 +11,13 @@ import UserNavigator from '../UserNavigator'
 import { supabase } from 'src/utils/supabase'
 import { theme } from 'src/styles/theme'
 
-interface Props {
-  setLoading: (state: boolean) => void
-  loading: boolean
-}
-
-export const RootNavigator = ({ setLoading, loading }: Props) => {
+export const RootNavigator = () => {
   const navigationRef = React.createRef<any>()
   const [navigationIsReady, setNavigationIsReady] = useState(false)
 
   const [session, setSession] = useState<Session | null>(null)
   const { resetPassword } = useContext(AppContext)
-  const { user } = useContext(AppContext)
+  const { user, loading, setLoading } = useContext(AppContext)
 
   useEffect(() => {
     const getUserSession = async () => {
