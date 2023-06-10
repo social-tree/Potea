@@ -4,6 +4,7 @@ import { HomeStackParamList } from './HomeNavigator.types'
 import { Notifications } from 'src/pages/User/Notifications'
 import { Product } from 'src/pages/User/Product'
 import React from 'react'
+import { Reviews } from 'src/pages/User/Reviews'
 import { Search } from 'src/pages/User/Search'
 import { Wishlist } from 'src/pages/User/Wishlist'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -40,6 +41,11 @@ const HomeNavigator = () => {
         options={{ headerLeft: () => <></>, headerTitle: 'Fill Your Profile' }}
         name="FillProfile"
         component={FillProfile}
+      />
+      <Screen
+        options={({ route }) => ({ title: route?.params?.name || 'reviews' })}
+        name="Reviews"
+        component={Reviews}
       />
     </Navigator>
   )
