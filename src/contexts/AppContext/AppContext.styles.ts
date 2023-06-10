@@ -15,7 +15,6 @@ export const ErrorButton = styled(Button)`
 
 export const ErrorWrapper = styled.View`
   width: 340px;
-  min-height: 400px;
   background-color: ${({ theme }) => theme.darkColors.dark2};
   border-radius: 44px;
   padding: 32px;

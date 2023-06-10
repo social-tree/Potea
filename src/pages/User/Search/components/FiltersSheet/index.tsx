@@ -17,6 +17,7 @@ import { ScrollView, View } from 'react-native'
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types'
 import { Chip } from 'src/components/Form/Elements/Chip'
 import { RatingStar } from 'src/assets/svg/RatingStar'
+import React from 'react'
 import { allFilters } from 'src/constants/filters'
 import { allRatings } from 'src/constants/ratings'
 import { sortByTypes } from 'src/constants/sortByTypes'
@@ -76,12 +77,12 @@ export const FiltersSheet = ({
           horizontal
           showsHorizontalScrollIndicator={false}
         >
-          {allFilters?.map((filterValue, index) => (
+          {allFilters?.map((filter, index) => (
             <Chip
-              key={index}
-              onPress={() => handleFilterChange('category', filterValue)}
-              selected={filters['category'] === filterValue}
-              text={filterValue}
+              key={filter.id}
+              onPress={() => handleFilterChange('category', filter.filter)}
+              selected={filters['category'] === filter.filter}
+              text={filter.filter}
             />
           ))}
         </ScrollView>

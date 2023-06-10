@@ -49,7 +49,7 @@ export const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
   const bottomTabBarHeight = useBottomTabBarHeight()
   useHideTab({ hide: false })
-  const { user } = useContext(AppContext)
+  const { user, setModalErrorText } = useContext(AppContext)
 
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
 
@@ -59,12 +59,20 @@ export const Home = ({ navigation }) => {
 
   const getSpecialOfferProducts = async () => {
     const { data, error } = await getProducts({ offerType: 'specialOffer' })
+    if (error)
+      return setModalErrorText(
+        `there was an error recieving all products. error code:${error.code}`
+      )
     setSpecialOffers(data)
     return
   }
 
   const getNormalProducts = async () => {
     const { data, error } = await getProducts({ offerType: 'normal' })
+    if (error)
+      return setModalErrorText(
+        `there was an error recieving all products. error code:${error.code}`
+      )
     setProducts(data)
     return
   }
@@ -207,7 +215,8 @@ export const Home = ({ navigation }) => {
                   <GreenButton>See All</GreenButton>
                 </TouchableOpacity>
               </MostPopularHeader>
-              <ScrollView
+              <FlatList
+                data={allFilters}
                 contentContainerStyle={{
                   display: 'flex',
                   gap: 10,
@@ -217,16 +226,15 @@ export const Home = ({ navigation }) => {
                 }}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-              >
-                {allFilters?.map((filter, index) => (
+                renderItem={({ item, index }) => (
                   <Chip
-                    key={index}
-                    onPress={() => handleFilterChange(filter)}
-                    selected={selectedFilter === filter}
-                    text={filter}
+                    key={item.id}
+                    onPress={() => handleFilterChange(item.filter)}
+                    selected={selectedFilter === item.filter}
+                    text={item.filter}
                   />
-                ))}
-              </ScrollView>
+                )}
+              />
               <FlatList
                 data={products}
                 numColumns={2}

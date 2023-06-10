@@ -28,25 +28,33 @@ import Carousel from 'react-native-reanimated-carousel'
 import { Dimensions } from 'react-native'
 import Dots from 'react-native-dots-pagination'
 import { Heart } from 'src/assets/svg/Heart'
+import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { Quantity } from 'src/components/Form/Elements/Quantity'
 import { RatingStar } from 'src/assets/svg/RatingStar'
 import { StackScreenProps } from '@react-navigation/stack'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { getProduct } from 'src/api/products'
 import { productType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
 import { useHideTab } from 'src/hooks/useHideTab'
 
-export const Product = ({ route }: StackScreenProps<{}>) => {
+export const Product = ({
+  route,
+  navigation,
+}: StackScreenProps<HomeStackParamList, 'Product'>) => {
   useHideTab({ hide: true })
   const { setModalErrorText } = useContext(AppContext)
   const width = Dimensions.get('window').width
-  const [productInfo, setProductInfo] = useState({
+  const [productInfo, setProductInfo] = useState<productType>({
     id: 0,
     image: [''],
     name: '',
     price: 0,
-    rating: 0,
-    soldAmount: 0,
+    description: '',
+    sold_amount: 0,
+    count: 0,
+    average_rating: 0,
+    reviews_amount: 0,
   })
   const carouselRef = useRef(null)
   const { id } = route.params
@@ -54,18 +62,12 @@ export const Product = ({ route }: StackScreenProps<{}>) => {
   const [quantity, setQuantity] = useState(1)
   useEffect(() => {
     const getProductInfo = async () => {
-      try {
-        const { data, error } = await getProduct({ id: id })
-
-        if (data) setProductInfo(data as productType)
-        if (error)
-          setModalErrorText(
-            `An error occurred while trying to get product information. error code: ${error.code}`
-          )
-      } catch (err) {
-        console.log(err.message, 'w')
-        setModalErrorText(err.message)
-      }
+      const { data, error } = await getProduct({ id: id })
+      if (data) setProductInfo(data as productType)
+      if (error)
+        setModalErrorText(
+          `An error occurred while trying to get product information. error code: ${error.code}`
+        )
     }
     getProductInfo()
   }, [id])
@@ -112,23 +114,25 @@ export const Product = ({ route }: StackScreenProps<{}>) => {
           <Heart stroke={theme.primary[500]} />
         </InfoTopBar>
         <InfoBottomBar>
-          <AmountSoldText>{productInfo.soldAmount} Sold</AmountSoldText>
+          <AmountSoldText>{productInfo.sold_amount} Sold</AmountSoldText>
           <RatingStar />
-          <ReviewText>
-            {productInfo.rating} (
-            {(productInfo.soldAmount > 200
-              ? productInfo.soldAmount - 49
-              : productInfo.soldAmount
-            ).toLocaleString()}{' '}
-            reviews)
-          </ReviewText>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Reviews', {
+                name: `${productInfo.average_rating} (${productInfo.reviews_amount} reviews)`,
+                productId: productInfo.id,
+                reviewsAmount: productInfo.reviews_amount,
+              })
+            }
+          >
+            <ReviewText>
+              {productInfo.average_rating} (
+              {productInfo.reviews_amount?.toLocaleString()} reviews)
+            </ReviewText>
+          </TouchableOpacity>
         </InfoBottomBar>
         <InfoTitle>Description</InfoTitle>
-        <Description>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna. Lorem ipsum dolor
-          sit amet, consectetur adipiscing elit.
-        </Description>
+        <Description>{productInfo.description}</Description>
         <QuantityContainer>
           <InfoTitle>Quantity</InfoTitle>
           <Quantity handleQuantity={handleQuantity} value={quantity} />
@@ -138,7 +142,10 @@ export const Product = ({ route }: StackScreenProps<{}>) => {
             <PriceTitle>Total price</PriceTitle>
             <PriceValue>${productInfo.price}</PriceValue>
           </PriceContainer>
-          <Button enableShadow={true}>
+          <Button
+            shadowProps={{ containerStyle: { flex: 1 } }}
+            enableShadow={true}
+          >
             <ButtonContent>
               <Bag />
               <PurchaseText>Add to Cart</PurchaseText>
