@@ -90,7 +90,7 @@ export const Search = () => {
       )
       console.log('here')
       const { data, error } = await getProducts({
-        offerType: 'normal',
+        offerType: null,
         searchText: searchText,
         type: filters.category,
         priceRange: priceRange,
