@@ -29,8 +29,6 @@ export const EmailLogin = async ({
     password,
   })
 
-  console.log(data, error)
-
   if (data?.user?.id && typeof rememberMe === 'boolean') {
     AsyncStorage.setItem('rememberMe', `${rememberMe}`)
   }

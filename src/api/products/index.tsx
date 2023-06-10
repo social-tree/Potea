@@ -3,39 +3,29 @@ import { getProductParams, getProductsParams } from './products.types'
 import { supabase } from 'src/utils/supabase'
 
 export const getProducts = async ({
-  limit = 10,
-  offerType = 'normal',
-  searchText = '',
-  type = '',
-  priceRange = undefined,
-  rating,
-  order = { name: 'created_at', ascending: true },
+  offerType = null,
+  searchText = null,
+  type = 'All',
+  priceRange = [0, 99999999],
+  rating = null,
 }: getProductsParams) => {
-  let query = supabase
-    .from('products')
-    .select()
-    .eq('offerType', offerType)
-    .limit(limit)
-    .order(order.name, { ascending: order.ascending })
+  let { data, error } = await supabase.rpc('get_products', {
+    product_offer_type: offerType,
+    product_type: type && type !== 'All' ? type?.toLocaleLowerCase() : null,
+    product_rating: rating === 0 ? null : rating,
+    product_search_text: searchText,
+    product_price_range: priceRange,
+  })
 
-  if (type && type !== 'All') query = query.eq('type', type.toLowerCase())
-  if (searchText) query = query.ilike('name', `%${searchText}%`)
-  if (rating > 0) query = query.eq('rating', rating)
-  if (priceRange?.length > 0) {
-    query = query.gte('price', priceRange[0])
-    query = query.lte('price', priceRange[1])
-  }
-  const { data, error } = await query
+  console.log(data)
 
   return { data, error }
 }
 
 export const getProduct = async ({ id }: getProductParams) => {
   const { data, error } = await supabase
-    .from('products')
-    .select()
-    .eq('id', id)
-    .single()
+    .rpc('get_product', { product_id: id })
+    .maybeSingle()
 
   return { data, error }
 }
