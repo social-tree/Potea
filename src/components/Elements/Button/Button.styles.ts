@@ -8,9 +8,8 @@ export const StyledText = styled.Text`
 `
 
 export const Container = styled(Shadow)`
-  height: 58px;
-  flex: 1;
-  width: 100%;
+  min-height: 58px;
+  min-width: 100%;
 `
 
 export const StyledTouchableOpacity = styled.TouchableOpacity<{
@@ -23,6 +22,6 @@ export const StyledTouchableOpacity = styled.TouchableOpacity<{
   align-items: center;
   justify-content: center;
   color: white;
-  width: 100%;
-  height: 58px;
+  min-width: 100%;
+  min-height: 58px;
 `

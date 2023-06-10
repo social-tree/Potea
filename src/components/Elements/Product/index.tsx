@@ -37,7 +37,7 @@ export const Product = ({
   ...props
 }: Props) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>()
-  const { image, id, name, rating, price, soldAmount } = product
+  const { image, id, name, average_rating, price, sold_amount } = product
 
   return (
     <Container
@@ -58,9 +58,9 @@ export const Product = ({
       <Title size={size}>{name}</Title>
       <InfoContainer>
         <RatingStar />
-        <RatingText size={size}>{rating}</RatingText>
+        <RatingText size={size}>{average_rating || 0}</RatingText>
         <RatingText size={size}>|</RatingText>
-        <AmountSoldText size={size}>{soldAmount} Sold</AmountSoldText>
+        <AmountSoldText size={size}>{sold_amount || 0} Sold</AmountSoldText>
       </InfoContainer>
       <Price size={size}>$ {price}</Price>
     </Container>
