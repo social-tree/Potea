@@ -13,3 +13,5 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     detectSessionInUrl: false,
   },
 })
+
+export const storageSupabaseURL = `${SUPABASE_URL}/storage/v1/object/public/avatars/`
