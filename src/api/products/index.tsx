@@ -10,14 +10,12 @@ export const getProducts = async ({
   rating = null,
 }: getProductsParams) => {
   let { data, error } = await supabase.rpc('get_products', {
-    product_offer_type: offerType,
+    product_offer_type: offerType || null,
     product_type: type && type !== 'All' ? type?.toLocaleLowerCase() : null,
     product_rating: rating === 0 ? null : rating,
     product_search_text: searchText,
     product_price_range: priceRange,
   })
-
-  console.log(data)
 
   return { data, error }
 }

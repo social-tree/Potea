@@ -1,6 +1,13 @@
 export type HomeStackParamList = {
   Home: undefined
-  Search: undefined
+  Search: {
+    selectedFilters?: {
+      category?: string
+      sortBy?: string
+      rating?: number
+      offerType?: string
+    }
+  }
   Notifications: undefined
   Wishlist: undefined
   Product: {

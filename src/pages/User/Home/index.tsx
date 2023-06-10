@@ -26,11 +26,13 @@ import { AppContext } from 'src/contexts/AppContext'
 import { Bell } from 'src/assets/svg/Bell'
 import { Chip } from 'src/components/Form/Elements/Chip'
 import { Heart } from 'src/assets/svg/Heart'
+import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { Misc } from 'src/assets/svg/Misc'
 import { Product } from 'src/components/Elements/Product'
 import { ScrollView } from 'react-native'
 import { Search } from 'src/assets/svg/Search'
 import { SearchInput } from 'src/components/Form/Elements/Inputs'
+import { StackScreenProps } from '@react-navigation/stack'
 import { allFilters } from 'src/constants/filters'
 import { getProducts } from 'src/api/products'
 import styled from 'styled-components/native'
@@ -41,7 +43,9 @@ import { useForm } from 'react-hook-form'
 import { useHideTab } from 'src/hooks/useHideTab'
 import { useNavigation } from '@react-navigation/native'
 
-export const Home = ({ navigation }) => {
+export const Home = ({
+  navigation,
+}: StackScreenProps<HomeStackParamList, 'Home'>) => {
   const { control } = useForm()
   const [selectedFilter, setSelectedFilter] = useState('All')
   const [specialOffers, setSpecialOffers] = useState([])
@@ -181,7 +185,13 @@ export const Home = ({ navigation }) => {
             <SpecialOffersContainer>
               <SpecialOffersHeader>
                 <SpecialOffersTitle>Special Offers</SpecialOffersTitle>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Search', {
+                      selectedFilters: { offerType: 'specialOffer' },
+                    })
+                  }
+                >
                   <GreenButton>See All</GreenButton>
                 </TouchableOpacity>
               </SpecialOffersHeader>
@@ -211,7 +221,13 @@ export const Home = ({ navigation }) => {
             <MostPopularContainer>
               <MostPopularHeader>
                 <MostPopularTitle>Most Popular</MostPopularTitle>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Search', {
+                      selectedFilters: { offerType: 'normal' },
+                    })
+                  }
+                >
                   <GreenButton>See All</GreenButton>
                 </TouchableOpacity>
               </MostPopularHeader>
