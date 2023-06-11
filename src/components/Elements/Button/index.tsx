@@ -26,7 +26,7 @@ export const Button = ({
 }: Props) => {
   return (
     <Container
-      startColor={shadowColor || `${theme.primary[500]}15`}
+      startColor={shadowColor || `${theme.primary[500]}20`}
       style={{ borderRadius: 15 }}
       offset={[0, 0]}
       disabled={!enableShadow}
