@@ -56,6 +56,7 @@ export const Product = ({
     average_rating: 0,
     reviews_amount: 0,
   })
+  const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
   const carouselRef = useRef(null)
   const { id } = route.params
   const [focusedImage, setFocusedImage] = useState(0)
@@ -111,7 +112,15 @@ export const Product = ({
       <ProductInfoContainer>
         <InfoTopBar>
           <ProductTitle>{productInfo.name}</ProductTitle>
-          <Heart stroke={theme.primary[500]} />
+          <TouchableOpacity onPress={() => addProductToFavorites(productInfo)}>
+            <Heart
+              stroke={
+                !!favoriteProducts.get(id)
+                  ? theme.primary[500]
+                  : theme.other.white
+              }
+            />
+          </TouchableOpacity>
         </InfoTopBar>
         <InfoBottomBar>
           <AmountSoldText>{productInfo.sold_amount} Sold</AmountSoldText>
