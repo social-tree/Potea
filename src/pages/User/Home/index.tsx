@@ -135,10 +135,12 @@ export const Home = ({
               <ProfilePicture
                 source={{ uri: 'https://i.imgur.com/zol9PsV.png' }}
               />
-              <UserInfo>
-                <WelcomeText>Good Morning 👋</WelcomeText>
-                <Username>{user?.user_metadata.full_name}</Username>
-              </UserInfo>
+              <TouchableOpacity onPress={() => supabase.auth.signOut()}>
+                <UserInfo>
+                  <WelcomeText>Good Morning 👋</WelcomeText>
+                  <Username>{user?.user_metadata.full_name}</Username>
+                </UserInfo>
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Notifications')}
               >
@@ -271,9 +273,6 @@ export const Home = ({
           </>
         )}
       />
-      <TouchableOpacity onPress={() => supabase.auth.signOut()}>
-        <StyledText>log out</StyledText>
-      </TouchableOpacity>
     </Container>
   )
 }
