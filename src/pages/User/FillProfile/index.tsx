@@ -41,6 +41,11 @@ export const FillProfile = ({ navigation }) => {
   )
 
   const onFillProfileSubmit = async (formData) => {
+    if (!!isOverEighteen(formData.date_of_birth))
+      return setError('date_of_birth', {
+        type: 'custom',
+        message: 'You must be 18 years or older to continue',
+      })
     try {
       if (formData?.avatar?.base64) {
         const { error } = await supabase.storage
@@ -84,16 +89,24 @@ export const FillProfile = ({ navigation }) => {
       if (!!user.user_metadata) {
         const { id, avatar, created_at, date_of_birth, gender, ...otherdata } =
           user.user_metadata
-        console.log(user.user_metadata)
         reset({
           ...otherdata,
           date_of_birth: new Date(date_of_birth),
-          gender: Number(gender?.id) ? `${gender.id}` : null,
+          gender: Number(gender) ? `${gender}` : null,
         })
       }
     }
     checkUserMetaData()
   }, [user])
+
+  const isOverEighteen = (date: Date) => {
+    var now = parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, ''))
+    var dateOfBirth =
+      date.getUTCFullYear() * 10000 +
+      date.getUTCMonth() * 100 +
+      date.getUTCDate() * 1 // date of birth of the user
+    return now - dateOfBirth < 180000
+  }
 
   return (
     <Container
@@ -149,12 +162,19 @@ export const FillProfile = ({ navigation }) => {
         <DateTimePicker
           testID="dateTimePicker"
           value={datepickerValue}
+          maximumDate={new Date()}
           mode={'date'}
           is24Hour={true}
           onChange={(event, selectedDate) => {
             setDatepickerValue(new Date(selectedDate.toDateString()))
             setIsDatepickerOpen(false)
+
             setValue('date_of_birth', new Date(selectedDate.toDateString()))
+            if (!!isOverEighteen(selectedDate))
+              setError('date_of_birth', {
+                type: 'custom',
+                message: 'You must be 18 years or older to continue',
+              })
           }}
         />
       )}
@@ -175,14 +195,6 @@ export const FillProfile = ({ navigation }) => {
           }}
         />
       </TouchableOpacity>
-      <Input
-        name={'phone_number'}
-        control={control}
-        placeholder="Phone Number"
-        rules={{ required: 'Enter a Phone Number' }}
-        errors={errors}
-        mask="+9 (999) 999-99-99"
-      />
       <Select
         errors={errors}
         placeholder="Gender"
@@ -191,6 +203,7 @@ export const FillProfile = ({ navigation }) => {
           { name: 'Female', value: '2' },
           { name: 'Other', value: '3' },
         ]}
+        rules={{ required: 'Please select a gender' }}
         name="gender"
         control={control}
       />

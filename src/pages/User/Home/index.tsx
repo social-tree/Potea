@@ -135,7 +135,10 @@ export const Home = ({
               <ProfilePicture
                 source={{ uri: 'https://i.imgur.com/zol9PsV.png' }}
               />
-              <TouchableOpacity onPress={() => supabase.auth.signOut()}>
+              <TouchableOpacity
+                style={{ flex: 1 }}
+                onPress={() => supabase.auth.signOut()}
+              >
                 <UserInfo>
                   <WelcomeText>Good Morning 👋</WelcomeText>
                   <Username>{user?.user_metadata.full_name}</Username>
