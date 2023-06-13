@@ -21,6 +21,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
+import { storageSupabaseURL, supabase } from 'src/utils/supabase'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { Bell } from 'src/assets/svg/Bell'
@@ -36,7 +37,6 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { allFilters } from 'src/constants/filters'
 import { getProducts } from 'src/api/products'
 import styled from 'styled-components/native'
-import { supabase } from 'src/utils/supabase'
 import { theme } from 'src/styles/theme'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useForm } from 'react-hook-form'
@@ -133,7 +133,12 @@ export const Home = ({
           <>
             <HomeHeader>
               <ProfilePicture
-                source={{ uri: 'https://i.imgur.com/zol9PsV.png' }}
+                borderRadius={50}
+                source={{
+                  uri: user?.user_metadata?.avatar
+                    ? `${storageSupabaseURL}${user?.user_metadata?.avatar}`
+                    : 'https://i.imgur.com/zol9PsV.png',
+                }}
               />
               <TouchableOpacity
                 style={{ flex: 1 }}

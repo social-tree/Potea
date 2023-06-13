@@ -111,7 +111,7 @@ export const Welcome = ({
             }}
             loop={false}
             data={WelcomeCourselScreens}
-            scrollAnimationDuration={1000}
+            scrollAnimationDuration={300}
             onSnapToItem={(index) => setFocusedImage(index)}
             renderItem={({
               item,
