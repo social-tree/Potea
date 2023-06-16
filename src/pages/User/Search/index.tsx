@@ -220,8 +220,11 @@ export const Search = ({
           onBlur: () => setSearchInputFocused(false),
         }}
         rightIcon={
-          <TouchableOpacity onPress={() => toggleBottomSheet()}>
-            <Misc />
+          <TouchableOpacity
+            style={{ width: 20 }}
+            onPress={() => toggleBottomSheet()}
+          >
+            <Misc fill={'red'} />
           </TouchableOpacity>
         }
       />
