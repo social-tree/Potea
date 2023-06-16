@@ -1,6 +1,7 @@
+import { ChipText, ChipTouchableOpacity } from './Chip.styles'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
-import { ChipText } from './Chip.styles'
+import React from 'react'
 
 interface Props extends TouchableOpacityProps {
   text: string | JSX.Element
@@ -9,8 +10,12 @@ interface Props extends TouchableOpacityProps {
 
 export const Chip = ({ text, selected, ...props }: Props) => {
   return (
-    <TouchableOpacity {...props}>
-      <ChipText selected={selected}>{text}</ChipText>
-    </TouchableOpacity>
+    <ChipTouchableOpacity selected={selected} {...props}>
+      {typeof text !== 'string' ? (
+        text
+      ) : (
+        <ChipText selected={selected}>{text}</ChipText>
+      )}
+    </ChipTouchableOpacity>
   )
 }
