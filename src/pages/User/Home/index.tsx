@@ -30,6 +30,7 @@ import { Heart } from 'src/assets/svg/Heart'
 import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { Misc } from 'src/assets/svg/Misc'
 import { Product } from 'src/components/Elements/Product'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native'
 import { Search } from 'src/assets/svg/Search'
 import { SearchInput } from 'src/components/Form/Elements/Inputs'
@@ -107,181 +108,185 @@ export const Home = ({
   }, [])
 
   return (
-    <Container>
-      <FlatList
-        data={[]}
-        keyExtractor={() => 'key'}
-        renderItem={null}
-        refreshControl={
-          <RefreshControl
-            progressBackgroundColor={theme.other.white}
-            colors={[theme.primary[500]]}
-            refreshing={loading}
-            onRefresh={async () => {
-              setLoading(true)
-              await getSpecialOfferProducts()
-              await getNormalProducts()
-              setLoading(false)
-            }}
-            progressViewOffset={60}
-          />
-        }
-        contentContainerStyle={[
-          { minHeight: 1060, paddingBottom: bottomTabBarHeight },
-        ]}
-        ListHeaderComponent={() => (
-          <>
-            <HomeHeader>
-              <ProfilePicture
-                borderRadius={50}
-                source={{
-                  uri: user?.user_metadata?.avatar
-                    ? `${storageSupabaseURL}${user?.user_metadata?.avatar}`
-                    : 'https://i.imgur.com/zol9PsV.png',
-                }}
-              />
-              <TouchableOpacity
-                style={{ flex: 1 }}
-                onPress={() => supabase.auth.signOut()}
-              >
-                <UserInfo>
-                  <WelcomeText>Good Morning 👋</WelcomeText>
-                  <Username>{user?.user_metadata.full_name}</Username>
-                </UserInfo>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Notifications')}
-              >
-                <Bell />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('Wishlist')}>
-                <Heart />
-              </TouchableOpacity>
-            </HomeHeader>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                navigation.navigate('Search')
+    <SafeAreaView>
+      <Container>
+        <FlatList
+          data={[]}
+          keyExtractor={() => 'key'}
+          renderItem={null}
+          refreshControl={
+            <RefreshControl
+              progressBackgroundColor={theme.other.white}
+              colors={[theme.primary[500]]}
+              refreshing={loading}
+              onRefresh={async () => {
+                setLoading(true)
+                await getSpecialOfferProducts()
+                await getNormalProducts()
+                setLoading(false)
               }}
-            >
-              <SearchContainer
-                style={{
-                  shadowColor: '#0000008d',
-                  backgroundColor: theme.darkColors.dark1,
-                  elevation: 23,
+              progressViewOffset={60}
+            />
+          }
+          contentContainerStyle={[
+            { minHeight: 1060, paddingBottom: bottomTabBarHeight },
+          ]}
+          ListHeaderComponent={() => (
+            <>
+              <HomeHeader>
+                <ProfilePicture
+                  borderRadius={50}
+                  source={{
+                    uri: user?.user_metadata?.avatar
+                      ? `${storageSupabaseURL}${user?.user_metadata?.avatar}`
+                      : 'https://i.imgur.com/zol9PsV.png',
+                  }}
+                />
+                <TouchableOpacity
+                  style={{ flex: 1 }}
+                  onPress={() => supabase.auth.signOut()}
+                >
+                  <UserInfo>
+                    <WelcomeText>Good Morning 👋</WelcomeText>
+                    <Username>{user?.user_metadata.full_name}</Username>
+                  </UserInfo>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Notifications')}
+                >
+                  <Bell />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Wishlist')}
+                >
+                  <Heart />
+                </TouchableOpacity>
+              </HomeHeader>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  navigation.navigate('Search')
                 }}
               >
-                <SearchInput
-                  leftIcon={<Search />}
-                  name="search"
-                  placeholder="Search"
-                  control={control}
-                  inputProps={{
-                    placeholderTextColor: theme.greyscale[600],
-                    onPressIn: () => {
-                      navigation.navigate('Search')
-                    },
-                    editable: false,
-                    focusable: false,
+                <SearchContainer
+                  style={{
+                    shadowColor: '#0000008d',
+                    backgroundColor: theme.darkColors.dark1,
+                    elevation: 23,
                   }}
-                  rightIcon={<Misc />}
+                >
+                  <SearchInput
+                    leftIcon={<Search />}
+                    name="search"
+                    placeholder="Search"
+                    control={control}
+                    inputProps={{
+                      placeholderTextColor: theme.greyscale[600],
+                      onPressIn: () => {
+                        navigation.navigate('Search')
+                      },
+                      editable: false,
+                      focusable: false,
+                    }}
+                    rightIcon={<Misc />}
+                  />
+                </SearchContainer>
+              </TouchableWithoutFeedback>
+            </>
+          )}
+          stickyHeaderIndices={[0]}
+          ListEmptyComponent={() => (
+            <>
+              <SpecialOffersContainer>
+                <SpecialOffersHeader>
+                  <SpecialOffersTitle>Special Offers</SpecialOffersTitle>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Search', {
+                        selectedFilters: { offerType: 'specialOffer' },
+                      })
+                    }
+                  >
+                    <GreenButton>See All</GreenButton>
+                  </TouchableOpacity>
+                </SpecialOffersHeader>
+                <FlatList
+                  data={specialOffers}
+                  horizontal
+                  renderItem={({ item, index }) => (
+                    <Product
+                      style={{
+                        marginRight:
+                          index === specialOffers?.length - 1
+                            ? 24
+                            : index % 2 !== 0
+                            ? 0
+                            : 15,
+                        marginLeft: index === 0 ? 24 : index === 1 ? 0 : 15,
+                      }}
+                      product={item}
+                      key={item.id}
+                      size="large"
+                      liked={!!favoriteProducts.get(item.id)}
+                      handleAddToFavorites={addProductToFavorites}
+                    />
+                  )}
                 />
-              </SearchContainer>
-            </TouchableWithoutFeedback>
-          </>
-        )}
-        stickyHeaderIndices={[0]}
-        ListEmptyComponent={() => (
-          <>
-            <SpecialOffersContainer>
-              <SpecialOffersHeader>
-                <SpecialOffersTitle>Special Offers</SpecialOffersTitle>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('Search', {
-                      selectedFilters: { offerType: 'specialOffer' },
-                    })
-                  }
-                >
-                  <GreenButton>See All</GreenButton>
-                </TouchableOpacity>
-              </SpecialOffersHeader>
-              <FlatList
-                data={specialOffers}
-                horizontal
-                renderItem={({ item, index }) => (
-                  <Product
-                    style={{
-                      marginRight:
-                        index === specialOffers?.length - 1
-                          ? 24
-                          : index % 2 !== 0
-                          ? 0
-                          : 15,
-                      marginLeft: index === 0 ? 24 : index === 1 ? 0 : 15,
-                    }}
-                    product={item}
-                    key={item.id}
-                    size="large"
-                    liked={!!favoriteProducts.get(item.id)}
-                    handleAddToFavorites={addProductToFavorites}
-                  />
-                )}
-              />
-            </SpecialOffersContainer>
-            <MostPopularContainer>
-              <MostPopularHeader>
-                <MostPopularTitle>Most Popular</MostPopularTitle>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('Search', {
-                      selectedFilters: { offerType: 'normal' },
-                    })
-                  }
-                >
-                  <GreenButton>See All</GreenButton>
-                </TouchableOpacity>
-              </MostPopularHeader>
-              <FlatList
-                data={allFilters}
-                contentContainerStyle={{
-                  display: 'flex',
-                  gap: 10,
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  paddingHorizontal: 24,
-                }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item, index }) => (
-                  <Chip
-                    key={item.id}
-                    onPress={() => handleFilterChange(item.filter)}
-                    selected={selectedFilter === item.filter}
-                    text={item.filter}
-                  />
-                )}
-              />
-              <FlatList
-                data={products}
-                numColumns={2}
-                style={{ paddingLeft: 24, paddingRight: 24 }}
-                renderItem={({ item, index }) => (
-                  <Product
-                    style={{
-                      marginRight: index % 2 !== 0 ? 0 : 15,
-                    }}
-                    product={item}
-                    key={item.id}
-                    liked={!!favoriteProducts.get(item.id)}
-                    handleAddToFavorites={addProductToFavorites}
-                  />
-                )}
-              />
-            </MostPopularContainer>
-          </>
-        )}
-      />
-    </Container>
+              </SpecialOffersContainer>
+              <MostPopularContainer>
+                <MostPopularHeader>
+                  <MostPopularTitle>Most Popular</MostPopularTitle>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Search', {
+                        selectedFilters: { offerType: 'normal' },
+                      })
+                    }
+                  >
+                    <GreenButton>See All</GreenButton>
+                  </TouchableOpacity>
+                </MostPopularHeader>
+                <FlatList
+                  data={allFilters}
+                  contentContainerStyle={{
+                    display: 'flex',
+                    gap: 10,
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    paddingHorizontal: 24,
+                  }}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={({ item, index }) => (
+                    <Chip
+                      key={item.id}
+                      onPress={() => handleFilterChange(item.filter)}
+                      selected={selectedFilter === item.filter}
+                      text={item.filter}
+                    />
+                  )}
+                />
+                <FlatList
+                  data={products}
+                  numColumns={2}
+                  style={{ paddingLeft: 24, paddingRight: 24 }}
+                  renderItem={({ item, index }) => (
+                    <Product
+                      style={{
+                        marginRight: index % 2 !== 0 ? 0 : 15,
+                      }}
+                      product={item}
+                      key={item.id}
+                      liked={!!favoriteProducts.get(item.id)}
+                      handleAddToFavorites={addProductToFavorites}
+                    />
+                  )}
+                />
+              </MostPopularContainer>
+            </>
+          )}
+        />
+      </Container>
+    </SafeAreaView>
   )
 }
 

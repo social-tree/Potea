@@ -232,13 +232,13 @@ export const Search = ({
         <ResultsContainer>
           <ResultsHeader>
             <SearchText>
-              Results for "
+              Results {SearchInputValue?.length > 0 && `for "`}
               <GreenText>
                 {SearchInputValue?.length > 11
                   ? `${SearchInputValue?.slice(0, 11)}...`
                   : SearchInputValue}
               </GreenText>
-              "
+              {SearchInputValue?.length > 0 && `"`}
             </SearchText>
             <GreenText>{products?.length.toLocaleString()} found</GreenText>
           </ResultsHeader>
