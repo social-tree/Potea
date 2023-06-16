@@ -1,3 +1,6 @@
+import { Bag } from 'src/assets/svg/Bag'
+import { Cart } from 'src/pages/User/Cart'
+import CartNavigator from '../CartNavigator'
 import { Home as HomeIcon } from 'src/assets/svg/Home'
 import HomeNavigator from '../HomeNavigator'
 import React from 'react'
@@ -24,11 +27,10 @@ const UserNavigator = () => {
                 return null
               }
             : undefined,
-          tabBarStyle: {
-            display: 'flex',
-            backgroundColor: theme.darkColors.dark2,
-            height: 55,
-            paddingBottom: 5,
+          tabBarStyle: UserTabBarStyle as any,
+          tabBarItemStyle: {
+            borderRadius: 20,
+            maxWidth: 58,
           },
           tabBarHideOnKeyboard: true,
         }
@@ -37,7 +39,7 @@ const UserNavigator = () => {
       <Screen
         options={{
           headerShown: false,
-          tabBarIcon: () => <HomeIcon />,
+          tabBarIcon: () => <HomeIcon width={19} height={20} />,
           title: 'Home',
           tabBarStyle: { display: 'none' },
         }}
@@ -52,8 +54,29 @@ const UserNavigator = () => {
         name="ResetPassword"
         component={ResetPassword}
       />
+      <Screen
+        options={{
+          headerShown: false,
+          title: 'Cart',
+          tabBarIcon: () => (
+            <Bag width={19} height={20} color={theme.primary[500]} />
+          ),
+          tabBarActiveTintColor: theme.primary[500],
+        }}
+        name="CartNav"
+        component={CartNavigator}
+      />
     </Navigator>
   )
+}
+
+export const UserTabBarStyle = {
+  display: 'flex',
+  backgroundColor: theme.darkColors.dark2,
+  height: 55,
+  paddingBottom: 5,
+  justifyContent: 'center',
+  alignItems: 'center',
 }
 
 export default UserNavigator
