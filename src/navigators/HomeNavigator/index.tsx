@@ -22,6 +22,7 @@ const HomeNavigator = () => {
           marginRight: 15,
           marginTop: 5,
         },
+        headerBackTitle: ' ',
       }}
       initialRouteName={'Home'}
     >
