@@ -1,4 +1,5 @@
-import { Container, QuantityAmount } from './Quantity.styles'
+import * as Styled from './Quantity.styles'
+
 import { TextProps, TouchableOpacity, ViewProps } from 'react-native'
 
 import { Minus } from 'src/assets/svg/Minus'
@@ -23,14 +24,14 @@ export const Quantity = ({
   ...props
 }: Props) => {
   return (
-    <Container {...props}>
+    <Styled.Container {...props}>
       <TouchableOpacity onPress={() => handleQuantity('rem')}>
         <Minus {...minusProps} />
       </TouchableOpacity>
-      <QuantityAmount {...quantityProps}>{value}</QuantityAmount>
+      <Styled.QuantityAmount {...quantityProps}>{value}</Styled.QuantityAmount>
       <TouchableOpacity onPress={() => handleQuantity('add')}>
         <Plus {...plusProps} />
       </TouchableOpacity>
-    </Container>
+    </Styled.Container>
   )
 }

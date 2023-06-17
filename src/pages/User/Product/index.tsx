@@ -1,24 +1,5 @@
-import {
-  AmountSoldText,
-  ButtonContent,
-  Container,
-  Description,
-  DotsContainer,
-  InfoBottomBar,
-  InfoTitle,
-  InfoTopBar,
-  PriceContainer,
-  PriceTitle,
-  PriceValue,
-  ProductImage,
-  ProductImageContaiener,
-  ProductInfoContainer,
-  ProductTitle,
-  PurchaseContainer,
-  PurchaseText,
-  QuantityContainer,
-  ReviewText,
-} from './Product.styles'
+import * as Styled from './Product.styles'
+
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
@@ -79,8 +60,8 @@ export const Product = ({
   }
 
   return (
-    <Container>
-      <ProductImageContaiener>
+    <Styled.Container>
+      <Styled.ProductImageContaiener>
         <Carousel
           ref={carouselRef}
           width={width}
@@ -94,10 +75,10 @@ export const Product = ({
           scrollAnimationDuration={1000}
           onSnapToItem={(index) => setFocusedImage(index)}
           renderItem={({ index, item }) => (
-            <ProductImage source={{ uri: item }} />
+            <Styled.ProductImage source={{ uri: item }} />
           )}
         />
-        <DotsContainer>
+        <Styled.DotsContainer>
           <Dots
             activeColor={theme.primary[500]}
             passiveColor={theme.darkColors.dark2}
@@ -106,12 +87,12 @@ export const Product = ({
             active={focusedImage}
             length={productInfo.image.length}
           />
-        </DotsContainer>
-      </ProductImageContaiener>
+        </Styled.DotsContainer>
+      </Styled.ProductImageContaiener>
 
-      <ProductInfoContainer>
-        <InfoTopBar>
-          <ProductTitle>{productInfo.name}</ProductTitle>
+      <Styled.ProductInfoContainer>
+        <Styled.InfoTopBar>
+          <Styled.ProductTitle>{productInfo.name}</Styled.ProductTitle>
           <TouchableOpacity onPress={() => addProductToFavorites(productInfo)}>
             <Heart
               stroke={
@@ -121,9 +102,11 @@ export const Product = ({
               }
             />
           </TouchableOpacity>
-        </InfoTopBar>
-        <InfoBottomBar>
-          <AmountSoldText>{productInfo.sold_amount} Sold</AmountSoldText>
+        </Styled.InfoTopBar>
+        <Styled.InfoBottomBar>
+          <Styled.AmountSoldText>
+            {productInfo.sold_amount} Sold
+          </Styled.AmountSoldText>
           <RatingStar />
           <TouchableOpacity
             onPress={() =>
@@ -134,34 +117,34 @@ export const Product = ({
               })
             }
           >
-            <ReviewText>
+            <Styled.ReviewText>
               {productInfo.average_rating} (
               {productInfo.reviews_amount?.toLocaleString()} reviews)
-            </ReviewText>
+            </Styled.ReviewText>
           </TouchableOpacity>
-        </InfoBottomBar>
-        <InfoTitle>Description</InfoTitle>
-        <Description>{productInfo.description}</Description>
-        <QuantityContainer>
-          <InfoTitle>Quantity</InfoTitle>
+        </Styled.InfoBottomBar>
+        <Styled.InfoTitle>Description</Styled.InfoTitle>
+        <Styled.Description>{productInfo.description}</Styled.Description>
+        <Styled.QuantityContainer>
+          <Styled.InfoTitle>Quantity</Styled.InfoTitle>
           <Quantity handleQuantity={handleQuantity} value={quantity} />
-        </QuantityContainer>
-        <PurchaseContainer>
-          <PriceContainer>
-            <PriceTitle>Total price</PriceTitle>
-            <PriceValue>${productInfo.price}</PriceValue>
-          </PriceContainer>
+        </Styled.QuantityContainer>
+        <Styled.PurchaseContainer>
+          <Styled.PriceContainer>
+            <Styled.PriceTitle>Total price</Styled.PriceTitle>
+            <Styled.PriceValue>${productInfo.price}</Styled.PriceValue>
+          </Styled.PriceContainer>
           <Button
             shadowProps={{ containerStyle: { flex: 1 } }}
             enableShadow={true}
           >
-            <ButtonContent>
+            <Styled.ButtonContent>
               <Bag />
-              <PurchaseText>Add to Cart</PurchaseText>
-            </ButtonContent>
+              <Styled.PurchaseText>Add to Cart</Styled.PurchaseText>
+            </Styled.ButtonContent>
           </Button>
-        </PurchaseContainer>
-      </ProductInfoContainer>
-    </Container>
+        </Styled.PurchaseContainer>
+      </Styled.ProductInfoContainer>
+    </Styled.Container>
   )
 }

@@ -1,4 +1,5 @@
-import { Container, Products } from './Wishlist.styles'
+import * as Styled from './Wishlist.styles'
+
 import { FlatList, ScrollView } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 
@@ -34,7 +35,7 @@ export const Wishlist = () => {
 
   return (
     <ScrollView>
-      <Container>
+      <Styled.Container>
         <SearchInput
           leftIcon={<Search />}
           name="search"
@@ -55,13 +56,14 @@ export const Wishlist = () => {
         >
           {allFilters.map((filter) => (
             <Chip
-              onPress={() => handleFilterChange(filter)}
-              selected={selectedFilter === filter}
-              text={filter}
+              key={filter.id}
+              onPress={() => handleFilterChange(filter.filter)}
+              selected={selectedFilter === filter.filter}
+              text={filter.filter}
             />
           ))}
         </ScrollView>
-        <Products>
+        <Styled.Products>
           <FlatList
             data={wishlistProducts}
             numColumns={2}
@@ -77,8 +79,8 @@ export const Wishlist = () => {
               />
             )}
           />
-        </Products>
-      </Container>
+        </Styled.Products>
+      </Styled.Container>
     </ScrollView>
   )
 }

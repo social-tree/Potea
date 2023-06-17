@@ -1,23 +1,12 @@
+import * as Styled from './Filters.styles'
+
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
-import {
-  ButtonText,
-  FilterContainer,
-  FilterTitle,
-  FiltersTitle,
-  PriceRangeDesc,
-  RatingChipContent,
-  RatingText,
-  ResetFiltersButton,
-  StyledSlider,
-  SubmitButton,
-  SubmitContainer,
-} from './Filters.styles'
-import { ScrollView, View } from 'react-native'
 
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types'
 import { Chip } from 'src/components/Form/Elements/Chip'
 import { RatingStar } from 'src/assets/svg/RatingStar'
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { allFilters } from 'src/constants/filters'
 import { allRatings } from 'src/constants/ratings'
 import { sortByTypes } from 'src/constants/sortByTypes'
@@ -63,9 +52,9 @@ export const FiltersSheet = ({
       backgroundStyle={{ backgroundColor: theme.darkColors.dark2, zIndex: 0 }}
       snapPoints={['95%']}
     >
-      <FilterContainer>
-        <FiltersTitle>Sort & Filter</FiltersTitle>
-        <FilterTitle>Categories</FilterTitle>
+      <Styled.FilterContainer>
+        <Styled.FiltersTitle>Sort & Filter</Styled.FiltersTitle>
+        <Styled.FilterTitle>Categories</Styled.FilterTitle>
         <ScrollView
           contentContainerStyle={{
             display: 'flex',
@@ -86,8 +75,8 @@ export const FiltersSheet = ({
             />
           ))}
         </ScrollView>
-        <FilterTitle>Price Range</FilterTitle>
-        <StyledSlider
+        <Styled.FilterTitle>Price Range</Styled.FilterTitle>
+        <Styled.StyledSlider
           key={`${reseting}`}
           containerStyle={{ marginHorizontal: 24 }}
           maximumTrackTintColor={theme.other.white}
@@ -106,10 +95,12 @@ export const FiltersSheet = ({
           onValueChange={(filterValue) => handlePriceRange(filterValue)}
           thumbTintColor={theme.other.white}
           renderBelowThumbComponent={(index, value) => (
-            <PriceRangeDesc value={value}>${value}</PriceRangeDesc>
+            <Styled.PriceRangeDesc value={value}>
+              ${value}
+            </Styled.PriceRangeDesc>
           )}
         />
-        <FilterTitle>Sort by</FilterTitle>
+        <Styled.FilterTitle>Sort by</Styled.FilterTitle>
         <ScrollView
           contentContainerStyle={{
             display: 'flex',
@@ -130,7 +121,7 @@ export const FiltersSheet = ({
             />
           ))}
         </ScrollView>
-        <FilterTitle>Rating</FilterTitle>
+        <Styled.FilterTitle>Rating</Styled.FilterTitle>
         <ScrollView
           contentContainerStyle={{
             display: 'flex',
@@ -148,7 +139,7 @@ export const FiltersSheet = ({
               onPress={() => handleFilterChange('rating', filterValue)}
               selected={filters['rating'] === filterValue}
               text={
-                <RatingChipContent>
+                <Styled.RatingChipContent>
                   <RatingStar
                     fill={
                       filters['rating'] === filterValue
@@ -159,28 +150,28 @@ export const FiltersSheet = ({
                     height={12.67}
                     halfStar={false}
                   />
-                  <RatingText>
+                  <Styled.RatingText>
                     {filterValue == 0 ? 'All' : filterValue}
-                  </RatingText>
-                </RatingChipContent>
+                  </Styled.RatingText>
+                </Styled.RatingChipContent>
               }
             />
           ))}
         </ScrollView>
-        <SubmitContainer>
-          <ResetFiltersButton
+        <Styled.SubmitContainer>
+          <Styled.ResetFiltersButton
             onPress={() => {
               handleReset()
               setReseting(true)
             }}
           >
-            <ButtonText>Reset</ButtonText>
-          </ResetFiltersButton>
-          <SubmitButton onPress={() => handleSearch()}>
-            <ButtonText>Apply</ButtonText>
-          </SubmitButton>
-        </SubmitContainer>
-      </FilterContainer>
+            <Styled.ButtonText>Reset</Styled.ButtonText>
+          </Styled.ResetFiltersButton>
+          <Styled.SubmitButton onPress={() => handleSearch()}>
+            <Styled.ButtonText>Apply</Styled.ButtonText>
+          </Styled.SubmitButton>
+        </Styled.SubmitContainer>
+      </Styled.FilterContainer>
     </BottomSheet>
   )
 }

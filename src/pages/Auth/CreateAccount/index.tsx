@@ -1,13 +1,5 @@
-import {
-  Container,
-  Form,
-  Lock,
-  OtherMethods,
-  SocialButton,
-  SocialButtons,
-  StyledSignupWrap,
-  Title,
-} from './CreateAccount.styles'
+import * as Styled from './CreateAccount.styles'
+
 import { EmailSignup, SocialLogin } from 'src/api/auth'
 import React, { useState } from 'react'
 import {
@@ -56,7 +48,7 @@ export const CreateAccount = ({ navigation }) => {
   }
 
   return (
-    <Container
+    <Styled.Container
       contentContainerStyle={{
         display: 'flex',
         alignItems: 'center',
@@ -66,8 +58,8 @@ export const CreateAccount = ({ navigation }) => {
       }}
     >
       <Logo />
-      <Title>Create Your Account</Title>
-      <Form>
+      <Styled.Title>Create Your Account</Styled.Title>
+      <Styled.Form>
         <Input
           name={'email'}
           control={control}
@@ -79,7 +71,7 @@ export const CreateAccount = ({ navigation }) => {
         <Input
           name={'password'}
           control={control}
-          leftIcon={<Lock source={require('src/assets/img/Lock.png')} />}
+          leftIcon={<Styled.Lock source={require('src/assets/img/Lock.png')} />}
           type="password"
           placeholder="Password"
           inputProps={{
@@ -98,22 +90,22 @@ export const CreateAccount = ({ navigation }) => {
         <Button loading={loading} onPress={handleSubmit(onFormSubmit)}>
           Sign up
         </Button>
-      </Form>
+      </Styled.Form>
       <ChoiceSplit />
-      <OtherMethods>
-        <SocialButtons>
-          <SocialButton disabled>
+      <Styled.OtherMethods>
+        <Styled.SocialButtons>
+          <Styled.SocialButton disabled>
             <Facebook />
-          </SocialButton>
-          <SocialButton>
+          </Styled.SocialButton>
+          <Styled.SocialButton>
             <Google onPress={() => SocialLogin({ provider: 'google' })} />
-          </SocialButton>
-          <SocialButton disabled>
+          </Styled.SocialButton>
+          <Styled.SocialButton disabled>
             <Apple />
-          </SocialButton>
-        </SocialButtons>
-      </OtherMethods>
-      <StyledSignupWrap>
+          </Styled.SocialButton>
+        </Styled.SocialButtons>
+      </Styled.OtherMethods>
+      <Styled.StyledSignupWrap>
         <SignupText>Already have an account?</SignupText>
         <SignupButton
           onPress={() => {
@@ -122,7 +114,7 @@ export const CreateAccount = ({ navigation }) => {
         >
           <SignupButtonText>Sign in</SignupButtonText>
         </SignupButton>
-      </StyledSignupWrap>
-    </Container>
+      </Styled.StyledSignupWrap>
+    </Styled.Container>
   )
 }

@@ -1,20 +1,8 @@
-import {
-  AmountSoldText,
-  Container,
-  HeartButton,
-  ImageContainer,
-  InfoContainer,
-  Price,
-  ProductImage,
-  Rating,
-  RatingText,
-  StyledHeart,
-  Title,
-} from './Product.styles'
-import React, { useState } from 'react'
+import * as Styled from './Product.styles'
 
 import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { RatingStar } from 'src/assets/svg/RatingStar'
+import React from 'react'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TouchableHighlight } from 'react-native'
 import { productType } from 'src/types/product'
@@ -40,29 +28,31 @@ export const Product = ({
   const { image, id, name, average_rating, price, sold_amount } = product
 
   return (
-    <Container
+    <Styled.Container
       {...props}
       size={size}
       onPress={() => navigation.navigate('Product', { id })}
     >
-      <ImageContainer>
-        <ProductImage size={size} source={{ uri: image[0] }} />
-        <HeartButton onPress={() => handleAddToFavorites(product)}>
-          <StyledHeart
+      <Styled.ImageContainer>
+        <Styled.ProductImage size={size} source={{ uri: image[0] }} />
+        <Styled.HeartButton onPress={() => handleAddToFavorites(product)}>
+          <Styled.StyledHeart
             width={size === 'large' ? '24' : '15'}
             size={size === 'large' ? '22' : '15'}
             stroke={liked ? theme.primary[500] : theme.other.white}
           />
-        </HeartButton>
-      </ImageContainer>
-      <Title size={size}>{name}</Title>
-      <InfoContainer>
+        </Styled.HeartButton>
+      </Styled.ImageContainer>
+      <Styled.Title size={size}>{name}</Styled.Title>
+      <Styled.InfoContainer>
         <RatingStar />
-        <RatingText size={size}>{average_rating || 0}</RatingText>
-        <RatingText size={size}>|</RatingText>
-        <AmountSoldText size={size}>{sold_amount || 0} Sold</AmountSoldText>
-      </InfoContainer>
-      <Price size={size}>$ {price}</Price>
-    </Container>
+        <Styled.RatingText size={size}>{average_rating || 0}</Styled.RatingText>
+        <Styled.RatingText size={size}>|</Styled.RatingText>
+        <Styled.AmountSoldText size={size}>
+          {sold_amount || 0} Sold
+        </Styled.AmountSoldText>
+      </Styled.InfoContainer>
+      <Styled.Price size={size}>$ {price}</Styled.Price>
+    </Styled.Container>
   )
 }

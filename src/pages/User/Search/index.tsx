@@ -1,22 +1,7 @@
 import * as Crypto from 'expo-crypto'
+import * as Styled from './Search.styles'
 
 import { FlatList, Keyboard, TouchableOpacity, View } from 'react-native'
-import {
-  Line,
-  LoadingContainer,
-  NothingFoundContainer,
-  NothingFoundDesc,
-  NothingFoundInfo,
-  NothingFoundTitle,
-  RecentContainer,
-  RecentHeader,
-  RecentSearch,
-  RecentSearchText,
-  RecentTitle,
-  ResultsContainer,
-  ResultsHeader,
-  SearchText,
-} from './Search.styles'
 import {
   useCallback,
   useContext,
@@ -232,9 +217,9 @@ export const Search = ({
       !loading &&
       (SearchInputValue || selectedFilters) &&
       !isRecentSearchesFocused ? (
-        <ResultsContainer>
-          <ResultsHeader>
-            <SearchText>
+        <Styled.ResultsContainer>
+          <Styled.ResultsHeader>
+            <Styled.SearchText>
               Results {SearchInputValue?.length > 0 && `for "`}
               <GreenText>
                 {SearchInputValue?.length > 11
@@ -242,20 +227,20 @@ export const Search = ({
                   : SearchInputValue}
               </GreenText>
               {SearchInputValue?.length > 0 && `"`}
-            </SearchText>
+            </Styled.SearchText>
             <GreenText>{products?.length.toLocaleString()} found</GreenText>
-          </ResultsHeader>
+          </Styled.ResultsHeader>
           {products.length === 0 ? (
-            <NothingFoundContainer>
+            <Styled.NothingFoundContainer>
               <ClipBoards />
-              <NothingFoundInfo>
-                <NothingFoundTitle>Not Found</NothingFoundTitle>
-                <NothingFoundDesc>
+              <Styled.NothingFoundInfo>
+                <Styled.NothingFoundTitle>Not Found</Styled.NothingFoundTitle>
+                <Styled.NothingFoundDesc>
                   Sorry, the keyword you entered cannot be found, please check
                   again or search with another keyword.
-                </NothingFoundDesc>
-              </NothingFoundInfo>
-            </NothingFoundContainer>
+                </Styled.NothingFoundDesc>
+              </Styled.NothingFoundInfo>
+            </Styled.NothingFoundContainer>
           ) : (
             <FlatList
               data={products}
@@ -274,20 +259,20 @@ export const Search = ({
               )}
             />
           )}
-        </ResultsContainer>
+        </Styled.ResultsContainer>
       ) : loading ? (
-        <LoadingContainer>
+        <Styled.LoadingContainer>
           <Loading style={{ width: 200 }} />
-        </LoadingContainer>
+        </Styled.LoadingContainer>
       ) : (
-        <RecentContainer>
-          <RecentHeader>
-            <RecentTitle>Recent</RecentTitle>
+        <Styled.RecentContainer>
+          <Styled.RecentHeader>
+            <Styled.RecentTitle>Recent</Styled.RecentTitle>
             <TouchableOpacity onPress={() => removeAllRecentSearches()}>
               <GreenButton>Clear All</GreenButton>
             </TouchableOpacity>
-          </RecentHeader>
-          <Line />
+          </Styled.RecentHeader>
+          <Styled.Line />
           <FlatList
             data={allRecentSearches}
             keyExtractor={(item) => item.id}
@@ -299,23 +284,23 @@ export const Search = ({
                 <TouchableOpacityGesture
                   onPress={() => handleRecentSearch(item)}
                 >
-                  <RecentSearch>
-                    <RecentSearchText>
+                  <Styled.RecentSearch>
+                    <Styled.RecentSearchText>
                       {item.text?.length > 19
                         ? `${item.text?.slice(0, 19)}...`
                         : item.text}
-                    </RecentSearchText>
+                    </Styled.RecentSearchText>
                     <TouchableOpacityGesture
                       onPress={() => removeRecentSearch(item.id)}
                     >
                       <SquareCross />
                     </TouchableOpacityGesture>
-                  </RecentSearch>
+                  </Styled.RecentSearch>
                 </TouchableOpacityGesture>
               </View>
             )}
           />
-        </RecentContainer>
+        </Styled.RecentContainer>
       )}
     </Container>
   )

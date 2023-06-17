@@ -1,4 +1,5 @@
-import { Container, StyledText, StyledTouchableOpacity } from './Button.styles'
+import * as Styled from './Button.styles'
+
 import { TextProps, TouchableOpacityProps } from 'react-native'
 
 import { Loading } from 'src/assets/animations/Loading'
@@ -25,22 +26,22 @@ export const Button = ({
   ...props
 }: Props) => {
   return (
-    <Container
+    <Styled.Container
       startColor={shadowColor || `${theme.primary[500]}20`}
       style={{ borderRadius: 15 }}
       offset={[0, 0]}
       disabled={!enableShadow}
       {...shadowProps}
     >
-      <StyledTouchableOpacity loading={loading} {...props}>
+      <Styled.StyledTouchableOpacity loading={loading} {...props}>
         {loading ? (
           <View style={{ height: 50, width: 50 }}>
             <Loading />
           </View>
         ) : (
-          <StyledText {...textProps}>{children}</StyledText>
+          <Styled.StyledText {...textProps}>{children}</Styled.StyledText>
         )}
-      </StyledTouchableOpacity>
-    </Container>
+      </Styled.StyledTouchableOpacity>
+    </Styled.Container>
   )
 }

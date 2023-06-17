@@ -1,12 +1,5 @@
-import {
-  Container,
-  Info,
-  ModalDescription,
-  ModalInfo,
-  ModalTitle,
-  SuccessModal,
-  Wrapper,
-} from './ResetPassword.styles'
+import * as Styled from './ResetPassword.styles'
+
 import { Image, KeyboardAvoidingView, Platform } from 'react-native'
 
 import { Button } from 'src/components/Elements/Button'
@@ -55,19 +48,19 @@ export const ResetPassword = ({ route, navigation }) => {
       style={{ flex: 1 }}
     >
       <Modal open={successModalOpen}>
-        <SuccessModal>
+        <Styled.SuccessModal>
           <SuccessShield />
-          <ModalInfo>
-            <ModalTitle>Congratulations!</ModalTitle>
-            <ModalDescription>
+          <Styled.ModalInfo>
+            <Styled.ModalTitle>Congratulations!</Styled.ModalTitle>
+            <Styled.ModalDescription>
               Your account is ready to use. You will be redirected to the Home
               page in a few seconds..
-            </ModalDescription>
-          </ModalInfo>
+            </Styled.ModalDescription>
+          </Styled.ModalInfo>
           <Loading style={{ width: 100, height: 130 }} />
-        </SuccessModal>
+        </Styled.SuccessModal>
       </Modal>
-      <Container
+      <Styled.Container
         contentContainerStyle={{
           alignItems: 'center',
           paddingTop: 71,
@@ -76,8 +69,8 @@ export const ResetPassword = ({ route, navigation }) => {
         }}
       >
         <PhoneSuccess />
-        <Wrapper>
-          <Info>Create Your New Password</Info>
+        <Styled.Wrapper>
+          <Styled.Info>Create Your New Password</Styled.Info>
           <Input
             control={control}
             placeholder="New Password"
@@ -100,9 +93,9 @@ export const ResetPassword = ({ route, navigation }) => {
             rules={{ required: true }}
             name="confirmPassword"
           />
-        </Wrapper>
+        </Styled.Wrapper>
         <Button onPress={handleSubmit(onFormSubmit)}>Continue</Button>
-      </Container>
+      </Styled.Container>
     </KeyboardAvoidingView>
   )
 }

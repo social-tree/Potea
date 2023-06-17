@@ -1,12 +1,5 @@
-import {
-  Container,
-  IconWrap,
-  InputWrap,
-  StyledInput,
-  StyledMaskedTextInput,
-  TextError,
-  Wrapper,
-} from './Input.styles'
+import * as Styled from './Input.styles'
+
 import { Control, UseControllerProps } from 'react-hook-form/dist/types'
 import { Ref, useState } from 'react'
 import { TextInput, TextInputProps } from 'react-native'
@@ -54,16 +47,16 @@ export const Input = ({
   }
 
   return (
-    <Container>
-      <Wrapper focused={focused} style={style} error={!!errors?.[name]}>
-        <InputWrap>
-          {leftIcon && <IconWrap>{leftIcon}</IconWrap>}
+    <Styled.Container>
+      <Styled.Wrapper focused={focused} style={style} error={!!errors?.[name]}>
+        <Styled.InputWrap>
+          {leftIcon && <Styled.IconWrap>{leftIcon}</Styled.IconWrap>}
           <Controller
             control={control}
             {...props}
             render={({ field }) =>
               !mask ? (
-                <StyledInput
+                <Styled.StyledInput
                   secureTextEntry={showPassword}
                   placeholderTextColor={theme.greyscale[50]}
                   ref={ref}
@@ -86,7 +79,7 @@ export const Input = ({
                   }}
                 />
               ) : (
-                <StyledMaskedTextInput
+                <Styled.StyledMaskedTextInput
                   style={{ width: '100%' }}
                   mask="+9 (999) 999-99-99"
                   ref={ref}
@@ -109,8 +102,8 @@ export const Input = ({
             }
             name={name}
           />
-        </InputWrap>
-        <IconWrap>
+        </Styled.InputWrap>
+        <Styled.IconWrap>
           {type === 'password' ? (
             <Eye
               fill={theme.greyscale[500]}
@@ -120,9 +113,11 @@ export const Input = ({
           ) : (
             rightIcon
           )}
-        </IconWrap>
-      </Wrapper>
-      {errors?.[name]?.message && <TextError>{errors[name].message}</TextError>}
-    </Container>
+        </Styled.IconWrap>
+      </Styled.Wrapper>
+      {errors?.[name]?.message && (
+        <Styled.TextError>{errors[name].message}</Styled.TextError>
+      )}
+    </Styled.Container>
   )
 }

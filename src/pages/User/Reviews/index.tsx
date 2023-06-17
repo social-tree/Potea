@@ -1,9 +1,5 @@
-import {
-  Container,
-  NothingFoundContainer,
-  NothingFoundText,
-  RatingText,
-} from './Reviews.styles'
+import * as Styled from './Reviews.styles'
+
 import React, { useContext, useEffect, useState } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
@@ -48,7 +44,7 @@ export const Reviews = ({
   }, [ratingFilter, productId])
 
   return (
-    <Container>
+    <Styled.Container>
       <ScrollView
         contentContainerStyle={{
           display: 'flex',
@@ -75,20 +71,20 @@ export const Reviews = ({
                   height={12.67}
                   halfStar={false}
                 />
-                <RatingText>
+                <Styled.RatingText>
                   {filterValue == 0 ? 'All' : filterValue}
-                </RatingText>
+                </Styled.RatingText>
               </RatingChipContent>
             }
           />
         ))}
       </ScrollView>
       {!reviewsAmount && (
-        <NothingFoundContainer>
-          <NothingFoundText>
+        <Styled.NothingFoundContainer>
+          <Styled.NothingFoundText>
             There are no reviews about this product
-          </NothingFoundText>
-        </NothingFoundContainer>
+          </Styled.NothingFoundText>
+        </Styled.NothingFoundContainer>
       )}
       <FlatList
         contentContainerStyle={{ gap: 24 }}
@@ -102,6 +98,6 @@ export const Reviews = ({
         )}
         data={reviews}
       />
-    </Container>
+    </Styled.Container>
   )
 }

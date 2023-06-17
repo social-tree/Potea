@@ -1,11 +1,5 @@
-import {
-  Container,
-  Form,
-  GreenText,
-  Lock,
-  StyledOtherMethods,
-  Title,
-} from './Login.styles'
+import * as Styled from './Login.styles'
+
 import { EmailLogin, SocialLogin } from 'src/api/auth'
 import {
   OtherMethods,
@@ -56,7 +50,7 @@ export const Login = ({ navigation }) => {
   }
 
   return (
-    <Container
+    <Styled.Container
       contentContainerStyle={{
         display: 'flex',
         alignItems: 'center',
@@ -66,8 +60,8 @@ export const Login = ({ navigation }) => {
       }}
     >
       <Logo />
-      <Title>Login to Your Account</Title>
-      <Form>
+      <Styled.Title>Login to Your Account</Styled.Title>
+      <Styled.Form>
         <Input
           name="email"
           control={control}
@@ -82,7 +76,7 @@ export const Login = ({ navigation }) => {
         <Input
           name="password"
           control={control}
-          leftIcon={<Lock source={require('src/assets/img/Lock.png')} />}
+          leftIcon={<Styled.Lock source={require('src/assets/img/Lock.png')} />}
           placeholder="Password"
           type="password"
           inputProps={{
@@ -106,10 +100,10 @@ export const Login = ({ navigation }) => {
           Sign in
         </Button>
         <TouchableHighlight onPress={() => navigation.navigate('ResetMethod')}>
-          <GreenText>Forgot the password?</GreenText>
+          <Styled.GreenText>Forgot the password?</Styled.GreenText>
         </TouchableHighlight>
-      </Form>
-      <StyledOtherMethods>
+      </Styled.Form>
+      <Styled.StyledOtherMethods>
         <ChoiceSplit />
         <SocialButtons>
           <SocialButton disabled>
@@ -127,10 +121,10 @@ export const Login = ({ navigation }) => {
           <SignupButtonText
             onPress={() => navigation.navigate('CreateAccount')}
           >
-            <GreenText>Sign up</GreenText>
+            <Styled.GreenText>Sign up</Styled.GreenText>
           </SignupButtonText>
         </StyledSignupWrap>
-      </StyledOtherMethods>
-    </Container>
+      </Styled.StyledOtherMethods>
+    </Styled.Container>
   )
 }

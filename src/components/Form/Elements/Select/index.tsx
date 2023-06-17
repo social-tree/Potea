@@ -1,4 +1,5 @@
-import { Container, StyledDropdown, TextError, Wrapper } from './Select.types'
+import * as Styled from './Select.types'
+
 import { Controller, UseControllerProps } from 'react-hook-form'
 import React, { Ref } from 'react'
 
@@ -26,13 +27,13 @@ export const Select = ({
   ...props
 }: Props) => {
   return (
-    <Container>
-      <Wrapper>
+    <Styled.Container>
+      <Styled.Wrapper>
         <Controller
           control={control}
           name={name}
           render={({ field: { onChange, value } }) => (
-            <StyledDropdown
+            <Styled.StyledDropdown
               placeholder={placeholder}
               options={options}
               dropdownStyle={{
@@ -63,8 +64,10 @@ export const Select = ({
           )}
           {...props}
         />
-      </Wrapper>
-      {errors?.[name]?.message && <TextError>{errors[name].message}</TextError>}
-    </Container>
+      </Styled.Wrapper>
+      {errors?.[name]?.message && (
+        <Styled.TextError>{errors[name].message}</Styled.TextError>
+      )}
+    </Styled.Container>
   )
 }

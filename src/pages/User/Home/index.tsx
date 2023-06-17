@@ -1,19 +1,5 @@
-import {
-  Container,
-  GreenButton,
-  HomeHeader,
-  MostPopularContainer,
-  MostPopularHeader,
-  MostPopularTitle,
-  ProfilePicture,
-  SearchContainer,
-  SpecialOffersContainer,
-  SpecialOffersHeader,
-  SpecialOffersTitle,
-  UserInfo,
-  Username,
-  WelcomeText,
-} from './Home.styles'
+import * as Styled from './Home.styles'
+
 import {
   FlatList,
   RefreshControl,
@@ -109,7 +95,7 @@ export const Home = ({
 
   return (
     <SafeAreaView>
-      <Container>
+      <Styled.Container>
         <FlatList
           data={[]}
           keyExtractor={() => 'key'}
@@ -133,8 +119,8 @@ export const Home = ({
           ]}
           ListHeaderComponent={() => (
             <>
-              <HomeHeader>
-                <ProfilePicture
+              <Styled.HomeHeader>
+                <Styled.ProfilePicture
                   borderRadius={50}
                   source={{
                     uri: user?.user_metadata?.avatar
@@ -146,10 +132,12 @@ export const Home = ({
                   style={{ flex: 1 }}
                   onPress={() => supabase.auth.signOut()}
                 >
-                  <UserInfo>
-                    <WelcomeText>Good Morning 👋</WelcomeText>
-                    <Username>{user?.user_metadata.full_name}</Username>
-                  </UserInfo>
+                  <Styled.UserInfo>
+                    <Styled.WelcomeText>Good Morning 👋</Styled.WelcomeText>
+                    <Styled.Username>
+                      {user?.user_metadata.full_name}
+                    </Styled.Username>
+                  </Styled.UserInfo>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Notifications')}
@@ -161,13 +149,13 @@ export const Home = ({
                 >
                   <Heart />
                 </TouchableOpacity>
-              </HomeHeader>
+              </Styled.HomeHeader>
               <TouchableWithoutFeedback
                 onPress={() => {
                   navigation.navigate('Search')
                 }}
               >
-                <SearchContainer
+                <Styled.SearchContainer
                   style={{
                     shadowColor: '#0000008d',
                     backgroundColor: theme.darkColors.dark1,
@@ -189,16 +177,18 @@ export const Home = ({
                     }}
                     rightIcon={<Misc />}
                   />
-                </SearchContainer>
+                </Styled.SearchContainer>
               </TouchableWithoutFeedback>
             </>
           )}
           stickyHeaderIndices={[0]}
           ListEmptyComponent={() => (
             <>
-              <SpecialOffersContainer>
-                <SpecialOffersHeader>
-                  <SpecialOffersTitle>Special Offers</SpecialOffersTitle>
+              <Styled.SpecialOffersContainer>
+                <Styled.SpecialOffersHeader>
+                  <Styled.SpecialOffersTitle>
+                    Special Offers
+                  </Styled.SpecialOffersTitle>
                   <TouchableOpacity
                     onPress={() =>
                       navigation.navigate('Search', {
@@ -206,9 +196,9 @@ export const Home = ({
                       })
                     }
                   >
-                    <GreenButton>See All</GreenButton>
+                    <Styled.GreenButton>See All</Styled.GreenButton>
                   </TouchableOpacity>
-                </SpecialOffersHeader>
+                </Styled.SpecialOffersHeader>
                 <FlatList
                   data={specialOffers}
                   horizontal
@@ -231,10 +221,12 @@ export const Home = ({
                     />
                   )}
                 />
-              </SpecialOffersContainer>
-              <MostPopularContainer>
-                <MostPopularHeader>
-                  <MostPopularTitle>Most Popular</MostPopularTitle>
+              </Styled.SpecialOffersContainer>
+              <Styled.MostPopularContainer>
+                <Styled.MostPopularHeader>
+                  <Styled.MostPopularTitle>
+                    Most Popular
+                  </Styled.MostPopularTitle>
                   <TouchableOpacity
                     onPress={() =>
                       navigation.navigate('Search', {
@@ -242,9 +234,9 @@ export const Home = ({
                       })
                     }
                   >
-                    <GreenButton>See All</GreenButton>
+                    <Styled.GreenButton>See All</Styled.GreenButton>
                   </TouchableOpacity>
-                </MostPopularHeader>
+                </Styled.MostPopularHeader>
                 <FlatList
                   data={allFilters}
                   contentContainerStyle={{
@@ -281,11 +273,11 @@ export const Home = ({
                     />
                   )}
                 />
-              </MostPopularContainer>
+              </Styled.MostPopularContainer>
             </>
           )}
         />
-      </Container>
+      </Styled.Container>
     </SafeAreaView>
   )
 }

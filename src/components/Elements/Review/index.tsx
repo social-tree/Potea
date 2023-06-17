@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Container,
-  CreatedDate,
-  Description,
-  InfoContainer,
-  RatingValue,
-  ReviewRating,
-  Username,
-} from './Review.styles'
+import * as Styled from './Review.styles'
 
 import { RatingStar } from 'src/assets/svg/RatingStar'
 import React from 'react'
@@ -31,17 +22,21 @@ export const Review = ({
   createdDate,
 }: Props) => {
   return (
-    <Container>
-      <InfoContainer>
-        <Avatar source={{ uri: `${storageSupabaseURL}${userInfo.avatar}` }} />
-        <Username>{userInfo.nickname}</Username>
-        <ReviewRating>
+    <Styled.Container>
+      <Styled.InfoContainer>
+        <Styled.Avatar
+          source={{ uri: `${storageSupabaseURL}${userInfo.avatar}` }}
+        />
+        <Styled.Username>{userInfo.nickname}</Styled.Username>
+        <Styled.ReviewRating>
           <RatingStar width={10} height={9.5} halfStar={false} />
-          <RatingValue>{rating}</RatingValue>
-        </ReviewRating>
-      </InfoContainer>
-      {description && <Description>{description}</Description>}
-      <CreatedDate>{getDateDifference(new Date(createdDate))}</CreatedDate>
-    </Container>
+          <Styled.RatingValue>{rating}</Styled.RatingValue>
+        </Styled.ReviewRating>
+      </Styled.InfoContainer>
+      {description && <Styled.Description>{description}</Styled.Description>}
+      <Styled.CreatedDate>
+        {getDateDifference(new Date(createdDate))}
+      </Styled.CreatedDate>
+    </Styled.Container>
   )
 }

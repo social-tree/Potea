@@ -1,13 +1,5 @@
-import {
-  ConfirmationText,
-  Container,
-  GreenConfirmationText,
-  ResendButton,
-  StyledCodeField,
-  TextCell,
-  TextCellContainer,
-  Wrapper,
-} from './Confirmation.styles'
+import * as Styled from './Confirmation.styles'
+
 import {
   Cursor,
   useBlurOnFulfill,
@@ -118,10 +110,12 @@ export const Confirmation = ({
   }
 
   return (
-    <Container>
-      <Wrapper>
-        <ConfirmationText>Code has been send to {info}</ConfirmationText>
-        <StyledCodeField
+    <Styled.Container>
+      <Styled.Wrapper>
+        <Styled.ConfirmationText>
+          Code has been send to {info}
+        </Styled.ConfirmationText>
+        <Styled.StyledCodeField
           ref={ref}
           {...props}
           value={value}
@@ -130,30 +124,30 @@ export const Confirmation = ({
           keyboardType="number-pad"
           textContentType="oneTimeCode"
           renderCell={({ index, symbol, isFocused }) => (
-            <TextCellContainer>
-              <TextCell
+            <Styled.TextCellContainer>
+              <Styled.TextCell
                 isFocused={isFocused}
                 key={index}
                 onLayout={getCellOnLayoutHandler(index)}
               >
                 {symbol || (isFocused ? <Cursor /> : null)}
-              </TextCell>
-            </TextCellContainer>
+              </Styled.TextCell>
+            </Styled.TextCellContainer>
           )}
         />
-        <ResendButton
+        <Styled.ResendButton
           onPress={() => resendVerification()}
           disabled={time !== 0}
         >
           <>
-            <ConfirmationText>Resend code </ConfirmationText>
-            <GreenConfirmationText>
+            <Styled.ConfirmationText>Resend code </Styled.ConfirmationText>
+            <Styled.GreenConfirmationText>
               {time !== 0 && `in ${time} s`}
-            </GreenConfirmationText>
+            </Styled.GreenConfirmationText>
           </>
-        </ResendButton>
-      </Wrapper>
+        </Styled.ResendButton>
+      </Styled.Wrapper>
       <Button onPress={() => verifyOtp()}>Verify</Button>
-    </Container>
+    </Styled.Container>
   )
 }

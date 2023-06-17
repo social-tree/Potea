@@ -1,14 +1,4 @@
-import {
-  Container,
-  IconShadow,
-  InfoText,
-  MethodButton,
-  MethodIcon,
-  MethodInfo,
-  MethodInfoText,
-  MethodText,
-  Methods,
-} from './ResetMethod.styles'
+import * as Styled from './ResetMethod.styles'
 
 import { Button } from 'src/components/Elements/Button'
 import { Email } from 'src/assets/svg/Email'
@@ -52,48 +42,52 @@ export const ResetMethod = ({ navigation }) => {
   }
 
   return (
-    <Container>
+    <Styled.Container>
       <LockedPhone />
-      <Methods>
-        <InfoText>
+      <Styled.Methods>
+        <Styled.InfoText>
           {stage === StageTypes.Method
             ? 'Select which method should we use to reset your password'
             : `Enter the ${
                 selectedMethod === MethodTypes.SMS ? 'phone number' : 'email'
               } that was linked to your account`}
-        </InfoText>
+        </Styled.InfoText>
         {stage === StageTypes.Method ? (
           <>
-            <MethodButton
+            <Styled.MethodButton
               selected={selectedMethod === MethodTypes.SMS}
               onPress={() => handleMethodChange(MethodTypes.SMS)}
             >
               <>
-                <MethodIcon>
-                  <IconShadow />
+                <Styled.MethodIcon>
+                  <Styled.IconShadow />
                   <Message />
-                </MethodIcon>
-                <MethodInfo>
-                  <MethodText>via SMS:</MethodText>
-                  <MethodInfoText>+7 999 ********99</MethodInfoText>
-                </MethodInfo>
+                </Styled.MethodIcon>
+                <Styled.MethodInfo>
+                  <Styled.MethodText>via SMS:</Styled.MethodText>
+                  <Styled.MethodInfoText>
+                    +7 999 ********99
+                  </Styled.MethodInfoText>
+                </Styled.MethodInfo>
               </>
-            </MethodButton>
-            <MethodButton
+            </Styled.MethodButton>
+            <Styled.MethodButton
               selected={selectedMethod === MethodTypes.EMAIL}
               onPress={() => handleMethodChange(MethodTypes.EMAIL)}
             >
               <>
-                <MethodIcon>
-                  <IconShadow />
+                <Styled.MethodIcon>
+                  <Styled.IconShadow />
                   <Email fill={theme.primary[500]} width={'32'} height={'32'} />
-                </MethodIcon>
-                <MethodInfo>
-                  <MethodText>via Email:</MethodText>
-                  <MethodInfoText>example@yourdomain.com</MethodInfoText>
-                </MethodInfo>
+                </Styled.MethodIcon>
+                <Styled.MethodInfo>
+                  <Styled.MethodText>via Email:</Styled.MethodText>
+                  <Styled.MethodInfoText>
+                    example@yourdomain.com
+                  </Styled.MethodInfoText>
+                </Styled.MethodInfo>
               </>
-            </MethodButton>
+            </Styled.MethodButton>
           </>
         ) : (
           <Input
@@ -105,7 +99,7 @@ export const ResetMethod = ({ navigation }) => {
             rules={{ required: true }}
           />
         )}
-      </Methods>
+      </Styled.Methods>
       <Button
         onPress={async () => {
           if (stage === StageTypes.Method) {
@@ -117,6 +111,6 @@ export const ResetMethod = ({ navigation }) => {
       >
         Continue
       </Button>
-    </Container>
+    </Styled.Container>
   )
 }

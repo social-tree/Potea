@@ -1,14 +1,11 @@
-import { EditPen } from 'src/assets/svg/EditPen'
-import { EmptyProfile } from 'src/assets/svg/EmptyProfile'
+import { EditPen as EditPenSVG } from 'src/assets/svg/EditPen'
 import styled from 'styled-components/native'
 
-export const StyledEditPen = styled(EditPen)`
+export const EditPen = styled(EditPenSVG)`
   position: absolute;
   bottom: 0px;
   right: 0px;
 `
-
-export const StyledEmptyProfile = styled(EmptyProfile)``
 
 export const ProfilePictureContainer = styled.View`
   position: relative;

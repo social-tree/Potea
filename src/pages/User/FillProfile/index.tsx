@@ -1,17 +1,13 @@
 import * as ImagePicker from 'expo-image-picker'
+import * as Styled from './FillProfile.styles'
 
-import {
-  Container,
-  ProfilePictureContainer,
-  StyledEditPen,
-  StyledEmptyProfile,
-} from './FillProfile.styles'
 import React, { useContext, useEffect, useState } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { Button } from 'src/components/Elements/Button'
 import { Calendar } from 'src/assets/svg/Calendar'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { EmptyProfile } from 'src/assets/svg/EmptyProfile'
 import { Image } from 'react-native'
 import { Input } from 'src/components/Form/Elements/Inputs'
 import { Select } from 'src/components/Form/Elements/Select'
@@ -109,7 +105,7 @@ export const FillProfile = ({ navigation }) => {
   }
 
   return (
-    <Container
+    <Styled.Container
       contentContainerStyle={{
         alignItems: 'center',
         justifyContent: 'center',
@@ -132,17 +128,17 @@ export const FillProfile = ({ navigation }) => {
           })
         }}
       >
-        <ProfilePictureContainer>
+        <Styled.ProfilePictureContainer>
           {watch('avatar') ? (
             <Image
               source={{ uri: watch('avatar').uri, width: 140, height: 140 }}
               borderRadius={100}
             />
           ) : (
-            <StyledEmptyProfile />
+            <EmptyProfile />
           )}
-          <StyledEditPen />
-        </ProfilePictureContainer>
+          <Styled.EditPen />
+        </Styled.ProfilePictureContainer>
       </TouchableOpacity>
       <Input
         name={'full_name'}
@@ -217,6 +213,6 @@ export const FillProfile = ({ navigation }) => {
       >
         Continue
       </Button>
-    </Container>
+    </Styled.Container>
   )
 }

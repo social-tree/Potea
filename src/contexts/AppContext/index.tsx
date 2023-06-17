@@ -1,9 +1,5 @@
-import {
-  ErrorButton,
-  ErrorContainer,
-  ErrorTitle,
-  ErrorWrapper,
-} from './AppContext.styles'
+import * as Styled from './AppContext.styles'
+
 import { UserMetaData, UserType } from 'src/types/user'
 import { createContext, useEffect, useState } from 'react'
 
@@ -124,11 +120,13 @@ export const AppProvider = ({ children }) => {
     >
       {!!modalErrorText && (
         <Modal onClose={() => closeErrorModal()} open={true}>
-          <ErrorWrapper>
+          <Styled.ErrorWrapper>
             <ErrorShield width={240} height={240} />
-            <ErrorTitle>{modalErrorText}</ErrorTitle>
-            <ErrorButton onPress={() => closeErrorModal()}>Return</ErrorButton>
-          </ErrorWrapper>
+            <Styled.ErrorTitle>{modalErrorText}</Styled.ErrorTitle>
+            <Styled.ErrorButton onPress={() => closeErrorModal()}>
+              Return
+            </Styled.ErrorButton>
+          </Styled.ErrorWrapper>
         </Modal>
       )}
       {children}

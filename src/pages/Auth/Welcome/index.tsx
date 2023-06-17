@@ -6,20 +6,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native'
-import {
-  ButtonContainer,
-  Container,
-  StyledButton,
-  Title,
-  WelcomeBackground,
-  WelcomeBackgroundContainer,
-  WelcomeContainer,
-  WelcomeDescription,
-  WelcomeInfo,
-  WelcomeSlideContainer,
-  WelcomeSlideText,
-  WelcomeText,
-} from './Welcome.styles'
+import * as Styled from './Welcome.styles'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { AuthStackParamList } from 'src/navigators/AuthNavigator/AuthNavigator.types'
@@ -65,21 +52,21 @@ export const Welcome = ({
   return (
     <>
       <StatusBar />
-      <Container>
-        <WelcomeContainer
+      <Styled.Container>
+        <Styled.WelcomeContainer
           style={{
             opacity: WelcomeFadeAnim,
             display: WelcomeFadeFinished ? 'none' : 'flex',
           }}
         >
-          <WelcomeBackgroundContainer>
-            <WelcomeBackground
+          <Styled.WelcomeBackgroundContainer>
+            <Styled.WelcomeBackground
               resizeMode="contain"
               resizeMethod="auto"
               source={require('src/assets/img/WelcomePlant.png')}
             />
-          </WelcomeBackgroundContainer>
-          <WelcomeInfo
+          </Styled.WelcomeBackgroundContainer>
+          <Styled.WelcomeInfo
             colors={[
               'transparent',
               '#181a2060',
@@ -88,14 +75,14 @@ export const Welcome = ({
               '#181a20',
             ]}
           >
-            <WelcomeText>Welcome to 👋</WelcomeText>
-            <Title>Potea</Title>
-            <WelcomeDescription>
+            <Styled.WelcomeText>Welcome to 👋</Styled.WelcomeText>
+            <Styled.Title>Potea</Styled.Title>
+            <Styled.WelcomeDescription>
               The best plant e-commerce & online store app of the century for
               your needs!
-            </WelcomeDescription>
-          </WelcomeInfo>
-        </WelcomeContainer>
+            </Styled.WelcomeDescription>
+          </Styled.WelcomeInfo>
+        </Styled.WelcomeContainer>
         <SafeAreaView style={{ flex: 1 }}>
           <Carousel
             ref={carouselRef}
@@ -118,13 +105,13 @@ export const Welcome = ({
             }: {
               item: { text: string; image: ImageSourcePropType }
             }) => (
-              <WelcomeSlideContainer>
+              <Styled.WelcomeSlideContainer>
                 <Image
                   style={{ height: height - 400, width: '100%' }}
                   resizeMode="cover"
                   source={item.image}
                 />
-                <WelcomeSlideText>{item.text}</WelcomeSlideText>
+                <Styled.WelcomeSlideText>{item.text}</Styled.WelcomeSlideText>
                 <Dots
                   activeColor={theme.primary[500]}
                   passiveColor={theme.darkColors.dark2}
@@ -133,11 +120,11 @@ export const Welcome = ({
                   active={focusedImage}
                   length={WelcomeCourselScreens.length}
                 />
-              </WelcomeSlideContainer>
+              </Styled.WelcomeSlideContainer>
             )}
           />
-          <ButtonContainer>
-            <StyledButton
+          <Styled.ButtonContainer>
+            <Styled.StyledButton
               onPress={() =>
                 focusedImage !== 2
                   ? carouselRef?.current?.next()
@@ -146,10 +133,10 @@ export const Welcome = ({
               enableShadow
             >
               Next
-            </StyledButton>
-          </ButtonContainer>
+            </Styled.StyledButton>
+          </Styled.ButtonContainer>
         </SafeAreaView>
-      </Container>
+      </Styled.Container>
     </>
   )
 }

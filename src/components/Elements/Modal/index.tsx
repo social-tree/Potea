@@ -1,5 +1,7 @@
-import { BackShadowDrop, Container, ModalContainer } from './Modal.styles'
-import { Touchable, TouchableWithoutFeedback } from 'react-native'
+import * as Styled from './Modal.styles'
+
+import React from 'react'
+import { TouchableWithoutFeedback } from 'react-native'
 
 interface Props {
   children?: JSX.Element | JSX.Element[]
@@ -9,14 +11,14 @@ interface Props {
 
 export const Modal = ({ onClose, open, children }: Props) => {
   return (
-    <Container open={open}>
+    <Styled.Container open={open}>
       <TouchableWithoutFeedback
         touchSoundDisabled={true}
         onPress={() => onClose && onClose()}
       >
-        <BackShadowDrop />
+        <Styled.BackShadowDrop />
       </TouchableWithoutFeedback>
-      <ModalContainer>{children}</ModalContainer>
-    </Container>
+      <Styled.ModalContainer>{children}</Styled.ModalContainer>
+    </Styled.Container>
   )
 }

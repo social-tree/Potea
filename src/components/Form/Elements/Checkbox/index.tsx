@@ -1,8 +1,9 @@
-import { Container, Label, StyledCheckBox } from './Checkbox.styles'
+import * as Styled from './Checkbox.styles'
 
 import { Control } from 'react-hook-form/dist/types/form'
 import { Controller } from 'react-hook-form'
 import { IBouncyCheckboxProps } from 'react-native-bouncy-checkbox'
+import React from 'react'
 import { theme } from 'src/styles/theme'
 
 interface Props extends IBouncyCheckboxProps {
@@ -13,14 +14,14 @@ interface Props extends IBouncyCheckboxProps {
 
 export const Checkbox = ({ control, name, label, text, ...props }: Props) => {
   return (
-    <Container>
+    <Styled.Container>
       <Controller
         control={control}
         rules={{
           maxLength: 100,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
-          <StyledCheckBox
+          <Styled.StyledCheckBox
             {...props}
             size={25}
             text={label}
@@ -28,7 +29,7 @@ export const Checkbox = ({ control, name, label, text, ...props }: Props) => {
             unfillColor="transparent"
             iconStyle={{ borderColor: theme.primary[500] }}
             innerIconStyle={{ borderWidth: 2, borderRadius: 8 }}
-            textComponent={<Label>{label || text}</Label>}
+            textComponent={<Styled.Label>{label || text}</Styled.Label>}
             onPress={(isChecked) => onChange(isChecked)}
             onBlur={onBlur}
             isChecked={value}
@@ -36,6 +37,6 @@ export const Checkbox = ({ control, name, label, text, ...props }: Props) => {
         )}
         name={name}
       />
-    </Container>
+    </Styled.Container>
   )
 }

@@ -1,14 +1,5 @@
-import {
-  Container,
-  DateTitle,
-  LoadingContainer,
-  Notification,
-  NotificationDesc,
-  NotificationDetails,
-  NotificationIcon,
-  NotificationTitle,
-  StyledLoading,
-} from './Notifications.styles'
+import * as Styled from './Notifications.styles'
+
 import { Dimensions, ScrollView } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 
@@ -72,20 +63,20 @@ export const Notifications = () => {
     <ScrollView
       contentContainerStyle={{ minHeight: screenHeight - headerHeight - 70 }}
     >
-      <Container>
+      <Styled.Container>
         {loading ? (
-          <LoadingContainer>
-            <StyledLoading />
-          </LoadingContainer>
+          <Styled.LoadingContainer>
+            <Styled.StyledLoading />
+          </Styled.LoadingContainer>
         ) : (
           sortedNotifications?.map((notificationGroup) => (
             <>
-              <DateTitle>{notificationGroup.date}</DateTitle>
+              <Styled.DateTitle>{notificationGroup.date}</Styled.DateTitle>
               {notificationGroup.notifications?.map((notification) => {
                 const type = notification.type
                 return (
-                  <Notification>
-                    <NotificationIcon>
+                  <Styled.Notification>
+                    <Styled.NotificationIcon>
                       {type === 'sale' ? (
                         <Sale />
                       ) : type === 'wallet' ? (
@@ -99,21 +90,23 @@ export const Notifications = () => {
                       ) : (
                         <></>
                       )}
-                    </NotificationIcon>
+                    </Styled.NotificationIcon>
 
-                    <NotificationDetails>
-                      <NotificationTitle>
+                    <Styled.NotificationDetails>
+                      <Styled.NotificationTitle>
                         {notification.title}
-                      </NotificationTitle>
-                      <NotificationDesc>{notification.desc}</NotificationDesc>
-                    </NotificationDetails>
-                  </Notification>
+                      </Styled.NotificationTitle>
+                      <Styled.NotificationDesc>
+                        {notification.desc}
+                      </Styled.NotificationDesc>
+                    </Styled.NotificationDetails>
+                  </Styled.Notification>
                 )
               })}
             </>
           ))
         )}
-      </Container>
+      </Styled.Container>
     </ScrollView>
   )
 }

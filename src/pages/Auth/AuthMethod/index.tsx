@@ -1,16 +1,5 @@
-import {
-  Container,
-  Header,
-  SignupButton,
-  SignupButtonText,
-  SignupText,
-  SignupWrap,
-  SocialButtonsContainer,
-  SocialLoginButton,
-  SocialLoginText,
-  StyledChoiceSplit,
-  StyledWindowWithSmoke,
-} from './AuthMethod.styles'
+import * as Styled from './AuthMethod.styles'
+
 import { SafeAreaView, StatusBar } from 'react-native'
 
 import { Apple } from 'src/assets/svg/Apple'
@@ -34,7 +23,7 @@ export const AuthMethod = ({ navigation }) => {
   }
 
   return (
-    <Container
+    <Styled.Container
       contentContainerStyle={{
         display: 'flex',
         alignItems: 'center',
@@ -42,41 +31,45 @@ export const AuthMethod = ({ navigation }) => {
         paddingBottom: 30,
       }}
     >
-      <StyledWindowWithSmoke />
-      <Header>Let’s you in</Header>
-      <SocialButtonsContainer>
-        <SocialLoginButton
+      <Styled.StyledWindowWithSmoke />
+      <Styled.Header>Let’s you in</Styled.Header>
+      <Styled.SocialButtonsContainer>
+        <Styled.SocialLoginButton
           disabled={loading || true}
           onPress={() => handleSocialLogin('facebook')}
         >
           <Facebook />
-          <SocialLoginText>Continue with Facebook</SocialLoginText>
-        </SocialLoginButton>
-        <SocialLoginButton
+          <Styled.SocialLoginText>
+            Continue with Facebook
+          </Styled.SocialLoginText>
+        </Styled.SocialLoginButton>
+        <Styled.SocialLoginButton
           disabled={loading}
           onPress={() => handleSocialLogin('google')}
         >
           <Google />
-          <SocialLoginText>Continue with Google</SocialLoginText>
-        </SocialLoginButton>
-        <SocialLoginButton
+          <Styled.SocialLoginText>Continue with Google</Styled.SocialLoginText>
+        </Styled.SocialLoginButton>
+        <Styled.SocialLoginButton
           disabled={loading || true}
           onPress={() => handleSocialLogin('apple')}
         >
           <Apple />
-          <SocialLoginText>Continue with Apple</SocialLoginText>
-        </SocialLoginButton>
-      </SocialButtonsContainer>
-      <StyledChoiceSplit />
+          <Styled.SocialLoginText>Continue with Apple</Styled.SocialLoginText>
+        </Styled.SocialLoginButton>
+      </Styled.SocialButtonsContainer>
+      <Styled.StyledChoiceSplit />
       <Button onPress={() => navigation.navigate('Login')} enableShadow>
         Sign in with password
       </Button>
-      <SignupWrap>
-        <SignupText>Don't have an account?</SignupText>
-        <SignupButton onPress={() => navigation.navigate('CreateAccount')}>
-          <SignupButtonText>Sign up</SignupButtonText>
-        </SignupButton>
-      </SignupWrap>
-    </Container>
+      <Styled.SignupWrap>
+        <Styled.SignupText>Don't have an account?</Styled.SignupText>
+        <Styled.SignupButton
+          onPress={() => navigation.navigate('CreateAccount')}
+        >
+          <Styled.SignupButtonText>Sign up</Styled.SignupButtonText>
+        </Styled.SignupButton>
+      </Styled.SignupWrap>
+    </Styled.Container>
   )
 }
