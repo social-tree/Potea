@@ -3,8 +3,11 @@ import * as Styled from './AppContext.styles'
 import { UserMetaData, UserType } from 'src/types/user'
 import { createContext, useEffect, useState } from 'react'
 
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { BottomSheetProvider } from '@gorhom/bottom-sheet/lib/typescript/contexts'
 import { Button } from 'src/components/Elements/Button'
 import { ErrorShield } from 'src/assets/svg/ErrorShield'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Modal } from 'src/components/Elements/Modal'
 import React from 'react'
 import { allNotifications } from 'src/constants/notifications'
@@ -118,18 +121,22 @@ export const AppProvider = ({ children }) => {
         loading,
       }}
     >
-      {!!modalErrorText && (
-        <Modal onClose={() => closeErrorModal()} open={true}>
-          <Styled.ErrorWrapper>
-            <ErrorShield width={240} height={240} />
-            <Styled.ErrorTitle>{modalErrorText}</Styled.ErrorTitle>
-            <Styled.ErrorButton onPress={() => closeErrorModal()}>
-              Return
-            </Styled.ErrorButton>
-          </Styled.ErrorWrapper>
-        </Modal>
-      )}
-      {children}
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          {!!modalErrorText && (
+            <Modal onClose={() => closeErrorModal()} open={true}>
+              <Styled.ErrorWrapper>
+                <ErrorShield width={240} height={240} />
+                <Styled.ErrorTitle>{modalErrorText}</Styled.ErrorTitle>
+                <Styled.ErrorButton onPress={() => closeErrorModal()}>
+                  Return
+                </Styled.ErrorButton>
+              </Styled.ErrorWrapper>
+            </Modal>
+          )}
+          {children}
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </AppContext.Provider>
   )
 }

@@ -7,6 +7,7 @@ import { Chip } from 'src/components/Form/Elements/Chip'
 import { RatingStar } from 'src/assets/svg/RatingStar'
 import React from 'react'
 import { ScrollView } from 'react-native'
+import { Shadow } from 'react-native-shadow-2'
 import { allFilters } from 'src/constants/filters'
 import { allRatings } from 'src/constants/ratings'
 import { sortByTypes } from 'src/constants/sortByTypes'
@@ -41,15 +42,21 @@ export const FiltersSheet = ({
       enablePanDownToClose
       ref={sheetRef}
       index={-1}
-      containerStyle={{ zIndex: 1 }}
-      backdropComponent={(props) => (
-        <BottomSheetBackdrop
-          {...props}
-          appearsOnIndex={0}
-          disappearsOnIndex={-1}
-        />
-      )}
-      backgroundStyle={{ backgroundColor: theme.darkColors.dark2, zIndex: 0 }}
+      containerStyle={{
+        zIndex: 1,
+      }}
+      backgroundStyle={{
+        backgroundColor: theme.darkColors.dark2,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.0,
+
+        elevation: 24,
+      }}
       snapPoints={['95%']}
     >
       <Styled.FilterContainer>
