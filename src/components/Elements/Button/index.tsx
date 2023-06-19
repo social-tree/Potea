@@ -25,7 +25,7 @@ export const Button = ({
   shadowProps,
   ...props
 }: Props) => {
-  return (
+  return enableShadow ? (
     <Styled.Container
       startColor={shadowColor || `${theme.primary[500]}20`}
       style={{ borderRadius: 15 }}
@@ -43,5 +43,15 @@ export const Button = ({
         )}
       </Styled.StyledTouchableOpacity>
     </Styled.Container>
+  ) : (
+    <Styled.StyledTouchableOpacity loading={loading} {...props}>
+      {loading ? (
+        <View style={{ height: 50, width: 50 }}>
+          <Loading />
+        </View>
+      ) : (
+        <Styled.StyledText {...textProps}>{children}</Styled.StyledText>
+      )}
+    </Styled.StyledTouchableOpacity>
   )
 }

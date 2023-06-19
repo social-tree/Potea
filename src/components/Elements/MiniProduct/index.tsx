@@ -4,13 +4,14 @@ import React, { useState } from 'react'
 import { TouchableOpacity, ViewProps } from 'react-native'
 
 import { Trash } from 'src/assets/svg/Trash'
-import { productType } from 'src/types/product'
+import { productWithQuantityType } from 'src/types/product'
 
 interface Props extends ViewProps {
-  handleDelete: (product: productType) => void
+  handleDelete: (product: productWithQuantityType) => void
   disableDelete?: boolean
   disableChangeQuantity?: boolean
   initialQuantity?: number
+  productInfo?: productWithQuantityType
 }
 
 export const MiniProduct = ({
@@ -18,6 +19,7 @@ export const MiniProduct = ({
   disableDelete,
   disableChangeQuantity,
   initialQuantity,
+  productInfo,
   ...props
 }: Props) => {
   const [quantity, setQuantity] = useState(initialQuantity || 1)
@@ -29,12 +31,10 @@ export const MiniProduct = ({
 
   return (
     <Styled.Container {...props}>
-      <Styled.MiniProductImage
-        source={{ uri: 'https://i.imgur.com/JLNQX7t.png' }}
-      />
+      <Styled.MiniProductImage source={{ uri: productInfo?.image[0] || '' }} />
       <Styled.MiniProductInfo>
-        <Styled.MiniProductName>Mini Product</Styled.MiniProductName>
-        <Styled.MiniProductPrice>$99</Styled.MiniProductPrice>
+        <Styled.MiniProductName>{productInfo?.name}</Styled.MiniProductName>
+        <Styled.MiniProductPrice>${productInfo?.price}</Styled.MiniProductPrice>
         {disableChangeQuantity ? (
           <Styled.MiniProductQuantityValue>
             {quantity}
@@ -51,19 +51,7 @@ export const MiniProduct = ({
       </Styled.MiniProductInfo>
       {!disableDelete && (
         <Styled.MiniProductTrash
-          onPress={() =>
-            handleDelete({
-              average_rating: 4,
-              count: 234,
-              description: '',
-              id: 2,
-              image: ['https://i.imgur.com/JLNQX7t.png'],
-              name: 'Mini Product',
-              price: 99,
-              reviews_amount: 224,
-              sold_amount: 2155,
-            })
-          }
+          onPress={() => handleDelete({ ...productInfo, quantity })}
         >
           <Trash />
         </Styled.MiniProductTrash>
