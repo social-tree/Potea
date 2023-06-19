@@ -13,6 +13,23 @@ import { theme } from 'src/styles/theme'
 const { Navigator, Screen } =
   createBottomTabNavigator<UserBottomStackParamList>()
 
+const UserNavIconProps = ({ focused, color }) => ({
+  fill: focused ? color : 'transparent',
+  width: 19,
+  height: 20,
+  stroke: color,
+})
+
+export const UserTabBarStyle = {
+  display: 'flex',
+  backgroundColor: theme.darkColors.dark2,
+  ...(Platform.OS !== 'ios'
+    ? { height: 55, paddingBottom: 5 }
+    : { height: 85 }),
+  justifyContent: 'center',
+  alignItems: 'center',
+}
+
 const UserNavigator = () => {
   return (
     <Navigator
@@ -35,13 +52,15 @@ const UserNavigator = () => {
             ...(Platform.OS === 'ios' ? { gap: 0, paddingBottom: 5 } : {}),
           },
           tabBarHideOnKeyboard: true,
+          tabBarActiveTintColor: theme.primary[500],
+          tabBarInactiveTintColor: theme.greyscale[500],
         }
       }}
     >
       <Screen
         options={{
           headerShown: false,
-          tabBarIcon: () => <HomeIcon width={19} height={20} />,
+          tabBarIcon: (props) => <HomeIcon {...UserNavIconProps(props)} />,
           title: 'Home',
           tabBarStyle: { display: 'none' },
         }}
@@ -60,26 +79,13 @@ const UserNavigator = () => {
         options={{
           headerShown: false,
           title: 'Cart',
-          tabBarIcon: () => (
-            <Bag width={19} height={20} color={theme.primary[500]} />
-          ),
-          tabBarActiveTintColor: theme.primary[500],
+          tabBarIcon: (props) => <Bag {...UserNavIconProps(props)} />,
         }}
         name="CartNav"
         component={CartNavigator}
       />
     </Navigator>
   )
-}
-
-export const UserTabBarStyle = {
-  display: 'flex',
-  backgroundColor: theme.darkColors.dark2,
-  ...(Platform.OS !== 'ios'
-    ? { height: 55, paddingBottom: 5 }
-    : { height: 85 }),
-  justifyContent: 'center',
-  alignItems: 'center',
 }
 
 export default UserNavigator
