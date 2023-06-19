@@ -4,7 +4,7 @@ import { Quantity } from 'src/components/Form/Elements/Quantity'
 import { Trash } from 'src/assets/svg/Trash'
 import styled from 'styled-components/native'
 
-export const MiniProductTrash = styled(Trash)`
+export const MiniProductTrash = styled.TouchableOpacity`
   align-self: flex-end;
   margin-left: auto;
   margin-bottom: 10px;
