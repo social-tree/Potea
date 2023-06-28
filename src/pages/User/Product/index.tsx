@@ -14,6 +14,7 @@ import { Quantity } from 'src/components/Form/Elements/Quantity'
 import { RatingStar } from 'src/assets/svg/RatingStar'
 import { StackScreenProps } from '@react-navigation/stack'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { addProductToCart } from 'src/api/cart'
 import { getProduct } from 'src/api/products'
 import { productType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
@@ -137,9 +138,10 @@ export const Product = ({
           <Button
             shadowProps={{ containerStyle: { flex: 1 } }}
             enableShadow={true}
+            onPress={() => addProductToCart({ id, quantity })}
           >
             <Styled.ButtonContent>
-              <Bag />
+              <Bag fill={theme.other.white} />
               <Styled.PurchaseText>Add to Cart</Styled.PurchaseText>
             </Styled.ButtonContent>
           </Button>

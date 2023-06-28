@@ -13,6 +13,7 @@ interface Props extends ViewProps {
   minusProps?: SvgProps
   plusProps?: SvgProps
   quantityProps?: TextProps
+  disable?: boolean
 }
 
 export const Quantity = ({
@@ -21,15 +22,22 @@ export const Quantity = ({
   minusProps,
   plusProps,
   quantityProps,
+  disable,
   ...props
 }: Props) => {
   return (
     <Styled.Container {...props}>
-      <TouchableOpacity onPress={() => handleQuantity('rem')}>
+      <TouchableOpacity
+        disabled={disable}
+        onPress={() => handleQuantity('rem')}
+      >
         <Minus {...minusProps} />
       </TouchableOpacity>
       <Styled.QuantityAmount {...quantityProps}>{value}</Styled.QuantityAmount>
-      <TouchableOpacity onPress={() => handleQuantity('add')}>
+      <TouchableOpacity
+        disabled={disable}
+        onPress={() => handleQuantity('add')}
+      >
         <Plus {...plusProps} />
       </TouchableOpacity>
     </Styled.Container>

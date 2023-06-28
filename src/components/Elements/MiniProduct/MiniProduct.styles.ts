@@ -12,12 +12,7 @@ export const MiniProductTrash = styled.TouchableOpacity`
 
 export const MiniProductQuantityValue = styled.Text`
   background-color: ${({ theme }) => theme.darkColors.dark3};
-  width: 35px;
   border-radius: 50px;
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
   ${ParagraphM}
   color:${({ theme }) => theme.other.white};
   padding: 8px 14px;
@@ -43,6 +38,7 @@ export const MiniProductName = styled.Text`
 
 export const MiniProductInfo = styled.View`
   display: flex;
+  align-items: flex-start;
   gap: 16px;
 `
 

@@ -12,6 +12,7 @@ interface Props extends ViewProps {
   disableChangeQuantity?: boolean
   initialQuantity?: number
   productInfo?: productWithQuantityType
+  handleQuantityChange?: (id: number, type: string) => Promise<number>
 }
 
 export const MiniProduct = ({
@@ -20,13 +21,23 @@ export const MiniProduct = ({
   disableChangeQuantity,
   initialQuantity,
   productInfo,
+  handleQuantityChange,
   ...props
 }: Props) => {
   const [quantity, setQuantity] = useState(initialQuantity || 1)
+  const [changingQuantity, setChangingQuantity] = useState(false)
 
-  const handleQuantity = (type: 'add' | 'rem') => {
-    type === 'add' && setQuantity((prev) => prev + 1)
-    type === 'rem' && quantity !== 1 && setQuantity((prev) => prev - 1)
+  const handleQuantity = async (type: 'add' | 'rem') => {
+    if ((type === 'rem' && quantity === 1) || changingQuantity) return
+    setChangingQuantity(true)
+    if (handleQuantityChange) {
+      const newQuantity = await handleQuantityChange(productInfo.id, type)
+      if (newQuantity) setQuantity(newQuantity)
+    } else {
+      type === 'add' && setQuantity((prev) => (prev += 1))
+      type === 'rem' && setQuantity((prev) => (prev -= 1))
+    }
+    setChangingQuantity(false)
   }
 
   return (
@@ -46,6 +57,7 @@ export const MiniProduct = ({
             quantityProps={{ style: { fontSize: 14 } }}
             handleQuantity={handleQuantity}
             value={quantity}
+            disable={changingQuantity}
           />
         )}
       </Styled.MiniProductInfo>

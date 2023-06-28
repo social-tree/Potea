@@ -5,6 +5,9 @@ export const StyledText = styled.Text`
   color: white;
   font-weight: 700;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 export const Container = styled(Shadow)`
