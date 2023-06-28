@@ -33,7 +33,7 @@ export const UserTabBarStyle = {
 const UserNavigator = () => {
   return (
     <Navigator
-      initialRouteName="HomeNav"
+      initialRouteName="CartNav"
       screenOptions={({ route }) => {
         const toExclude: (typeof route.name)[] = [
           'ResetPassword',
