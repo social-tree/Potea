@@ -50,7 +50,6 @@ export const MiniProductImage = styled.Image`
 `
 
 export const Container = styled.View`
-  flex: 1;
   background-color: ${({ theme }) => theme.darkColors.dark2};
   border-radius: 32px;
   display: flex;

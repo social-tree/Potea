@@ -5,6 +5,7 @@ import {
 } from 'src/styles/utils/typography'
 
 import { Animated } from 'react-native'
+import { BoldArrow } from 'src/assets/svg/BoldArrow'
 import { Button } from 'src/components/Elements/Button'
 import { Loading } from 'src/assets/animations/Loading'
 import { Shadow } from 'react-native-shadow-2'
@@ -58,8 +59,14 @@ export const TotalPrice = styled.View`
   align-items: center;
 `
 
+export const CheckoutBoldArrow = styled.View`
+  padding-left: 16px;
+`
+
 export const CheckoutButton = styled(Button)`
   min-width: 0px;
+  flex: 1;
+  max-height: 58px;
 `
 
 export const BottomSheetContainer = styled.View`

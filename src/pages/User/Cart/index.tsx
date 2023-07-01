@@ -1,3 +1,4 @@
+import * as SearchStyled from '../Search/Search.styles'
 import * as Styled from './Cart.styles'
 
 import { Animated, Easing } from 'react-native'
@@ -17,11 +18,13 @@ import { BoldArrow } from 'src/assets/svg/BoldArrow'
 import BottomSheet from '@gorhom/bottom-sheet'
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types'
 import { CartStackParamList } from 'src/navigators/CartNavigator/CartNavigator.types'
+import { ClipBoards } from 'src/assets/svg/Clipboards'
 import { MiniProduct } from 'src/components/Elements/MiniProduct'
 import { RemoveItemSheet } from './components/RemoveItemSheet'
 import { Shadow } from 'react-native-shadow-2'
 import { StackScreenProps } from '@react-navigation/stack'
 import { theme } from 'src/styles/theme'
+import { useHideTab } from 'src/hooks/useHideTab'
 
 export const Cart = ({
   navigation,
@@ -36,6 +39,7 @@ export const Cart = ({
   const [dots, setDots] = useState('.')
   const [loading, setLoading] = useState(false)
   const slideInAnim = useRef(new Animated.Value(-200)).current
+  useHideTab({ customStyles: { backgroundColor: theme.darkColors.dark1 } })
 
   const slidInAnimationHandler = useMemo(() => {
     return Animated.timing(slideInAnim, {
@@ -86,6 +90,7 @@ export const Cart = ({
   }
 
   const totalCost = useMemo(() => {
+    if (cartProducts?.length === 0) return
     let newTotalCost = 0
     cartProducts.map((product: productWithQuantityType) => {
       newTotalCost += product.quantity * product.price
@@ -96,7 +101,12 @@ export const Cart = ({
   const getCartProducts = useCallback(async () => {
     toggleLoading()
     const { data, error } = await getProductsFromCart()
-    setCartProducts(data)
+    if (error) {
+      setModalErrorText(
+        `There was an error when trying to get your cart items. Error code: ${error?.code}`
+      )
+    }
+    setCartProducts(data ? data : [])
     toggleLoading()
   }, [])
 
@@ -156,7 +166,6 @@ export const Cart = ({
     },
     [setModalErrorText, setCartProducts, slidInAnimationHandler]
   )
-
   return (
     <>
       <Styled.UpdatingProducts
@@ -186,25 +195,39 @@ export const Cart = ({
           paddingBottom: 50,
         }}
       >
-        {cartProducts.map((item: productWithQuantityType) => (
-          <MiniProduct
-            key={item.id}
-            handleQuantityChange={handleQuantityChange}
-            productInfo={item}
-            initialQuantity={item.quantity}
-            handleDelete={handleProductDelete}
-          />
-        ))}
+        {cartProducts.length > 0 ? (
+          cartProducts?.map((item: productWithQuantityType) => (
+            <MiniProduct
+              key={item.id}
+              handleQuantityChange={handleQuantityChange}
+              productInfo={item}
+              initialQuantity={item.quantity}
+              handleDelete={handleProductDelete}
+            />
+          ))
+        ) : (
+          <SearchStyled.NothingFoundContainer>
+            <ClipBoards />
+            <SearchStyled.NothingFoundInfo>
+              <SearchStyled.NothingFoundTitle>
+                Your cart is empty
+              </SearchStyled.NothingFoundTitle>
+              <SearchStyled.NothingFoundDesc>
+                You don't have any items added to cart yet. You need to add
+                items to cart before checkout.
+              </SearchStyled.NothingFoundDesc>
+            </SearchStyled.NothingFoundInfo>
+          </SearchStyled.NothingFoundContainer>
+        )}
       </Styled.Container>
-      <Shadow
-        startColor={'#00000050'}
-        containerStyle={{ height: 110 }}
-        stretch
-        offset={[0, -5]}
-        style={{ height: 110, borderRadius: 20 }}
-      >
+      {cartProducts.length > 0 && (
         <BottomSheet
-          backgroundStyle={{ backgroundColor: theme.darkColors.dark2 }}
+          backgroundStyle={{
+            backgroundColor: theme.darkColors.dark2,
+            borderRadius: 32,
+            borderWidth: 1,
+            borderColor: theme.darkColors.dark3,
+          }}
           snapPoints={[110]}
           enableOverDrag={false}
           handleStyle={{ display: 'none' }}
@@ -219,14 +242,19 @@ export const Cart = ({
                 style: { borderRadius: 20 },
                 containerStyle: { flex: 1, minWidth: undefined },
               }}
-              enableShadow
+              enableShadow={!loading}
+              disabled={cartProducts.length <= 0 || loading}
+              loading={loading}
+              onPress={() => navigation.navigate('Checkout')}
             >
-              Check out
-              <BoldArrow />
+              Checkout
+              <Styled.CheckoutBoldArrow>
+                <BoldArrow />
+              </Styled.CheckoutBoldArrow>
             </Styled.CheckoutButton>
           </Styled.BottomSheetContainer>
         </BottomSheet>
-      </Shadow>
+      )}
       <RemoveItemSheet
         refreshProducts={() => handleRemoveProductRefresh()}
         selectedProduct={selectedProduct}

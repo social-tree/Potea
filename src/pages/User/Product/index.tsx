@@ -25,7 +25,6 @@ export const Product = ({
   navigation,
 }: StackScreenProps<HomeStackParamList, 'Product'>) => {
   useHideTab({ hide: true })
-  const { setModalErrorText } = useContext(AppContext)
   const width = Dimensions.get('window').width
   const [productInfo, setProductInfo] = useState<productType>({
     id: 0,
@@ -38,7 +37,7 @@ export const Product = ({
     average_rating: 0,
     reviews_amount: 0,
   })
-  const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
+  const { addProductToFavorites, favoriteProducts, setModalErrorText } = useContext(AppContext)
   const carouselRef = useRef(null)
   const { id } = route.params
   const [focusedImage, setFocusedImage] = useState(0)
@@ -58,6 +57,16 @@ export const Product = ({
   const handleQuantity = (type: 'add' | 'rem') => {
     type === 'add' && setQuantity((prev) => prev + 1)
     type === 'rem' && quantity !== 1 && setQuantity((prev) => prev - 1)
+  }
+
+  const handleAddProductToCart = async () => {
+    const { data, error } = await addProductToCart({ id, quantity })
+    console.log(error)
+    if (error) {
+      setModalErrorText(
+        `there was an error trying to add product to cart. error code: ${error.code}`
+      )
+    }
   }
 
   return (
@@ -138,7 +147,7 @@ export const Product = ({
           <Button
             shadowProps={{ containerStyle: { flex: 1 } }}
             enableShadow={true}
-            onPress={() => addProductToCart({ id, quantity })}
+            onPress={() => handleAddProductToCart()}
           >
             <Styled.ButtonContent>
               <Bag fill={theme.other.white} />

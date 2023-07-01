@@ -7,7 +7,7 @@ import { Trash } from 'src/assets/svg/Trash'
 import { productWithQuantityType } from 'src/types/product'
 
 interface Props extends ViewProps {
-  handleDelete: (product: productWithQuantityType) => void
+  handleDelete?: (product: productWithQuantityType) => void
   disableDelete?: boolean
   disableChangeQuantity?: boolean
   initialQuantity?: number

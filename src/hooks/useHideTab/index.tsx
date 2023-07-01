@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 
 import { UserTabBarStyle } from 'src/navigators/UserNavigator'
+import { ViewStyle } from 'react-native'
 import { theme } from 'src/styles/theme'
 import { useNavigation } from '@react-navigation/native'
 
 interface Props {
   hide?: boolean
+  customStyles?: ViewStyle
 }
 
-export const useHideTab = ({ hide }: Props) => {
+export const useHideTab = ({ hide, customStyles }: Props) => {
   const { getParent } = useNavigation()
 
   useEffect(() => {
@@ -17,27 +19,28 @@ export const useHideTab = ({ hide }: Props) => {
     hide
       ? parent?.setOptions({
           tabBarStyle: {
+            ...customStyles,
             ...UserTabBarStyle,
             display: 'none',
           },
         })
       : parent?.setOptions({
           tabBarStyle: {
+            ...customStyles,
             ...UserTabBarStyle,
             display: 'flex',
           },
         })
 
     return () => {
-      hide &&
-        parent?.setOptions({
-          tabBarStyle: {
-            ...UserTabBarStyle,
-            display: 'flex',
-          },
-        })
+      parent?.setOptions({
+        tabBarStyle: {
+          ...UserTabBarStyle,
+          display: 'flex',
+        },
+      })
     }
-  }, [getParent])
+  }, [getParent, hide, customStyles])
 
   return {}
 }
