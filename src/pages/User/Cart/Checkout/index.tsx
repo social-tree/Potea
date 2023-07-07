@@ -20,18 +20,18 @@ import { Button } from 'src/components/Elements/Button'
 import { CartStackParamList } from 'src/navigators/CartNavigator/CartNavigator.types'
 import { Easing } from 'react-native'
 import { EditPen } from 'src/assets/svg/EditPen'
-import { LocationPin } from 'src/assets/svg/LocationPin'
+import { Ionicons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { MiniProduct } from 'src/components/Elements/MiniProduct'
 import { Shadow } from 'react-native-shadow-2'
 import { StackScreenProps } from '@react-navigation/stack'
-import { Truck } from 'src/assets/svg/Truck'
 import { getProductsFromCart } from 'src/api/cart'
 import { productWithQuantityType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
-import { useHideTab } from 'src/hooks/useHideTab'
 
 export const Checkout = ({
   navigation,
+  route,
 }: StackScreenProps<CartStackParamList, 'Checkout'>) => {
   const [cartProducts, setCartProducts] = useState<
     productWithQuantityType[] | []
@@ -39,7 +39,6 @@ export const Checkout = ({
   const [loading, setLoading] = useState(false)
   const [dots, setDots] = useState('.')
   const slideInAnim = useRef(new Animated.Value(-200)).current
-  useHideTab({ hide: true })
   const [shippingType, setShippingType] = useState({
     type: '',
     price: 0,
@@ -100,7 +99,10 @@ export const Checkout = ({
       setModalErrorText(
         `There was an error when trying to get your cart items. Error code: ${error?.code}`
       )
+      navigation.navigate('Cart')
     }
+    if (!data && data.length <= 0) navigation.navigate('Cart')
+
     setCartProducts(data ? data : [])
     toggleLoading()
   }, [])
@@ -151,7 +153,11 @@ export const Checkout = ({
                   endColor={`${theme.primary[500]}20`}
                 >
                   <Styled.ShippingInfoIcon>
-                    <LocationPin width={20} height={20} />
+                    <Ionicons
+                      name="ios-location-sharp"
+                      size={20}
+                      color="white"
+                    />
                   </Styled.ShippingInfoIcon>
                 </Shadow>
                 <Styled.ShippingInfo>
@@ -180,8 +186,14 @@ export const Checkout = ({
           <>
             <Styled.Line />
             <Styled.CheckoutTitle>Choose Shipping</Styled.CheckoutTitle>
-            <Styled.ChooseShippingButton>
-              <Truck />
+            <Styled.ChooseShippingButton
+              onPress={() => navigation.navigate('ChooseShipping')}
+            >
+              <MaterialCommunityIcons
+                name="truck"
+                size={24}
+                color={theme.primary[500]}
+              />
               <Styled.ChooseShippingText>
                 Choose Shipping Type{' '}
               </Styled.ChooseShippingText>

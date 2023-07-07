@@ -15,6 +15,7 @@ import { Chip } from 'src/components/Form/Elements/Chip'
 import { Heart } from 'src/assets/svg/Heart'
 import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { Misc } from 'src/assets/svg/Misc'
+import { Octicons } from '@expo/vector-icons'
 import { Product } from 'src/components/Elements/Product'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native'
@@ -27,8 +28,6 @@ import styled from 'styled-components/native'
 import { theme } from 'src/styles/theme'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useForm } from 'react-hook-form'
-import { useHideTab } from 'src/hooks/useHideTab'
-import { useNavigation } from '@react-navigation/native'
 
 export const Home = ({
   navigation,
@@ -39,7 +38,6 @@ export const Home = ({
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
   const bottomTabBarHeight = useBottomTabBarHeight()
-  useHideTab({ hide: false })
   const { user, setModalErrorText } = useContext(AppContext)
 
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)

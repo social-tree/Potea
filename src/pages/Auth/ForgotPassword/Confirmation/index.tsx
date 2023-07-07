@@ -17,8 +17,6 @@ import { SignInWithOtp } from 'src/api/auth/Phone'
 import { StackScreenProps } from '@react-navigation/stack'
 import { supabase } from 'src/utils/supabase'
 import { updateUserInfo } from 'src/api/auth/User'
-import { useHideTab } from 'src/hooks/useHideTab'
-import { verifyUserInfo } from 'src/api/auth/User'
 
 const CELL_COUNT = 6
 
@@ -28,7 +26,6 @@ export const Confirmation = ({
   const { toggleResetPassword } = useContext(AppContext)
   const [time, setTime] = useState(60)
   const [value, setValue] = useState('')
-  useHideTab({ hide: true })
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT })
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,

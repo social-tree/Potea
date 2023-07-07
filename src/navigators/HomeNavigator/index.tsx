@@ -9,10 +9,21 @@ import { Search } from 'src/pages/User/Search'
 import { Wishlist } from 'src/pages/User/Wishlist'
 import { createStackNavigator } from '@react-navigation/stack'
 import styled from 'styled-components/native'
+import { useHideTab } from 'src/hooks/useHideTab'
 
 const { Navigator, Screen } = createStackNavigator<HomeStackParamList>()
+const routesWithoutTabs = [
+  'FillProfile',
+  'Notifications',
+  'Product',
+  'Reviews',
+  'Search',
+  'Notifications',
+  'Wishlist',
+]
 
 const HomeNavigator = () => {
+  useHideTab({ routesToHideTab: routesWithoutTabs })
   return (
     <Navigator
       screenOptions={{

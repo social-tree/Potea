@@ -16,7 +16,6 @@ import { decode } from 'base64-arraybuffer'
 import { supabase } from 'src/utils/supabase'
 import { theme } from 'src/styles/theme'
 import { useForm } from 'react-hook-form'
-import { useHideTab } from 'src/hooks/useHideTab'
 
 export const FillProfile = ({ navigation }) => {
   const {
@@ -30,7 +29,6 @@ export const FillProfile = ({ navigation }) => {
   } = useForm()
 
   const { user, setModalErrorText } = useContext(AppContext)
-  useHideTab({ hide: true })
   const [isDatepickerOpen, setIsDatepickerOpen] = useState(false)
   const [datepickerValue, setDatepickerValue] = useState<Date>(
     new Date(new Date().toDateString())

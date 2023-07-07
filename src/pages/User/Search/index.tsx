@@ -33,7 +33,6 @@ import { TouchableOpacity as TouchableOpacityGesture } from 'react-native-gestur
 import { getProducts } from 'src/api/products'
 import { theme } from 'src/styles/theme'
 import { useForm } from 'react-hook-form'
-import { useHideTab } from 'src/hooks/useHideTab'
 
 export const Search = ({
   route,
@@ -53,7 +52,6 @@ export const Search = ({
   const [priceRange, setPriceRange] = useState([0, 100])
   const { addProductToFavorites, favoriteProducts } = useContext(AppContext)
   const sheetRef = useRef<BottomSheet>(null)
-  useHideTab({ hide: true })
   const selectedFilters = route.params?.selectedFilters
 
   const handleSearch = async ({

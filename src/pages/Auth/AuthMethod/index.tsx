@@ -2,11 +2,10 @@ import * as Styled from './AuthMethod.styles'
 
 import { SafeAreaView, StatusBar } from 'react-native'
 
-import { Apple } from 'src/assets/svg/Apple'
+import { AntDesign } from '@expo/vector-icons'
 import { Button } from 'src/components/Elements/Button'
 import { ChoiceSplit } from 'src/components/Elements/ChoiceSplit'
-import { Facebook } from 'src/assets/svg/Facebook'
-import { Google } from 'src/assets/svg/Google'
+import { FontAwesome5 } from '@expo/vector-icons'
 import { Provider } from '@supabase/supabase-js'
 import React from 'react'
 import { SocialLogin } from 'src/api/auth'
@@ -38,7 +37,8 @@ export const AuthMethod = ({ navigation }) => {
           disabled={loading || true}
           onPress={() => handleSocialLogin('facebook')}
         >
-          <Facebook />
+          <FontAwesome5 name="facebook" size={24} color="white" />
+
           <Styled.SocialLoginText>
             Continue with Facebook
           </Styled.SocialLoginText>
@@ -47,14 +47,14 @@ export const AuthMethod = ({ navigation }) => {
           disabled={loading}
           onPress={() => handleSocialLogin('google')}
         >
-          <Google />
+          <AntDesign name="google" size={24} color="white" />
           <Styled.SocialLoginText>Continue with Google</Styled.SocialLoginText>
         </Styled.SocialLoginButton>
         <Styled.SocialLoginButton
           disabled={loading || true}
           onPress={() => handleSocialLogin('apple')}
         >
-          <Apple />
+          <AntDesign name="apple1" size={24} color="black" />
           <Styled.SocialLoginText>Continue with Apple</Styled.SocialLoginText>
         </Styled.SocialLoginButton>
       </Styled.SocialButtonsContainer>

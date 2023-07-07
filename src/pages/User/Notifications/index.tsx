@@ -4,14 +4,9 @@ import { Dimensions, ScrollView } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
-import { CreditCard } from 'src/assets/svg/CreditCard'
-import { LocationPin } from 'src/assets/svg/LocationPin'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React from 'react'
-import { Sale } from 'src/assets/svg/Sale'
-import { User } from 'src/assets/svg/User'
-import { Wallet } from 'src/assets/svg/Wallet'
 import { useHeaderHeight } from '@react-navigation/elements'
-import { useHideTab } from 'src/hooks/useHideTab'
 
 const screenHeight = Dimensions.get('screen')?.height
 
@@ -19,7 +14,6 @@ export const Notifications = () => {
   const [sortedNotifications, setSortedNotifications] = useState([])
   const [loading, setLoading] = useState(true)
   const headerHeight = useHeaderHeight()
-  useHideTab({ hide: true })
   const notifications = useContext(AppContext).notifications
 
   useEffect(() => {
@@ -77,19 +71,11 @@ export const Notifications = () => {
                 return (
                   <Styled.Notification>
                     <Styled.NotificationIcon>
-                      {type === 'sale' ? (
-                        <Sale />
-                      ) : type === 'wallet' ? (
-                        <Wallet />
-                      ) : type === 'location' ? (
-                        <LocationPin />
-                      ) : type === 'payment' ? (
-                        <CreditCard />
-                      ) : type === 'user' ? (
-                        <User />
-                      ) : (
-                        <></>
-                      )}
+                      <MaterialCommunityIcons
+                        name={type}
+                        size={30}
+                        color="white"
+                      />
                     </Styled.NotificationIcon>
 
                     <Styled.NotificationDetails>

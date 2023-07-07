@@ -1,13 +1,16 @@
 import { Cart } from 'src/pages/User/Cart'
 import { CartStackParamList } from './CartNavigator.types'
 import { Checkout } from 'src/pages/User/Cart/Checkout'
+import { ChooseShipping } from 'src/pages/User/Cart/ChooseShipping'
 import { Logo } from 'src/assets/svg/Leaf'
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import { useHideTab } from 'src/hooks/useHideTab'
 
 const { Navigator, Screen } = createStackNavigator<CartStackParamList>()
-
-const CartNavigator = () => {
+const routesWithoutTabs = ['Checkout', 'ChooseShipping']
+const CartNavigator = (props) => {
+  useHideTab({ routesToHideTab: routesWithoutTabs })
   return (
     <Navigator initialRouteName="Cart">
       <Screen
@@ -29,6 +32,13 @@ const CartNavigator = () => {
         }}
         name="Checkout"
         component={Checkout}
+      />
+      <Screen
+        options={{
+          title: 'Choose Shipping',
+        }}
+        name="ChooseShipping"
+        component={ChooseShipping}
       />
     </Navigator>
   )

@@ -15,18 +15,18 @@ export const allNotifications = [
     date: '2023-04-20T20:45:22.248Z',
     title: 'New Services Available!',
     desc: 'Now you can track orders in real time',
-    type: 'location',
+    type: 'truck',
   },
   {
     date: '2023-04-19T20:45:22.248Z',
     title: 'Credit Card Connected!',
     desc: 'Credit Card has been linked!',
-    type: 'payment',
+    type: 'credit-card',
   },
   {
     date: '2023-04-18T20:45:22.248Z',
     title: 'Account Setup Successful!',
     desc: 'Your account has been created!',
-    type: 'user',
+    type: 'account',
   },
 ]

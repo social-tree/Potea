@@ -24,10 +24,10 @@ import { RemoveItemSheet } from './components/RemoveItemSheet'
 import { Shadow } from 'react-native-shadow-2'
 import { StackScreenProps } from '@react-navigation/stack'
 import { theme } from 'src/styles/theme'
-import { useHideTab } from 'src/hooks/useHideTab'
 
 export const Cart = ({
   navigation,
+  route,
 }: StackScreenProps<CartStackParamList, 'Cart'>) => {
   const sheetRef = useRef<BottomSheetModalMethods>(null)
   const [selectedProduct, setSelectedProduct] =
@@ -39,7 +39,6 @@ export const Cart = ({
   const [dots, setDots] = useState('.')
   const [loading, setLoading] = useState(false)
   const slideInAnim = useRef(new Animated.Value(-200)).current
-  useHideTab({ customStyles: { backgroundColor: theme.darkColors.dark1 } })
 
   const slidInAnimationHandler = useMemo(() => {
     return Animated.timing(slideInAnim, {

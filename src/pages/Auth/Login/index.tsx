@@ -9,13 +9,12 @@ import {
 } from '../CreateAccount/CreateAccount.styles'
 import { SignupButtonText, SignupText } from '../AuthMethod/AuthMethod.styles'
 
-import { Apple } from 'src/assets/svg/Apple'
+import { AntDesign } from '@expo/vector-icons'
 import { Button } from 'src/components/Elements/Button'
 import { Checkbox } from 'src/components/Form/Elements/Checkbox'
 import { ChoiceSplit } from 'src/components/Elements/ChoiceSplit'
 import { Email } from 'src/assets/svg/Email'
-import { Facebook } from 'src/assets/svg/Facebook'
-import { Google } from 'src/assets/svg/Google'
+import { FontAwesome5 } from '@expo/vector-icons'
 import { Input } from 'src/components/Form/Elements/Inputs/Input'
 import { Logo } from 'src/assets/svg/Logo'
 import React from 'react'
@@ -107,13 +106,18 @@ export const Login = ({ navigation }) => {
         <ChoiceSplit />
         <SocialButtons>
           <SocialButton disabled>
-            <Facebook />
+            <FontAwesome5 name="facebook" size={24} color="white" />
           </SocialButton>
           <SocialButton>
-            <Google onPress={() => SocialLogin({ provider: 'google' })} />
+            <AntDesign
+              name="google"
+              size={24}
+              color="white"
+              onPress={() => SocialLogin({ provider: 'google' })}
+            />
           </SocialButton>
           <SocialButton disabled>
-            <Apple />
+            <AntDesign name="apple1" size={24} color="black" />
           </SocialButton>
         </SocialButtons>
         <StyledSignupWrap>

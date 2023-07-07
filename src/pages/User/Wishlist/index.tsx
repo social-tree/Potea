@@ -12,14 +12,12 @@ import { SearchInput } from 'src/components/Form/Elements/Inputs'
 import { allFilters } from 'src/constants/filters'
 import { theme } from 'src/styles/theme'
 import { useForm } from 'react-hook-form'
-import { useHideTab } from 'src/hooks/useHideTab'
 
 export const Wishlist = () => {
   const { control } = useForm()
   const [selectedFilter, setSelectedFilter] = useState('All')
   const [wishlistProducts, setWishlistProducts] = useState([])
   const { favoriteProducts, addProductToFavorites } = useContext(AppContext)
-  useHideTab({ hide: true })
 
   const handleFilterChange = (filter: string) => {
     setSelectedFilter(filter)

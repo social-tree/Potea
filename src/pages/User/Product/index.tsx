@@ -18,13 +18,11 @@ import { addProductToCart } from 'src/api/cart'
 import { getProduct } from 'src/api/products'
 import { productType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
-import { useHideTab } from 'src/hooks/useHideTab'
 
 export const Product = ({
   route,
   navigation,
 }: StackScreenProps<HomeStackParamList, 'Product'>) => {
-  useHideTab({ hide: true })
   const width = Dimensions.get('window').width
   const [productInfo, setProductInfo] = useState<productType>({
     id: 0,
@@ -37,7 +35,8 @@ export const Product = ({
     average_rating: 0,
     reviews_amount: 0,
   })
-  const { addProductToFavorites, favoriteProducts, setModalErrorText } = useContext(AppContext)
+  const { addProductToFavorites, favoriteProducts, setModalErrorText } =
+    useContext(AppContext)
   const carouselRef = useRef(null)
   const { id } = route.params
   const [focusedImage, setFocusedImage] = useState(0)

@@ -1,5 +1,7 @@
 import { Path, Svg, SvgProps } from 'react-native-svg'
 
+import React from 'react'
+
 export const Misc = (props: SvgProps) => {
   return (
     <Svg {...props} width="20" height="20" viewBox="0 0 20 20" fill="none">

@@ -83,7 +83,6 @@ export const RootNavigator = () => {
     }
     checkUserMetaData()
   }, [user, session])
-
   return (
     <>
       {loading && <SplashScreen />}

@@ -52,8 +52,8 @@ export const MiniProduct = ({
           </Styled.MiniProductQuantityValue>
         ) : (
           <Styled.MiniProductQuantity
-            minusProps={{ width: 12 }}
-            plusProps={{ width: 12 }}
+            minusProps={{ size: 12 }}
+            plusProps={{ size: 12 }}
             quantityProps={{ style: { fontSize: 14 } }}
             handleQuantity={handleQuantity}
             value={quantity}

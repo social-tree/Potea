@@ -1,46 +1,43 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
+import {
+  getFocusedRouteNameFromRoute,
+  useFocusEffect,
+} from '@react-navigation/native'
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native'
 
 import { UserTabBarStyle } from 'src/navigators/UserNavigator'
 import { ViewStyle } from 'react-native'
-import { theme } from 'src/styles/theme'
-import { useNavigation } from '@react-navigation/native'
 
 interface Props {
   hide?: boolean
   customStyles?: ViewStyle
+  navigation?: any
+  key?: any
+  routesToHideTab?: string[]
 }
 
-export const useHideTab = ({ hide, customStyles }: Props) => {
-  const { getParent } = useNavigation()
+export const useHideTab = ({ hide, customStyles, routesToHideTab }: Props) => {
+  const navigation = useNavigation()
+  const route = useRoute()
 
-  useEffect(() => {
-    const parent = getParent()
-
-    hide
-      ? parent?.setOptions({
-          tabBarStyle: {
-            ...customStyles,
-            ...UserTabBarStyle,
-            display: 'none',
-          },
-        })
-      : parent?.setOptions({
-          tabBarStyle: {
-            ...customStyles,
-            ...UserTabBarStyle,
-            display: 'flex',
-          },
-        })
-
-    return () => {
+  useFocusEffect(() => {
+    console.log('ran')
+    const parent = navigation
+    if (routesToHideTab.includes(getFocusedRouteNameFromRoute(route))) {
       parent?.setOptions({
-        tabBarStyle: {
-          ...UserTabBarStyle,
-          display: 'flex',
-        },
+        tabBarStyle: { ...customStyles, ...UserTabBarStyle, display: 'none' },
+      })
+    } else {
+      parent?.setOptions({
+        tabBarStyle: { ...customStyles, ...UserTabBarStyle, display: 'flex' },
       })
     }
-  }, [getParent, hide, customStyles])
+    return () => {
+      parent?.setOptions({
+        tabBarStyle: { ...customStyles, ...UserTabBarStyle, display: 'flex' },
+      })
+    }
+  })
 
   return {}
 }
