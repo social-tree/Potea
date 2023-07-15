@@ -1,7 +1,7 @@
 import {
   HeadingFive,
   HeadingSix,
-  ParagraphM,
+  ParagraphS,
 } from 'src/styles/utils/typography'
 
 import styled from 'styled-components/native'
@@ -14,7 +14,7 @@ export const ShippingTypePrice = styled.Text`
 `
 
 export const ShippingTypeDesc = styled.Text`
-  ${ParagraphM}
+  ${ParagraphS}
   color: ${({ theme }) => theme.other.white};
 `
 

@@ -22,8 +22,10 @@ import { Easing } from 'react-native'
 import { EditPen } from 'src/assets/svg/EditPen'
 import { Ionicons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MiniCard } from 'src/components/Elements/MiniCard'
 import { MiniProduct } from 'src/components/Elements/MiniProduct'
 import { Shadow } from 'react-native-shadow-2'
+import { ShippingTypeType } from 'src/types/shippingTypes'
 import { StackScreenProps } from '@react-navigation/stack'
 import { getProductsFromCart } from 'src/api/cart'
 import { productWithQuantityType } from 'src/types/product'
@@ -39,11 +41,9 @@ export const Checkout = ({
   const [loading, setLoading] = useState(false)
   const [dots, setDots] = useState('.')
   const slideInAnim = useRef(new Animated.Value(-200)).current
-  const [shippingType, setShippingType] = useState({
-    type: '',
-    price: 0,
-  })
   const { setModalErrorText } = useContext(AppContext)
+  const selectedShippingType = route.params as ShippingTypeType
+  console.log(selectedShippingType)
 
   const slidInAnimationHandler = useMemo(() => {
     return Animated.timing(slideInAnim, {
@@ -103,7 +103,7 @@ export const Checkout = ({
     }
     if (!data && data.length <= 0) navigation.navigate('Cart')
 
-    setCartProducts(data ? data : [])
+    setCartProducts(data || [])
     toggleLoading()
   }, [])
 
@@ -140,35 +140,30 @@ export const Checkout = ({
           paddingHorizontal: 24,
           paddingBottom: 110,
         }}
+        style={{ width: '100%' }}
         ListFooterComponentStyle={{ gap: 24 }}
         ListHeaderComponent={() => (
           <>
             <Styled.CheckoutTitle>Shipping Address</Styled.CheckoutTitle>
-            <Shadow stretch style={{ borderRadius: 24 }} startColor="#00000037">
-              <Styled.ShippingInfoCard>
-                <Shadow
-                  style={{ borderRadius: 20 }}
-                  distance={6}
-                  startColor={`${theme.primary[500]}20`}
-                  endColor={`${theme.primary[500]}20`}
-                >
-                  <Styled.ShippingInfoIcon>
-                    <Ionicons
-                      name="ios-location-sharp"
-                      size={20}
-                      color="white"
-                    />
-                  </Styled.ShippingInfoIcon>
-                </Shadow>
-                <Styled.ShippingInfo>
-                  <Styled.ShippingInfoTitle>Home</Styled.ShippingInfoTitle>
-                  <Styled.ShippingInfoAddress>
-                    61480 Sunbrook Park, PC 5679
-                  </Styled.ShippingInfoAddress>
-                </Styled.ShippingInfo>
-                <EditPen />
-              </Styled.ShippingInfoCard>
-            </Shadow>
+            <MiniCard onPress={() => navigation.navigate('ShippingAddress')}>
+              <Shadow
+                style={{ borderRadius: 20 }}
+                distance={6}
+                startColor={`${theme.primary[500]}20`}
+                endColor={`${theme.primary[500]}20`}
+              >
+                <Styled.ShippingInfoIcon>
+                  <Ionicons name="ios-location-sharp" size={20} color="white" />
+                </Styled.ShippingInfoIcon>
+              </Shadow>
+              <Styled.ShippingInfo>
+                <Styled.ShippingInfoTitle>Home</Styled.ShippingInfoTitle>
+                <Styled.ShippingInfoAddress>
+                  61480 Sunbrook Park, PC 5679
+                </Styled.ShippingInfoAddress>
+              </Styled.ShippingInfo>
+              <EditPen />
+            </MiniCard>
             <Styled.Line />
             <Styled.CheckoutTitle>Order List</Styled.CheckoutTitle>
           </>
@@ -208,15 +203,17 @@ export const Checkout = ({
               <Styled.TotalAmountRow>
                 <Styled.TotalAmountTitle>Shipping</Styled.TotalAmountTitle>
                 <Styled.TotalAmountValue>
-                  {shippingType.price ? `$${shippingType.price}` : `-`}
+                  {selectedShippingType?.price
+                    ? `$${selectedShippingType?.price}`
+                    : `-`}
                 </Styled.TotalAmountValue>
               </Styled.TotalAmountRow>
               <Styled.Line />
               <Styled.TotalAmountRow>
                 <Styled.TotalAmountTitle>Total</Styled.TotalAmountTitle>
                 <Styled.TotalAmountValue>
-                  {shippingType.price && totalCost
-                    ? `$${shippingType.price + totalCost}`
+                  {selectedShippingType?.price && totalCost
+                    ? `$${selectedShippingType?.price + totalCost}`
                     : `-`}
                 </Styled.TotalAmountValue>
               </Styled.TotalAmountRow>

@@ -1,6 +1,7 @@
 import * as Styled from './Reviews.styles'
 
 import React, { useContext, useEffect, useState } from 'react'
+import { reviewType, reviewWithUserType } from 'src/types/review'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { Chip } from 'src/components/Form/Elements/Chip'
@@ -13,14 +14,13 @@ import { ScrollView } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { allRatings } from 'src/constants/ratings'
 import { getReviews } from 'src/api/reviews'
-import { reviewType } from 'src/types/review'
 import { theme } from 'src/styles/theme'
 
 export const Reviews = ({
   route,
 }: StackScreenProps<HomeStackParamList, 'Reviews'>) => {
   const [ratingFilter, setRatingFilter] = useState(0)
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState<reviewWithUserType[] | []>([])
 
   const { setModalErrorText } = useContext(AppContext)
 
@@ -34,7 +34,7 @@ export const Reviews = ({
         filterByRating: ratingFilter,
       })
 
-      if (data) setReviews(data)
+      if (data) setReviews(data as reviewWithUserType[])
       if (error)
         setModalErrorText(
           `An error occurred while trying to get product reviews. error code: ${error.code}`
@@ -88,7 +88,7 @@ export const Reviews = ({
       )}
       <FlatList
         contentContainerStyle={{ gap: 24 }}
-        renderItem={({ item }: { item: reviewType }) => (
+        renderItem={({ item }: { item: reviewWithUserType }) => (
           <Review
             userInfo={item.userInfo}
             createdDate={item.created_at}

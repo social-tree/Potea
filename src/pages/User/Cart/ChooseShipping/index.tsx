@@ -1,56 +1,36 @@
 import * as CheckoutStyled from '../Checkout/Checkout.styles'
 import * as Styled from './ChooseShipping.styles'
 
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
+import { AppContext } from 'src/contexts/AppContext'
 import BottomSheet from '@gorhom/bottom-sheet'
-import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { Button } from 'src/components/Elements/Button'
 import { CartStackParamList } from 'src/navigators/CartNavigator/CartNavigator.types'
+import { Checkbox } from 'src/components/Form/Elements/Checkbox'
 import { FlatList } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MiniCard } from 'src/components/Elements/MiniCard'
 import { ShippingTypeType } from 'src/types/shippingTypes'
 import { StackScreenProps } from '@react-navigation/stack'
+import { getShippingTypes } from 'src/api/shippingTypes'
 import { theme } from 'src/styles/theme'
 
 export const ChooseShipping = ({
   navigation,
   route,
 }: StackScreenProps<CartStackParamList, 'ChooseShipping'>) => {
-  const [selectedShippingType, setSelectedShippingType] = useState({
-    iconName: '',
-    title: '',
-    estimated_arrival_time: '',
-    price: 0,
-  })
-  const [shippingTypes, setSelectedShippingTypes] = useState<
-    ShippingTypeType[] | []
-  >([
-    {
-      iconName: 'sale',
-      title: 'Economy',
-      estimated_arrival_time: '3-6',
-      price: 20,
-    },
-    {
-      iconName: 'package-variant-closed',
-      title: 'Regular',
-      estimated_arrival_time: '3-5',
-      price: 20,
-    },
-    {
-      iconName: 'truck',
-      title: 'Cargo',
-      estimated_arrival_time: '2-3',
-      price: 20,
-    },
-    {
-      iconName: 'truck-fast',
-      title: 'Express',
-      estimated_arrival_time: '1-2',
-      price: 20,
-    },
-  ])
+  const [selectedShippingType, setSelectedShippingType] =
+    useState<ShippingTypeType>({
+      iconName: '',
+      title: '',
+      estimated_arrival_time: '',
+      price: 0,
+    })
+  const [shippingTypes, setShippingTypes] = useState<ShippingTypeType[] | []>(
+    []
+  )
+  const { setLoading } = useContext(AppContext)
 
   const changeShippingType = (shippingType: ShippingTypeType) => {
     setSelectedShippingType((prev) => ({ ...shippingType }))
@@ -65,15 +45,24 @@ export const ChooseShipping = ({
     }`
   }
 
+  useEffect(() => {
+    const getAllShippingTypes = async () => {
+      setLoading(true)
+      const { data, error } = await getShippingTypes()
+
+      setShippingTypes((data as ShippingTypeType[]) || [])
+      setLoading(false)
+    }
+    getAllShippingTypes()
+  }, [])
+
   return (
     <>
       <FlatList
         contentContainerStyle={{ padding: 24, gap: 24, paddingBottom: 140 }}
         data={shippingTypes}
         renderItem={({ item }: { item: ShippingTypeType }) => (
-          <Styled.ShippingTypeContainer
-            onPress={() => changeShippingType(item)}
-          >
+          <MiniCard onPress={() => changeShippingType(item)}>
             <Styled.ShippingTypeIcon>
               <MaterialCommunityIcons
                 name={item.iconName as any}
@@ -89,16 +78,14 @@ export const ChooseShipping = ({
               </Styled.ShippingTypeDesc>
             </Styled.ShippingTypeInfo>
             <Styled.ShippingTypePrice>${item.price}</Styled.ShippingTypePrice>
-            <BouncyCheckbox
+            <Checkbox
               disableBuiltInState
-              fillColor={theme.primary[500]}
-              iconComponent
               isChecked={selectedShippingType.title === item.title}
               onPress={() => changeShippingType(item)}
               size={20}
-              style={{ width: 20 }}
+              rounded
             />
-          </Styled.ShippingTypeContainer>
+          </MiniCard>
         )}
       ></FlatList>
       <BottomSheet
@@ -119,7 +106,9 @@ export const ChooseShipping = ({
               containerStyle: { flex: 1, minWidth: undefined },
             }}
             disabled={!selectedShippingType.title}
-            onPress={() => navigation.navigate('Checkout')}
+            onPress={() =>
+              navigation.navigate('Checkout', { ...selectedShippingType })
+            }
           >
             Apply
           </Button>

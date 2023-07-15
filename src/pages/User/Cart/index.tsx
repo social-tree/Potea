@@ -105,7 +105,7 @@ export const Cart = ({
         `There was an error when trying to get your cart items. Error code: ${error?.code}`
       )
     }
-    setCartProducts(data ? data : [])
+    setCartProducts(data || [])
     toggleLoading()
   }, [])
 

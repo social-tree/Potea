@@ -3,16 +3,14 @@ import * as Styled from './Review.styles'
 import { RatingStar } from 'src/assets/svg/RatingStar'
 import React from 'react'
 import { getDateDifference } from 'src/helpers/getDateDifference'
+import { reviewWithUserType } from 'src/types/review'
 import { storageSupabaseURL } from 'src/utils/supabase'
 
 interface Props {
   rating: number
   description: string
   createdDate: string
-  userInfo: {
-    avatar: string
-    nickname: string
-  }
+  userInfo: reviewWithUserType['userInfo']
 }
 
 export const Review = ({

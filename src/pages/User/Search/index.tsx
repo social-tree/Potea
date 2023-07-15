@@ -31,6 +31,7 @@ import { SquareCross } from 'src/assets/svg/SquareCross'
 import { StackScreenProps } from '@react-navigation/stack'
 import { TouchableOpacity as TouchableOpacityGesture } from 'react-native-gesture-handler'
 import { getProducts } from 'src/api/products'
+import { productWithRatingType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
 import { useForm } from 'react-hook-form'
 
@@ -39,7 +40,7 @@ export const Search = ({
 }: StackScreenProps<HomeStackParamList, 'Search'>) => {
   const { control, watch, handleSubmit, setValue, reset } = useForm()
   const [allRecentSearches, setAllRecentSearches] = useState([])
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<productWithRatingType[] | []>([])
   const [searchInputFocused, setSearchInputFocused] = useState(true)
   const [loading, setLoading] = useState(false)
   const [isRecentSearchesFocused, setIsRecentSearchesFocused] = useState(false)

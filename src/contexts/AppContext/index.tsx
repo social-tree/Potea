@@ -25,8 +25,10 @@ export const AppContext = createContext({
   setModalErrorText: (error: string) => {},
   modalErrorText: '',
   closeErrorModal: () => {},
-  loading: true,
+  loading: false,
+  splashLoading: true,
   setLoading: (state: boolean) => {},
+  setSplashLoading: (state: boolean) => {},
 })
 
 export const AppProvider = ({ children }) => {
@@ -35,7 +37,8 @@ export const AppProvider = ({ children }) => {
   const [favoriteProducts, setFavoriteProducts] = useState(new Map([]))
   const [user, setUser] = useState<null | UserType>(null)
   const [modalErrorText, setModalErrorText] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [splashLoading, setSplashLoading] = useState(false)
 
   const toggleResetPassword = () => {
     setResetPassword((prev) => (prev ? false : true))
@@ -75,7 +78,7 @@ export const AppProvider = ({ children }) => {
           setUser((prev) => {
             return {
               ...prev,
-              user_metadata: userInfo as UserMetaData,
+              user_metadata: userInfo,
             }
           })
         })
@@ -119,6 +122,8 @@ export const AppProvider = ({ children }) => {
         closeErrorModal,
         setLoading,
         loading,
+        splashLoading,
+        setSplashLoading,
       }}
     >
       <GestureHandlerRootView style={{ flex: 1 }}>

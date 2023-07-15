@@ -1,6 +1,7 @@
 import * as Styled from './Product.styles'
 
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import { productType, productWithRatingType } from 'src/types/product'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { Bag } from 'src/assets/svg/Bag'
@@ -16,7 +17,6 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { addProductToCart } from 'src/api/cart'
 import { getProduct } from 'src/api/products'
-import { productType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
 
 export const Product = ({
@@ -24,17 +24,9 @@ export const Product = ({
   navigation,
 }: StackScreenProps<HomeStackParamList, 'Product'>) => {
   const width = Dimensions.get('window').width
-  const [productInfo, setProductInfo] = useState<productType>({
-    id: 0,
-    image: [''],
-    name: '',
-    price: 0,
-    description: '',
-    sold_amount: 0,
-    count: 0,
-    average_rating: 0,
-    reviews_amount: 0,
-  })
+  const [productInfo, setProductInfo] = useState<productWithRatingType | null>(
+    null
+  )
   const { addProductToFavorites, favoriteProducts, setModalErrorText } =
     useContext(AppContext)
   const carouselRef = useRef(null)
@@ -44,7 +36,7 @@ export const Product = ({
   useEffect(() => {
     const getProductInfo = async () => {
       const { data, error } = await getProduct({ id: id })
-      if (data) setProductInfo(data as productType)
+      if (data) setProductInfo(data as productWithRatingType)
       if (error)
         setModalErrorText(
           `An error occurred while trying to get product information. error code: ${error.code}`
@@ -59,8 +51,7 @@ export const Product = ({
   }
 
   const handleAddProductToCart = async () => {
-    const { data, error } = await addProductToCart({ id, quantity })
-    console.log(error)
+    const { error } = await addProductToCart({ id, quantity })
     if (error) {
       setModalErrorText(
         `there was an error trying to add product to cart. error code: ${error.code}`

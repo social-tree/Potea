@@ -1,11 +1,12 @@
 import * as Styled from './Product.styles'
 
+import { productType, productWithRatingType } from 'src/types/product'
+
 import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { RatingStar } from 'src/assets/svg/RatingStar'
 import React from 'react'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { TouchableHighlight } from 'react-native'
-import { productType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
 import { useNavigation } from '@react-navigation/native'
 
@@ -14,7 +15,7 @@ interface Props {
   handleAddToFavorites?: (product: productType) => void
   style?: any
   liked: boolean
-  product: productType
+  product: productWithRatingType
 }
 
 export const Product = ({

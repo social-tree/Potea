@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
+import { productType, productWithRatingType } from 'src/types/product'
 import { storageSupabaseURL, supabase } from 'src/utils/supabase'
 
 import { AppContext } from 'src/contexts/AppContext'
@@ -35,7 +36,7 @@ export const Home = ({
   const { control } = useForm()
   const [selectedFilter, setSelectedFilter] = useState('All')
   const [specialOffers, setSpecialOffers] = useState([])
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<productWithRatingType[] | []>([])
   const [loading, setLoading] = useState(false)
   const bottomTabBarHeight = useBottomTabBarHeight()
   const { user, setModalErrorText } = useContext(AppContext)
