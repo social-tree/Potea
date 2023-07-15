@@ -1,6 +1,4 @@
-export type ShippingTypeType = {
-  iconName: string
-  title: string
-  estimated_arrival_time: string
-  price: number
-}
+import { Database } from './supabase'
+
+export type ShippingTypeType =
+  Database['public']['Tables']['shippingTypes']['Row']

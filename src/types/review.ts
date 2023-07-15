@@ -1,12 +1,3 @@
-export type reviewType = {
-  id: number
-  created_at: string
-  rating: number
-  description: string
-  user_id: string
-  product_id: number
-  userInfo: {
-    avatar: string
-    nickname: string
-  }
-}
+import { Database } from './supabase'
+
+export type reviewType = Database['public']['Tables']['reviews']['Row']
