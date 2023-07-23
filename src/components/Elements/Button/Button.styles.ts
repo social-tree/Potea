@@ -17,9 +17,10 @@ export const Container = styled(Shadow)`
 
 export const StyledTouchableOpacity = styled.TouchableOpacity<{
   loading: boolean
+  disabled?: boolean
 }>`
-  background: ${({ theme, loading }) =>
-    loading ? theme.greyscale['800'] : theme.primary['500']};
+  background: ${({ theme, loading, disabled }) =>
+    loading || disabled ? theme.greyscale['800'] : theme.primary['500']};
   border-radius: 100px;
   display: flex;
   align-items: center;

@@ -1,8 +1,10 @@
 import { Bag } from 'src/assets/svg/Bag'
-import { Cart } from 'src/pages/User/Cart'
+import { Cart } from 'src/assets/svg/Cart'
 import CartNavigator from '../CartNavigator'
+import { FillProfile } from 'src/pages/User/FillProfile'
 import { Home as HomeIcon } from 'src/assets/svg/Home'
 import HomeNavigator from '../HomeNavigator'
+import OrdersNavigator from '../OrdersNavigator'
 import { Platform } from 'react-native'
 import React from 'react'
 import { ResetPassword } from 'src/pages/User/ResetPassword'
@@ -33,10 +35,11 @@ export const UserTabBarStyle = {
 const UserNavigator = () => {
   return (
     <Navigator
-      initialRouteName="CartNav"
+      initialRouteName="OrdersNav"
       screenOptions={({ route }) => {
         const toExclude: (typeof route.name)[] = [
           'ResetPassword',
+          'FillProfile',
           'FillProfile',
         ]
         return {
@@ -68,6 +71,11 @@ const UserNavigator = () => {
         component={HomeNavigator}
       />
       <Screen
+        options={{ headerLeft: () => <></>, headerTitle: 'Fill Your Profile' }}
+        name="FillProfile"
+        component={FillProfile}
+      />
+      <Screen
         options={{
           title: 'Create New Password',
           tabBarStyle: { display: 'none' },
@@ -83,6 +91,24 @@ const UserNavigator = () => {
         }}
         name="CartNav"
         component={CartNavigator}
+      />
+      <Screen
+        options={{
+          headerShown: false,
+          title: 'Orders',
+          tabBarIcon: (props) => <Cart {...UserNavIconProps(props)} />,
+        }}
+        name="OrdersNav"
+        component={OrdersNavigator}
+      />
+      <Screen
+        options={{
+          headerShown: false,
+          title: 'Wallet',
+          tabBarIcon: (props) => <Cart {...UserNavIconProps(props)} />,
+        }}
+        name="WalletNav"
+        component={OrdersNavigator}
       />
     </Navigator>
   )

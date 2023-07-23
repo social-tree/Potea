@@ -21,7 +21,6 @@ export const useHideTab = ({ hide, customStyles, routesToHideTab }: Props) => {
   const route = useRoute()
 
   useFocusEffect(() => {
-    console.log('ran')
     const parent = navigation
     if (routesToHideTab.includes(getFocusedRouteNameFromRoute(route))) {
       parent?.setOptions({

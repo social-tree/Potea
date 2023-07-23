@@ -1,12 +1,12 @@
 import { FillProfile } from 'src/pages/User/FillProfile'
 import { Home } from 'src/pages/User/Home'
 import { HomeStackParamList } from './HomeNavigator.types'
-import { Notifications } from 'src/pages/User/Notifications'
-import { Product } from 'src/pages/User/Product'
+import { Notifications } from 'src/pages/User/Home/Notifications'
+import { Product } from 'src/pages/User/Home/Product'
 import React from 'react'
-import { Reviews } from 'src/pages/User/Reviews'
-import { Search } from 'src/pages/User/Search'
-import { Wishlist } from 'src/pages/User/Wishlist'
+import { Reviews } from 'src/pages/User/Home/Reviews'
+import { Search } from 'src/pages/User/Home/Search'
+import { Wishlist } from 'src/pages/User/Home/Wishlist'
 import { createStackNavigator } from '@react-navigation/stack'
 import styled from 'styled-components/native'
 import { useHideTab } from 'src/hooks/useHideTab'
@@ -48,11 +48,6 @@ const HomeNavigator = () => {
         }}
         name="Product"
         component={Product}
-      />
-      <Screen
-        options={{ headerLeft: () => <></>, headerTitle: 'Fill Your Profile' }}
-        name="FillProfile"
-        component={FillProfile}
       />
       <Screen
         options={({ route }) => ({ title: route?.params?.name || 'reviews' })}

@@ -2,6 +2,7 @@ import {
   addProductToCartParams,
   changeCartProductQuantityParams,
   deleteCartProductParams,
+  purchaseCartProductsParams,
 } from './cart.types'
 
 import { supabase } from 'src/utils/supabase'
@@ -38,6 +39,16 @@ export const changeCartProductQuantity = async ({
 export const deleteCartProduct = async ({ id }: deleteCartProductParams) => {
   const { data, error } = await supabase.rpc('delete_product_from_cart', {
     product_id: id,
+  })
+
+  return { data, error }
+}
+
+export const purchaseCartProducts = async ({
+  payment_id,
+}: purchaseCartProductsParams) => {
+  const { data, error } = await supabase.rpc('purchase_items', {
+    payment_id,
   })
 
   return { data, error }

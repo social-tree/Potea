@@ -3,4 +3,6 @@ export type UserBottomStackParamList = {
   ResetPassword: undefined
   FillProfile: undefined
   CartNav: undefined
+  OrdersNav: undefined
+  WalletNav: undefined
 }

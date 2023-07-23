@@ -11,3 +11,7 @@ export type changeCartProductQuantityParams = {
 export type deleteCartProductParams = {
   id: number
 }
+
+export type purchaseCartProductsParams = {
+  payment_id: number
+}

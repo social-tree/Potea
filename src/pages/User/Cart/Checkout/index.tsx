@@ -25,6 +25,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { MiniCard } from 'src/components/Elements/MiniCard'
 import { MiniProduct } from 'src/components/Elements/MiniProduct'
 import { Shadow } from 'react-native-shadow-2'
+import { ShippingAddressType } from 'src/types/shippingAddress'
 import { ShippingTypeType } from 'src/types/shippingTypes'
 import { StackScreenProps } from '@react-navigation/stack'
 import { getProductsFromCart } from 'src/api/cart'
@@ -40,10 +41,13 @@ export const Checkout = ({
   >([])
   const [loading, setLoading] = useState(false)
   const [dots, setDots] = useState('.')
+  const [selectedShippingAddress, setSelectedShippingAddress] =
+    useState<ShippingAddressType | null>(null)
+  const [selectedShippingType, setSelectedShippingType] =
+    useState<ShippingTypeType | null>(null)
   const slideInAnim = useRef(new Animated.Value(-200)).current
   const { setModalErrorText } = useContext(AppContext)
-  const selectedShippingType = route.params as ShippingTypeType
-  console.log(selectedShippingType)
+  const Params = route.params
 
   const slidInAnimationHandler = useMemo(() => {
     return Animated.timing(slideInAnim, {
@@ -62,6 +66,12 @@ export const Checkout = ({
     })
     return newTotalCost
   }, [cartProducts])
+
+  useEffect(() => {
+    if (Params?.ShippingAddress)
+      setSelectedShippingAddress(Params?.ShippingAddress)
+    if (Params?.ShippingType) setSelectedShippingType(Params?.ShippingType)
+  }, [Params?.ShippingAddress, Params?.ShippingType])
 
   useEffect(() => {
     if (!loading) return
@@ -101,14 +111,16 @@ export const Checkout = ({
       )
       navigation.navigate('Cart')
     }
-    if (!data && data.length <= 0) navigation.navigate('Cart')
+    if (!data && (data as productWithQuantityType[])?.length <= 0)
+      navigation.navigate('Cart')
 
-    setCartProducts(data || [])
+    setCartProducts((data as productWithQuantityType[]) || [])
     toggleLoading()
   }, [])
 
   useEffect(() => {
     getCartProducts()
+    console.log('getting')
   }, [])
 
   return (
@@ -145,7 +157,13 @@ export const Checkout = ({
         ListHeaderComponent={() => (
           <>
             <Styled.CheckoutTitle>Shipping Address</Styled.CheckoutTitle>
-            <MiniCard onPress={() => navigation.navigate('ShippingAddress')}>
+            <MiniCard
+              onPress={() =>
+                navigation.navigate('ShippingAddress', {
+                  ShippingAddress: selectedShippingAddress,
+                })
+              }
+            >
               <Shadow
                 style={{ borderRadius: 20 }}
                 distance={6}
@@ -157,14 +175,23 @@ export const Checkout = ({
                 </Styled.ShippingInfoIcon>
               </Shadow>
               <Styled.ShippingInfo>
-                <Styled.ShippingInfoTitle>Home</Styled.ShippingInfoTitle>
-                <Styled.ShippingInfoAddress>
-                  61480 Sunbrook Park, PC 5679
-                </Styled.ShippingInfoAddress>
+                {selectedShippingAddress?.title ? (
+                  <>
+                    <Styled.ShippingInfoTitle>
+                      {selectedShippingAddress?.title}
+                    </Styled.ShippingInfoTitle>
+                    <Styled.ShippingInfoAddress>
+                      {selectedShippingAddress?.address.slice(0, 28)}
+                    </Styled.ShippingInfoAddress>
+                  </>
+                ) : (
+                  <Styled.ShippingInfoTitle>
+                    Choose An Address
+                  </Styled.ShippingInfoTitle>
+                )}
               </Styled.ShippingInfo>
-              <EditPen />
+              {selectedShippingAddress?.title && <EditPen />}
             </MiniCard>
-            <Styled.Line />
             <Styled.CheckoutTitle>Order List</Styled.CheckoutTitle>
           </>
         )}
@@ -182,15 +209,19 @@ export const Checkout = ({
             <Styled.Line />
             <Styled.CheckoutTitle>Choose Shipping</Styled.CheckoutTitle>
             <Styled.ChooseShippingButton
-              onPress={() => navigation.navigate('ChooseShipping')}
+              onPress={() =>
+                navigation.navigate('ChooseShipping', {
+                  ShippingType: selectedShippingType,
+                })
+              }
             >
               <MaterialCommunityIcons
-                name="truck"
+                name={(selectedShippingType?.icon_name as any) || 'truck'}
                 size={24}
                 color={theme.primary[500]}
               />
               <Styled.ChooseShippingText>
-                Choose Shipping Type{' '}
+                {selectedShippingType?.title || 'Choose Shipping Type'}{' '}
               </Styled.ChooseShippingText>
               <Arrow rotation={180} />
             </Styled.ChooseShippingButton>
@@ -238,10 +269,19 @@ export const Checkout = ({
               style: { borderRadius: 20 },
               containerStyle: { flex: 1, minWidth: undefined },
             }}
-            enableShadow={!loading}
+            enableShadow={
+              selectedShippingAddress?.title &&
+              selectedShippingType?.title &&
+              !loading
+            }
             loading={loading}
-            disabled={cartProducts.length <= 0 || loading}
-            onPress={() => navigation.navigate('Checkout')}
+            disabled={
+              cartProducts.length <= 0 ||
+              loading ||
+              !selectedShippingAddress ||
+              !selectedShippingType
+            }
+            onPress={() => navigation.navigate('PaymentMethods')}
           >
             Continue to Payment
             <Styled.CheckoutBoldArrow>

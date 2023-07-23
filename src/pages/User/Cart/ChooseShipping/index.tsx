@@ -21,16 +21,13 @@ export const ChooseShipping = ({
   route,
 }: StackScreenProps<CartStackParamList, 'ChooseShipping'>) => {
   const [selectedShippingType, setSelectedShippingType] =
-    useState<ShippingTypeType>({
-      iconName: '',
-      title: '',
-      estimated_arrival_time: '',
-      price: 0,
-    })
+    useState<ShippingTypeType | null>(null)
   const [shippingTypes, setShippingTypes] = useState<ShippingTypeType[] | []>(
     []
   )
   const { setLoading } = useContext(AppContext)
+
+  const Params = route.params
 
   const changeShippingType = (shippingType: ShippingTypeType) => {
     setSelectedShippingType((prev) => ({ ...shippingType }))
@@ -44,6 +41,11 @@ export const ChooseShipping = ({
       todaysDate.getDate() + Number(days[1])
     }`
   }
+
+  useEffect(() => {
+    if (!Params?.ShippingType) return
+    setSelectedShippingType(Params?.ShippingType)
+  }, [Params])
 
   useEffect(() => {
     const getAllShippingTypes = async () => {
@@ -65,7 +67,7 @@ export const ChooseShipping = ({
           <MiniCard onPress={() => changeShippingType(item)}>
             <Styled.ShippingTypeIcon>
               <MaterialCommunityIcons
-                name={item.iconName as any}
+                name={item.icon_name as any}
                 size={24}
                 color="white"
               />
@@ -80,7 +82,7 @@ export const ChooseShipping = ({
             <Styled.ShippingTypePrice>${item.price}</Styled.ShippingTypePrice>
             <Checkbox
               disableBuiltInState
-              isChecked={selectedShippingType.title === item.title}
+              isChecked={selectedShippingType?.title === item.title}
               onPress={() => changeShippingType(item)}
               size={20}
               rounded
@@ -105,9 +107,11 @@ export const ChooseShipping = ({
               style: { borderRadius: 20 },
               containerStyle: { flex: 1, minWidth: undefined },
             }}
-            disabled={!selectedShippingType.title}
+            disabled={!selectedShippingType?.title}
             onPress={() =>
-              navigation.navigate('Checkout', { ...selectedShippingType })
+              navigation.navigate('Checkout', {
+                ShippingType: selectedShippingType,
+              })
             }
           >
             Apply

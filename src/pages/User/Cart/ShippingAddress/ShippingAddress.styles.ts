@@ -28,5 +28,3 @@ export const ShippingInfoIcon = styled.View`
   padding: 8px;
   border-radius: 50px;
 `
-
-export const Container = styled.FlatList``

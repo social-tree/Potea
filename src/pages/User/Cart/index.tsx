@@ -1,4 +1,4 @@
-import * as SearchStyled from '../Search/Search.styles'
+import * as SearchStyled from '../Home/Search/Search.styles'
 import * as Styled from './Cart.styles'
 
 import { Animated, Easing } from 'react-native'
@@ -105,7 +105,7 @@ export const Cart = ({
         `There was an error when trying to get your cart items. Error code: ${error?.code}`
       )
     }
-    setCartProducts(data || [])
+    setCartProducts((data as productWithQuantityType[]) || [])
     toggleLoading()
   }, [])
 
@@ -140,7 +140,7 @@ export const Cart = ({
         id,
         type,
       })
-      if (error || !data?.quantity) {
+      if (error || !(data as productWithQuantityType)?.quantity) {
         setModalErrorText(
           `There was an error when trying to update the quantity. Error code: ${error?.code}`
         )
@@ -151,7 +151,10 @@ export const Cart = ({
       setCartProducts((prevProducts) => {
         const updatedProducts = prevProducts.map((product) => {
           if (product.id === id) {
-            return { ...product, quantity: data.quantity }
+            return {
+              ...product,
+              quantity: (data as productWithQuantityType).quantity,
+            }
           }
           return product
         })
@@ -161,7 +164,7 @@ export const Cart = ({
       slidInAnimationHandler.reset()
       toggleLoading()
 
-      return data.quantity
+      return (data as productWithQuantityType).quantity
     },
     [setModalErrorText, setCartProducts, slidInAnimationHandler]
   )

@@ -4,10 +4,13 @@ import { AppContext } from 'src/contexts/AppContext'
 import { AppState } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AuthNavigator from '../AuthNavigator'
+import { Loading } from 'src/assets/animations/Loading'
 import { NavigationContainer } from '@react-navigation/native'
 import { Session } from '@supabase/supabase-js'
 import { SplashScreen } from 'src/pages/SplashScreen'
+import { ThemeConsumer } from 'styled-components'
 import UserNavigator from '../UserNavigator'
+import { View } from 'react-native'
 import { supabase } from 'src/utils/supabase'
 import { theme } from 'src/styles/theme'
 
@@ -17,18 +20,19 @@ export const RootNavigator = () => {
 
   const [session, setSession] = useState<Session | null>(null)
   const { resetPassword } = useContext(AppContext)
-  const { user, loading, setLoading } = useContext(AppContext)
+  const { user, loading, setSplashLoading, splashLoading } =
+    useContext(AppContext)
 
   useEffect(() => {
     const getUserSession = async () => {
-      setLoading(true)
+      setSplashLoading(true)
       await supabase.auth
         .getSession()
         .then(({ data: { session } }) => {
           setSession(session)
         })
         .catch((error) => console.log(error))
-      setLoading(false)
+      setSplashLoading(false)
     }
     getUserSession()
 
@@ -82,10 +86,21 @@ export const RootNavigator = () => {
       }
     }
     checkUserMetaData()
-  }, [user, session])
+  }, [user, session, navigationRef])
   return (
     <>
-      {loading && <SplashScreen />}
+      {loading && (
+        <View
+          style={{
+            height: '100%',
+            width: '100%',
+            backgroundColor: theme.darkColors.dark1,
+          }}
+        >
+          <Loading />
+        </View>
+      )}
+      {splashLoading && <SplashScreen />}
       <NavigationContainer
         ref={navigationRef}
         onReady={() => setNavigationIsReady(true)}

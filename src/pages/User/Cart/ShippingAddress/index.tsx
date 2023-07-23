@@ -10,6 +10,7 @@ import { Button } from 'src/components/Elements/Button'
 import { CartStackParamList } from 'src/navigators/CartNavigator/CartNavigator.types'
 import { Checkbox } from 'src/components/Form/Elements/Checkbox'
 import { EditPen } from 'src/assets/svg/EditPen'
+import { FlatList } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons'
 import { MiniCard } from 'src/components/Elements/MiniCard'
 import { Shadow } from 'react-native-shadow-2'
@@ -20,6 +21,7 @@ import { theme } from 'src/styles/theme'
 
 export const ShippingAddress = ({
   navigation,
+  route,
 }: StackScreenProps<CartStackParamList, 'ShippingAddress'>) => {
   const { user } = useContext(AppContext)
 
@@ -29,20 +31,31 @@ export const ShippingAddress = ({
   const [selectedShippingAddress, setSelectedShippingAddress] =
     useState<ShippingAddressType | null>(null)
 
+  const { setLoading } = useContext(AppContext)
+
+  const Params = route.params
+
+  useEffect(() => {
+    if (!Params?.ShippingAddress) return
+    setSelectedShippingAddress(Params?.ShippingAddress)
+  }, [Params])
+
   useEffect(() => {
     const getUsersShippingAddresses = async () => {
+      setLoading(true)
       const { data, error } = await getShippingAddresses({ userId: user?.id })
       setShippingAddresses(data || [])
+      setLoading(false)
     }
     getUsersShippingAddresses()
   }, [])
 
   return (
     <>
-      <Styled.Container
+      <FlatList
         contentContainerStyle={{ padding: 20, gap: 30, paddingBottom: 140 }}
         data={shippingAddresses}
-        renderItem={({ item }: any) => (
+        renderItem={({ item }: { item: ShippingAddressType }) => (
           <MiniCard onPress={() => setSelectedShippingAddress(item)}>
             <Shadow
               style={{ borderRadius: 20 }}
@@ -55,14 +68,14 @@ export const ShippingAddress = ({
               </Styled.ShippingInfoIcon>
             </Shadow>
             <Styled.ShippingInfo>
-              <Styled.ShippingInfoTitle>{item.title}</Styled.ShippingInfoTitle>
+              <Styled.ShippingInfoTitle>{item?.title}</Styled.ShippingInfoTitle>
               <Styled.ShippingInfoAddress>
-                {item.desc}
+                {item.address}
               </Styled.ShippingInfoAddress>
             </Styled.ShippingInfo>
             <Checkbox
               disableBuiltInState
-              isChecked={item.title === selectedShippingAddress?.title}
+              isChecked={item?.title === selectedShippingAddress?.title}
               onPress={() => setSelectedShippingAddress(item)}
               rounded
               size={20}
@@ -92,8 +105,12 @@ export const ShippingAddress = ({
               style: { borderRadius: 20 },
               containerStyle: { flex: 1, minWidth: undefined },
             }}
-            disabled={!selectedShippingAddress.title}
-            onPress={() => navigation.navigate('Checkout')}
+            disabled={!selectedShippingAddress?.title}
+            onPress={() =>
+              navigation.navigate('Checkout', {
+                ShippingAddress: selectedShippingAddress,
+              })
+            }
           >
             Apply
           </Button>
