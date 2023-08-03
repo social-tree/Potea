@@ -10,6 +10,7 @@ import { ErrorShield } from 'src/assets/svg/ErrorShield'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Modal } from 'src/components/Elements/Modal'
 import React from 'react'
+import { Session } from '@supabase/supabase-js'
 import { allNotifications } from 'src/constants/notifications'
 import { notificationType } from 'src/types/notification'
 import { productType } from 'src/types/product'
@@ -18,7 +19,6 @@ import { supabase } from 'src/utils/supabase'
 export const AppContext = createContext({
   resetPassword: false,
   toggleResetPassword: () => {},
-  notifications: [],
   favoriteProducts: new Map([]),
   addProductToFavorites: (product: productType) => {},
   user: null as null | UserType,
@@ -29,24 +29,22 @@ export const AppContext = createContext({
   splashLoading: true,
   setLoading: (state: boolean) => {},
   setSplashLoading: (state: boolean) => {},
+  session: null as null | Session,
+  setSession: (session: Session) => {},
 })
 
 export const AppProvider = ({ children }) => {
   const [resetPassword, setResetPassword] = useState(false)
-  const [notifications, setNotifications] = useState<notificationType[]>([])
   const [favoriteProducts, setFavoriteProducts] = useState(new Map([]))
   const [user, setUser] = useState<null | UserType>(null)
   const [modalErrorText, setModalErrorText] = useState('')
   const [loading, setLoading] = useState(false)
   const [splashLoading, setSplashLoading] = useState(false)
+  const [session, setSession] = useState<Session | null>(null)
 
   const toggleResetPassword = () => {
     setResetPassword((prev) => (prev ? false : true))
   }
-
-  useEffect(() => {
-    setNotifications(allNotifications)
-  }, [])
 
   const addProductToFavorites = (product: productType) => {
     setFavoriteProducts((products) => {
@@ -95,14 +93,19 @@ export const AppProvider = ({ children }) => {
           (updatedData) => {
             setUser((prev) => ({
               ...prev,
-              user_metadata: updatedData.new as UserMetaData,
+              user_metadata: {
+                avatar: `${
+                  updatedData.new.avatar
+                }?time=${new Date().getTime()}`,
+                ...(updatedData.new as UserMetaData),
+              },
             }))
           }
         )
         .subscribe()
     }
     getUserSession()
-  }, [])
+  }, [session])
 
   const closeErrorModal = () => {
     setModalErrorText('')
@@ -111,8 +114,9 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        session,
+        setSession,
         favoriteProducts,
-        notifications,
         resetPassword,
         toggleResetPassword,
         addProductToFavorites,
