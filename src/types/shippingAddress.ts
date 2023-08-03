@@ -1,4 +1,4 @@
 import { Database } from './supabase'
 
 export type ShippingAddressType =
-  Database['public']['Tables']['shippingAddresses']['Row']
+  Database['public']['Tables']['shippingAddresses']['Insert']
