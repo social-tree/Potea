@@ -6,12 +6,12 @@ import { StatusBar } from 'react-native'
 
 export const SplashScreen = () => {
   return (
-    <SafeAreaView>
+    <>
       <StatusBar />
       <Styled.Container>
         <Styled.StyledLogo />
         <Styled.StyledLoading />
       </Styled.Container>
-    </SafeAreaView>
+    </>
   )
 }

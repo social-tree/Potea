@@ -123,16 +123,15 @@ export const Home = ({
                   <Styled.ProfilePicture
                     borderRadius={50}
                     source={{
-                      uri: `${storageSupabaseURL}${user?.user_metadata?.avatar}`,
+                      uri: `${storageSupabaseURL}${
+                        user?.user_metadata?.avatar
+                      }?time=${new Date().getTime()}`,
                     }}
                   />
                 ) : (
                   <FontAwesome name="user-circle" size={47} color="grey" />
                 )}
-                <TouchableOpacity
-                  style={{ flex: 1 }}
-                  onPress={() => supabase.auth.signOut()}
-                >
+                <TouchableOpacity style={{ flex: 1 }}>
                   <Styled.UserInfo>
                     <Styled.WelcomeText>Good Morning 👋</Styled.WelcomeText>
                     <Styled.Username numberOfLines={1} ellipsizeMode={'tail'}>

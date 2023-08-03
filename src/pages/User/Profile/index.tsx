@@ -23,9 +23,7 @@ export const Profile = ({
 
   useEffect(() => {
     setValue('avatar', {
-      uri: `${storageSupabaseURL}${
-        user.user_metadata.avatar
-      }?time=${new Date().getTime()}`,
+      uri: `${storageSupabaseURL}${user.user_metadata.avatar}`,
     })
   }, [user?.user_metadata?.avatar])
 
@@ -90,18 +88,15 @@ export const Profile = ({
           }}
         >
           <FillProfileStyled.ProfilePictureContainer>
-            {watch('avatar') ? (
+            {watch('avatar')?.uri ? (
               <Image
-                key={`${user.user_metadata.avatar}?time=${new Date()}`}
+                key={`${user.user_metadata.avatar}`}
                 source={{
                   uri: watch('avatar').uri,
                   width: 140,
                   height: 140,
-                  cache: 'reload',
-                  headers: {
-                    Pragma: 'no-cache',
-                  },
                 }}
+                onError={(err) => console.log(err.nativeEvent, 'w')}
                 borderRadius={100}
               />
             ) : (
@@ -110,8 +105,12 @@ export const Profile = ({
             <FillProfileStyled.EditPen />
           </FillProfileStyled.ProfilePictureContainer>
         </TouchableOpacity>
-        <Styled.FullName>{user.user_metadata.full_name}</Styled.FullName>
-        <Styled.Email>{user.user_metadata.email}</Styled.Email>
+        <Styled.FullName ellipsizeMode="tail" numberOfLines={1}>
+          {user.user_metadata.full_name}
+        </Styled.FullName>
+        <Styled.Email ellipsizeMode="tail" numberOfLines={1}>
+          {user.user_metadata.email}
+        </Styled.Email>
       </Styled.ProfilePreview>
       <Styled.Line />
       {profileOptions.map(

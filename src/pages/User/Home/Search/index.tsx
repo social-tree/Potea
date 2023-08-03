@@ -34,13 +34,15 @@ import { getProducts } from 'src/api/products'
 import { productWithRatingType } from 'src/types/product'
 import { theme } from 'src/styles/theme'
 import { useForm } from 'react-hook-form'
+import { usePagination } from 'src/hooks/usePagination'
 
 export const Search = ({
   route,
 }: StackScreenProps<HomeStackParamList, 'Search'>) => {
   const { control, watch, handleSubmit, setValue, reset } = useForm()
   const [allRecentSearches, setAllRecentSearches] = useState([])
-  const [products, setProducts] = useState<productWithRatingType[] | []>([])
+  const { data, fetchData, nextPage, onPageRefresh } =
+    usePagination(getProducts)
   const [searchInputFocused, setSearchInputFocused] = useState(true)
   const [loading, setLoading] = useState(false)
   const [isRecentSearchesFocused, setIsRecentSearchesFocused] = useState(false)
@@ -55,6 +57,32 @@ export const Search = ({
   const sheetRef = useRef<BottomSheet>(null)
   const selectedFilters = route.params?.selectedFilters
 
+  const saveRecents = async ({ DontSaveToRecent, searchText }) => {
+    if (!DontSaveToRecent) {
+      let storedRecentSearches =
+        JSON.parse(await AsyncStorage.getItem('recentSearches')) || []
+      const isSearchAlreadyStored = storedRecentSearches.find(
+        (recentSearch) => recentSearch.text === searchText
+      )
+      if (isSearchAlreadyStored) {
+        storedRecentSearches = storedRecentSearches.filter(
+          (recentSearch) => recentSearch.text !== searchText
+        )
+      }
+      if (storedRecentSearches.length > 12) {
+        storedRecentSearches.pop()
+      }
+      storedRecentSearches.unshift({
+        id: Crypto.randomUUID(),
+        text: searchText,
+      })
+      AsyncStorage.setItem(
+        'recentSearches',
+        JSON.stringify(storedRecentSearches)
+      )
+    }
+  }
+
   const handleSearch = async ({
     submitData,
     DontSaveToRecent = false,
@@ -67,30 +95,7 @@ export const Search = ({
     const { searchText } = submitData
     setLoading(true)
     try {
-      if (!DontSaveToRecent) {
-        let storedRecentSearches =
-          JSON.parse(await AsyncStorage.getItem('recentSearches')) || []
-        const isSearchAlreadyStored = storedRecentSearches.find(
-          (recentSearch) => recentSearch.text === searchText
-        )
-        if (isSearchAlreadyStored) {
-          storedRecentSearches = storedRecentSearches.filter(
-            (recentSearch) => recentSearch.text !== searchText
-          )
-        }
-        if (storedRecentSearches.length > 12) {
-          storedRecentSearches.pop()
-        }
-        storedRecentSearches.unshift({
-          id: Crypto.randomUUID(),
-          text: searchText,
-        })
-        AsyncStorage.setItem(
-          'recentSearches',
-          JSON.stringify(storedRecentSearches)
-        )
-      }
-      const { data } = await getProducts(
+      await fetchData(
         otherFilters || {
           offerType: filters.offerType,
           searchText: searchText,
@@ -98,8 +103,7 @@ export const Search = ({
           priceRange: priceRange,
           rating: filters.rating,
         }
-      )
-      setProducts(data)
+      ).finally(() => saveRecents({ DontSaveToRecent, searchText }))
       setLoading(false)
       setIsRecentSearchesFocused(false)
       getAllRecentSearches()
@@ -227,9 +231,9 @@ export const Search = ({
               </GreenText>
               {SearchInputValue?.length > 0 && `"`}
             </Styled.SearchText>
-            <GreenText>{products?.length.toLocaleString()} found</GreenText>
+            <GreenText>{data?.length.toLocaleString()} found</GreenText>
           </Styled.ResultsHeader>
-          {products.length === 0 ? (
+          {data.length === 0 ? (
             <Styled.NothingFoundContainer>
               <ClipBoards />
               <Styled.NothingFoundInfo>
@@ -242,7 +246,10 @@ export const Search = ({
             </Styled.NothingFoundContainer>
           ) : (
             <FlatList
-              data={products}
+              data={data}
+              onRefresh={() => onPageRefresh()}
+              onEndReached={() => nextPage()}
+              onEndReachedThreshold={0.1}
               numColumns={2}
               contentContainerStyle={{ paddingBottom: 78 }}
               renderItem={({ item, index }) => (

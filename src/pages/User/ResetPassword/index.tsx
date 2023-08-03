@@ -1,6 +1,12 @@
 import * as Styled from './ResetPassword.styles'
 
-import { Image, KeyboardAvoidingView, Platform } from 'react-native'
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native'
 
 import { Button } from 'src/components/Elements/Button'
 import { Input } from 'src/components/Form/Elements/Inputs/Input'
@@ -42,60 +48,62 @@ export const ResetPassword = ({ route, navigation }) => {
   }
 
   return (
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={headerHeight}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      style={{ flex: 1 }}
-    >
-      <Modal open={successModalOpen}>
-        <Styled.SuccessModal>
-          <SuccessShield />
-          <Styled.ModalInfo>
-            <Styled.ModalTitle>Congratulations!</Styled.ModalTitle>
-            <Styled.ModalDescription>
-              Your account is ready to use. You will be redirected to the Home
-              page in a few seconds..
-            </Styled.ModalDescription>
-          </Styled.ModalInfo>
-          <Loading style={{ width: 100, height: 130 }} />
-        </Styled.SuccessModal>
-      </Modal>
-      <Styled.Container
-        contentContainerStyle={{
-          alignItems: 'center',
-          paddingTop: 71,
-          paddingHorizontal: 24,
-          gap: 71,
-        }}
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={headerHeight}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
       >
-        <PhoneSuccess />
-        <Styled.Wrapper>
-          <Styled.Info>Create Your New Password</Styled.Info>
-          <Input
-            control={control}
-            placeholder="New Password"
-            leftIcon={<Image source={require('src/assets/img/Lock.png')} />}
-            type="password"
-            inputProps={{
-              textContentType: 'password',
-            }}
-            rules={{ required: true }}
-            name="password"
-          />
-          <Input
-            control={control}
-            placeholder="Confirm Password"
-            leftIcon={<Image source={require('src/assets/img/Lock.png')} />}
-            type="password"
-            inputProps={{
-              textContentType: 'password',
-            }}
-            rules={{ required: true }}
-            name="confirmPassword"
-          />
-        </Styled.Wrapper>
-        <Button onPress={handleSubmit(onFormSubmit)}>Continue</Button>
-      </Styled.Container>
-    </KeyboardAvoidingView>
+        <Modal open={successModalOpen}>
+          <Styled.SuccessModal>
+            <SuccessShield />
+            <Styled.ModalInfo>
+              <Styled.ModalTitle>Congratulations!</Styled.ModalTitle>
+              <Styled.ModalDescription>
+                Your account is ready to use. You will be redirected to the Home
+                page in a few seconds..
+              </Styled.ModalDescription>
+            </Styled.ModalInfo>
+            <Loading style={{ width: 100, height: 130 }} />
+          </Styled.SuccessModal>
+        </Modal>
+        <Styled.Container
+          contentContainerStyle={{
+            alignItems: 'center',
+            paddingTop: 71,
+            paddingHorizontal: 24,
+            gap: 71,
+          }}
+        >
+          <PhoneSuccess />
+          <Styled.Wrapper>
+            <Styled.Info>Create Your New Password</Styled.Info>
+            <Input
+              control={control}
+              placeholder="New Password"
+              leftIcon={<Image source={require('src/assets/img/Lock.png')} />}
+              type="password"
+              inputProps={{
+                textContentType: 'password',
+              }}
+              rules={{ required: true }}
+              name="password"
+            />
+            <Input
+              control={control}
+              placeholder="Confirm Password"
+              leftIcon={<Image source={require('src/assets/img/Lock.png')} />}
+              type="password"
+              inputProps={{
+                textContentType: 'password',
+              }}
+              rules={{ required: true }}
+              name="confirmPassword"
+            />
+          </Styled.Wrapper>
+          <Button onPress={handleSubmit(onFormSubmit)}>Continue</Button>
+        </Styled.Container>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }

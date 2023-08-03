@@ -71,7 +71,7 @@ export const FillProfile = ({
       }
       const { error } = await supabase
         .from('users')
-        .update(formData)
+        .update({ avatar: formData?.avatar?.uri, ...formData })
         .eq('id', user.id)
       if (error && error.code) {
         return setModalErrorText(
@@ -95,15 +95,6 @@ export const FillProfile = ({
       if (!!user.user_metadata) {
         const { id, avatar, created_at, date_of_birth, gender, ...otherdata } =
           user.user_metadata
-        console.log({
-          ...otherdata,
-          user,
-          avatar: {
-            uri: `${storageSupabaseURL}${avatar}?time=${new Date().getTime()}`,
-          },
-          date_of_birth: new Date(date_of_birth),
-          gender: Number(gender) ? `${gender}` : null,
-        })
         reset({
           ...otherdata,
           avatar: {
