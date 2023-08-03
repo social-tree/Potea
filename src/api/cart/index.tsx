@@ -47,7 +47,7 @@ export const deleteCartProduct = async ({ id }: deleteCartProductParams) => {
 export const purchaseCartProducts = async ({
   payment_id,
 }: purchaseCartProductsParams) => {
-  const { data, error } = await supabase.rpc('purchase_items', {
+  const { data, error } = await supabase.rpc('purchase_cart_items', {
     payment_id,
   })
 

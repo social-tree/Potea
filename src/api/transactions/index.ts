@@ -1,29 +1,29 @@
-import { getOrdersParams } from './orders.types'
+import { getUserTransactionsParams } from './transactions.types'
 import { supabase } from 'src/utils/supabase'
 
-export const getOrders = async ({
+export const getUserTransactions = async ({
   limit,
   offset,
   amountPerPage = 10,
-  type,
-}: getOrdersParams) => {
+}: getUserTransactionsParams) => {
   let query = supabase
-    .from('orders')
-    .select('*, product:products(*)')
+    .from('transactions')
+    .select('*', { count: 'exact' })
     .order('created_at', { ascending: false })
 
   let count
-  if (limit) query = query.limit(limit)
 
+  if (limit) {
+    query = query.limit(limit)
+  }
   if (Number(offset) >= 0) {
     query = query.range(offset, offset + amountPerPage - 1)
     count = await supabase
-      .from('orders')
+      .from('transactions')
       .select('*', { count: 'exact', head: true })
   }
-  if (type) query = query.eq('status', type)
 
   const { data, error } = await query
 
-  return { data, error, countData: count }
+  return { data, error, countData: count || 0 }
 }
