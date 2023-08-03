@@ -2,10 +2,11 @@ import * as Styled from './Input.styles'
 
 import { Control, UseControllerProps } from 'react-hook-form/dist/types'
 import { Ref, useState } from 'react'
-import { TextInput, TextInputProps } from 'react-native'
+import { TextInput, TextInputProps, ViewProps } from 'react-native'
 
 import { Controller } from 'react-hook-form'
 import { Eye } from 'src/assets/svg/Eye'
+import { MaskOptions } from 'react-native-mask-text/lib/typescript/src/@types'
 import React from 'react'
 import { theme } from 'src/styles/theme'
 
@@ -21,6 +22,7 @@ interface Props extends UseControllerProps {
   errors?: any
   style?: any
   mask?: string
+  inputWrapProps?: ViewProps
 }
 
 export const Input = ({
@@ -35,6 +37,7 @@ export const Input = ({
   ref,
   mask,
   style,
+  inputWrapProps,
   ...props
 }: Props) => {
   const [focused, setFocused] = useState(false)
@@ -48,8 +51,18 @@ export const Input = ({
 
   return (
     <Styled.Container>
-      <Styled.Wrapper focused={focused} style={style} error={!!errors?.[name]}>
-        <Styled.InputWrap>
+      <Styled.Wrapper
+        leftIcon={!!leftIcon}
+        rightIcon={!!rightIcon}
+        focused={focused}
+        style={style}
+        error={!!errors?.[name]}
+      >
+        <Styled.InputWrap
+          leftIcon={!!leftIcon}
+          rightIcon={!!rightIcon}
+          {...inputWrapProps}
+        >
           {leftIcon && <Styled.IconWrap>{leftIcon}</Styled.IconWrap>}
           <Controller
             control={control}
@@ -81,8 +94,9 @@ export const Input = ({
               ) : (
                 <Styled.StyledMaskedTextInput
                   style={{ width: '100%' }}
-                  mask="+9 (999) 999-99-99"
+                  mask={mask}
                   ref={ref}
+                  options={{ decimalSeparator: 'tg' }}
                   onChangeText={(text, rawText) => field.onChange(rawText)}
                   placeholder={placeholder}
                   placeholderTextColor={theme.other.white}
@@ -103,17 +117,17 @@ export const Input = ({
             name={name}
           />
         </Styled.InputWrap>
-        <Styled.IconWrap>
-          {type === 'password' ? (
+        {type === 'password' ? (
+          <Styled.IconWrap>
             <Eye
               fill={theme.greyscale[500]}
               onPress={() => toggleShowPassword()}
               hidden={showPassword}
             />
-          ) : (
-            rightIcon
-          )}
-        </Styled.IconWrap>
+          </Styled.IconWrap>
+        ) : (
+          rightIcon
+        )}
       </Styled.Wrapper>
       {errors?.[name]?.message && (
         <Styled.TextError>{errors[name].message}</Styled.TextError>
