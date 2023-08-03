@@ -1,6 +1,6 @@
+import { HeadingSix } from 'src/styles/utils/typography'
 import { Loading } from 'src/assets/animations/Loading'
 import { ParagraphM } from 'src/styles/utils/typography'
-import { HeadingSix } from 'src/styles/utils/typography'
 import styled from 'styled-components/native'
 
 export const StyledLoading = styled(Loading)`
@@ -50,14 +50,18 @@ export const Notification = styled.View`
   gap: 24px;
 `
 
+export const Notifications = styled.View`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`
+
 export const DateTitle = styled.Text`
   ${HeadingSix}
   color: ${({ theme }) => theme.other.white};
 `
 
 export const Container = styled.View`
-  padding: 20px;
   display: flex;
   gap: 24px;
-  height: 100%;
 `

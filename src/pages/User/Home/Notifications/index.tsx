@@ -1,98 +1,69 @@
 import * as Styled from './Notifications.styles'
 
-import { Dimensions, ScrollView } from 'react-native'
-import { useContext, useEffect, useState } from 'react'
+import { Dimensions, FlatList } from 'react-native'
+import { useContext, useEffect } from 'react'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React from 'react'
+import { getUserNotifications } from 'src/api/notifications'
+import { notificationType } from 'src/types/notification'
 import { useHeaderHeight } from '@react-navigation/elements'
+import { usePagination } from 'src/hooks/usePagination'
 
 const screenHeight = Dimensions.get('screen')?.height
 
 export const Notifications = () => {
-  const [sortedNotifications, setSortedNotifications] = useState([])
-  const [loading, setLoading] = useState(true)
   const headerHeight = useHeaderHeight()
-  const notifications = useContext(AppContext).notifications
+  const { data, fetchData, onPageRefresh, loading } =
+    usePagination(getUserNotifications)
+  const { user } = useContext(AppContext)
 
   useEffect(() => {
-    const sortNotifications = () => {
-      setLoading(true)
-      // split so we can takout the date without the timestamp (hours/minutes)
-      const todayDateISO = new Date().toISOString().split('T')[0]
-      const yesterdayDateISO = new Date(
-        new Date().setDate(new Date().getDate() - 1)
-      )
-        .toISOString()
-        .split('T')[0]
-
-      const NotificationGroups = {}
-
-      notifications.forEach((notification) => {
-        const date = notification.date.split('T')[0]
-        const determinedDate =
-          date === todayDateISO
-            ? 'Today'
-            : yesterdayDateISO === date
-            ? 'Yesterday'
-            : new Date(date).toDateString()
-        if (!NotificationGroups[determinedDate]) {
-          NotificationGroups[determinedDate] = []
-        }
-        NotificationGroups[determinedDate].push(notification)
-      })
-
-      // Sort groups by date
-      const sortedGroups = Object.entries(NotificationGroups)
-        .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
-        ?.map(([date, notifications]) => ({ date, notifications }))
-      setSortedNotifications(sortedGroups)
-      setLoading(false)
-    }
-    sortNotifications()
-  }, [notifications])
+    fetchData({
+      userCreationDate: user.created_at,
+    })
+  }, [])
 
   return (
-    <ScrollView
-      contentContainerStyle={{ minHeight: screenHeight - headerHeight - 70 }}
-    >
-      <Styled.Container>
-        {loading ? (
-          <Styled.LoadingContainer>
-            <Styled.StyledLoading />
-          </Styled.LoadingContainer>
-        ) : (
-          sortedNotifications?.map((notificationGroup) => (
-            <>
-              <Styled.DateTitle>{notificationGroup.date}</Styled.DateTitle>
-              {notificationGroup.notifications?.map((notification) => {
-                const type = notification.type
-                return (
-                  <Styled.Notification>
-                    <Styled.NotificationIcon>
-                      <MaterialCommunityIcons
-                        name={type}
-                        size={30}
-                        color="white"
-                      />
-                    </Styled.NotificationIcon>
+    <FlatList
+      data={data}
+      onRefresh={() => onPageRefresh()}
+      refreshing={loading}
+      contentContainerStyle={{
+        minHeight: screenHeight - headerHeight - 70,
+        padding: 20,
+        gap: 24,
+      }}
+      renderItem={({ item }) => (
+        <Styled.Container>
+          <Styled.DateTitle>{item.date}</Styled.DateTitle>
+          <Styled.Notifications>
+            {item.notifications?.map((notification: notificationType) => {
+              return (
+                <Styled.Notification>
+                  <Styled.NotificationIcon>
+                    <MaterialCommunityIcons
+                      name={notification?.notification_types?.icon_name as any}
+                      size={30}
+                      color="white"
+                    />
+                  </Styled.NotificationIcon>
 
-                    <Styled.NotificationDetails>
-                      <Styled.NotificationTitle>
-                        {notification.title}
-                      </Styled.NotificationTitle>
-                      <Styled.NotificationDesc>
-                        {notification.desc}
-                      </Styled.NotificationDesc>
-                    </Styled.NotificationDetails>
-                  </Styled.Notification>
-                )
-              })}
-            </>
-          ))
-        )}
-      </Styled.Container>
-    </ScrollView>
+                  <Styled.NotificationDetails>
+                    <Styled.NotificationTitle>
+                      {notification.notification_types?.title}
+                    </Styled.NotificationTitle>
+                    <Styled.NotificationDesc>
+                      {notification.notification_types?.desc}
+                    </Styled.NotificationDesc>
+                  </Styled.NotificationDetails>
+                </Styled.Notification>
+              )
+            })}
+          </Styled.Notifications>
+        </Styled.Container>
+      )}
+    />
   )
 }

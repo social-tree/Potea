@@ -109,7 +109,7 @@ export const Confirmation = ({
   return (
     <Styled.Container>
       <Styled.Wrapper>
-        <Styled.ConfirmationText>
+        <Styled.ConfirmationText ellipsizeMode="tail">
           Code has been send to {info}
         </Styled.ConfirmationText>
         <Styled.StyledCodeField

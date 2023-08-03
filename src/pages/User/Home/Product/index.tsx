@@ -27,20 +27,26 @@ export const Product = ({
   const [productInfo, setProductInfo] = useState<productWithRatingType | null>(
     null
   )
-  const { addProductToFavorites, favoriteProducts, setModalErrorText } =
-    useContext(AppContext)
+  const {
+    addProductToFavorites,
+    favoriteProducts,
+    setModalErrorText,
+    setLoading,
+  } = useContext(AppContext)
   const carouselRef = useRef(null)
   const { id } = route.params
   const [focusedImage, setFocusedImage] = useState(0)
   const [quantity, setQuantity] = useState(1)
   useEffect(() => {
     const getProductInfo = async () => {
+      setLoading(true)
       const { data, error } = await getProduct({ id: id })
       if (data) setProductInfo(data as productWithRatingType)
       if (error)
         setModalErrorText(
           `An error occurred while trying to get product information. error code: ${error.code}`
         )
+      setLoading(false)
     }
     getProductInfo()
   }, [id])
@@ -85,14 +91,14 @@ export const Product = ({
             alignDotsOnXAxis
             activeDotWidth={32}
             active={focusedImage}
-            length={productInfo.image.length}
+            length={productInfo?.image?.length}
           />
         </Styled.DotsContainer>
       </Styled.ProductImageContaiener>
 
       <Styled.ProductInfoContainer>
         <Styled.InfoTopBar>
-          <Styled.ProductTitle>{productInfo.name}</Styled.ProductTitle>
+          <Styled.ProductTitle>{productInfo?.name}</Styled.ProductTitle>
           <TouchableOpacity onPress={() => addProductToFavorites(productInfo)}>
             <Heart
               stroke={
@@ -105,26 +111,26 @@ export const Product = ({
         </Styled.InfoTopBar>
         <Styled.InfoBottomBar>
           <Styled.AmountSoldText>
-            {productInfo.sold_amount} Sold
+            {productInfo?.sold_amount} Sold
           </Styled.AmountSoldText>
           <RatingStar />
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('Reviews', {
-                name: `${productInfo.average_rating} (${productInfo.reviews_amount} reviews)`,
-                productId: productInfo.id,
-                reviewsAmount: productInfo.reviews_amount,
+                name: `${productInfo?.average_rating} (${productInfo?.reviews_amount} reviews)`,
+                productId: productInfo?.id,
+                reviewsAmount: productInfo?.reviews_amount,
               })
             }
           >
             <Styled.ReviewText>
-              {productInfo.average_rating} (
-              {productInfo.reviews_amount?.toLocaleString()} reviews)
+              {productInfo?.average_rating} (
+              {productInfo?.reviews_amount?.toLocaleString()} reviews)
             </Styled.ReviewText>
           </TouchableOpacity>
         </Styled.InfoBottomBar>
         <Styled.InfoTitle>Description</Styled.InfoTitle>
-        <Styled.Description>{productInfo.description}</Styled.Description>
+        <Styled.Description>{productInfo?.description}</Styled.Description>
         <Styled.QuantityContainer>
           <Styled.InfoTitle>Quantity</Styled.InfoTitle>
           <Quantity handleQuantity={handleQuantity} value={quantity} />
@@ -132,7 +138,7 @@ export const Product = ({
         <Styled.PurchaseContainer>
           <Styled.PriceContainer>
             <Styled.PriceTitle>Total price</Styled.PriceTitle>
-            <Styled.PriceValue>${productInfo.price}</Styled.PriceValue>
+            <Styled.PriceValue>${productInfo?.price}</Styled.PriceValue>
           </Styled.PriceContainer>
           <Button
             shadowProps={{ containerStyle: { flex: 1 } }}

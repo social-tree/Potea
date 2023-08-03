@@ -1,5 +1,6 @@
-import { CodeField } from 'react-native-confirmation-code-field'
 import { HeadingFour, ParagraphXL } from 'src/styles/utils/typography'
+
+import { CodeField } from 'react-native-confirmation-code-field'
 import styled from 'styled-components/native'
 
 export const TextCell = styled.Text<{ isFocused: boolean }>`
@@ -30,7 +31,6 @@ export const ConfirmationText = styled.Text`
   color: ${({ theme }) => theme.other.white};
   ${ParagraphXL}
   text-align: center;
-  text-overflow: ellipsis;
 `
 
 export const GreenConfirmationText = styled.Text`

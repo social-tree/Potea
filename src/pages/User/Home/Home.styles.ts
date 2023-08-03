@@ -70,12 +70,12 @@ export const WelcomeText = styled.Text`
 
 export const Username = styled.Text`
   color: ${({ theme }) => theme.other.white};
-  ${HeadingFive}
+  ${HeadingFive};
 `
 
 export const ProfilePicture = styled.Image`
-  height: 48px;
-  width: 48px;
+  height: 47px;
+  width: 47px;
 `
 
 export const UserInfo = styled.View`

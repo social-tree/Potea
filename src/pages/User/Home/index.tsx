@@ -7,24 +7,23 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { productType, productWithRatingType } from 'src/types/product'
 import { storageSupabaseURL, supabase } from 'src/utils/supabase'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { Bell } from 'src/assets/svg/Bell'
 import { Chip } from 'src/components/Form/Elements/Chip'
+import { FontAwesome } from '@expo/vector-icons'
 import { Heart } from 'src/assets/svg/Heart'
 import { HomeStackParamList } from 'src/navigators/HomeNavigator/HomeNavigator.types'
 import { Misc } from 'src/assets/svg/Misc'
-import { Octicons } from '@expo/vector-icons'
 import { Product } from 'src/components/Elements/Product'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ScrollView } from 'react-native'
 import { Search } from 'src/assets/svg/Search'
 import { SearchInput } from 'src/components/Form/Elements/Inputs'
 import { StackScreenProps } from '@react-navigation/stack'
 import { allFilters } from 'src/constants/filters'
 import { getProducts } from 'src/api/products'
+import { productWithRatingType } from 'src/types/product'
 import styled from 'styled-components/native'
 import { theme } from 'src/styles/theme'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
@@ -38,6 +37,7 @@ export const Home = ({
   const [specialOffers, setSpecialOffers] = useState([])
   const [products, setProducts] = useState<productWithRatingType[] | []>([])
   const [loading, setLoading] = useState(false)
+  const [fullNameOverflow, setFullNameOverflow] = useState(false)
   const bottomTabBarHeight = useBottomTabBarHeight()
   const { user, setModalErrorText } = useContext(AppContext)
 
@@ -119,22 +119,24 @@ export const Home = ({
           ListHeaderComponent={() => (
             <>
               <Styled.HomeHeader>
-                <Styled.ProfilePicture
-                  borderRadius={50}
-                  source={{
-                    uri: user?.user_metadata?.avatar
-                      ? `${storageSupabaseURL}${user?.user_metadata?.avatar}`
-                      : 'https://i.imgur.com/zol9PsV.png',
-                  }}
-                />
+                {user?.user_metadata?.avatar ? (
+                  <Styled.ProfilePicture
+                    borderRadius={50}
+                    source={{
+                      uri: `${storageSupabaseURL}${user?.user_metadata?.avatar}`,
+                    }}
+                  />
+                ) : (
+                  <FontAwesome name="user-circle" size={47} color="grey" />
+                )}
                 <TouchableOpacity
                   style={{ flex: 1 }}
                   onPress={() => supabase.auth.signOut()}
                 >
                   <Styled.UserInfo>
                     <Styled.WelcomeText>Good Morning 👋</Styled.WelcomeText>
-                    <Styled.Username>
-                      {user?.user_metadata.full_name}
+                    <Styled.Username numberOfLines={1} ellipsizeMode={'tail'}>
+                      {user?.user_metadata?.full_name}
                     </Styled.Username>
                   </Styled.UserInfo>
                 </TouchableOpacity>
