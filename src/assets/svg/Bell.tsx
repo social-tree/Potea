@@ -1,8 +1,10 @@
 import { Path, Svg, SvgProps } from 'react-native-svg'
 
+import React from 'react'
+
 export const Bell = (props: SvgProps) => {
   return (
-    <Svg {...props} width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <Svg width="28" height="28" viewBox="0 0 28 28" fill="none" {...props}>
       <Path
         fillRule="evenodd"
         clipRule="evenodd"
