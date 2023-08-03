@@ -2,22 +2,28 @@ import * as ImagePicker from 'expo-image-picker'
 import * as Styled from './FillProfile.styles'
 
 import React, { useContext, useEffect, useState } from 'react'
+import { storageSupabaseURL, supabase } from 'src/utils/supabase'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { Button } from 'src/components/Elements/Button'
 import { Calendar } from 'src/assets/svg/Calendar'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { EmptyProfile } from 'src/assets/svg/EmptyProfile'
+import { FontAwesome } from '@expo/vector-icons'
 import { Image } from 'react-native'
 import { Input } from 'src/components/Form/Elements/Inputs'
 import { Select } from 'src/components/Form/Elements/Select'
+import { StackScreenProps } from '@react-navigation/stack'
 import { TouchableOpacity } from 'react-native'
+import { UserBottomStackParamList } from 'src/navigators/UserNavigator/UserNavigator.types'
 import { decode } from 'base64-arraybuffer'
-import { supabase } from 'src/utils/supabase'
 import { theme } from 'src/styles/theme'
 import { useForm } from 'react-hook-form'
 
-export const FillProfile = ({ navigation }) => {
+export const FillProfile = ({
+  navigation,
+  route,
+}: StackScreenProps<UserBottomStackParamList, 'FillProfile'>) => {
   const {
     control,
     handleSubmit,
@@ -27,6 +33,8 @@ export const FillProfile = ({ navigation }) => {
     setError,
     reset,
   } = useForm()
+
+  const Params = route.params
 
   const { user, setModalErrorText } = useContext(AppContext)
   const [isDatepickerOpen, setIsDatepickerOpen] = useState(false)
@@ -72,19 +80,35 @@ export const FillProfile = ({ navigation }) => {
           }`
         )
       }
-      navigation.navigate('Home')
+      navigation.navigate('HomeNav')
     } catch (err) {
       console.log(err)
     }
   }
 
   useEffect(() => {
+    Params?.title && navigation.setOptions({ title: Params.title })
+  }, [Params])
+
+  useEffect(() => {
     const checkUserMetaData = async () => {
       if (!!user.user_metadata) {
         const { id, avatar, created_at, date_of_birth, gender, ...otherdata } =
           user.user_metadata
+        console.log({
+          ...otherdata,
+          user,
+          avatar: {
+            uri: `${storageSupabaseURL}${avatar}?time=${new Date().getTime()}`,
+          },
+          date_of_birth: new Date(date_of_birth),
+          gender: Number(gender) ? `${gender}` : null,
+        })
         reset({
           ...otherdata,
+          avatar: {
+            uri: `${storageSupabaseURL}${avatar}?time=${new Date().getTime()}`,
+          },
           date_of_birth: new Date(date_of_birth),
           gender: Number(gender) ? `${gender}` : null,
         })
@@ -127,13 +151,17 @@ export const FillProfile = ({ navigation }) => {
         }}
       >
         <Styled.ProfilePictureContainer>
-          {watch('avatar') ? (
+          {watch('avatar')?.uri ? (
             <Image
-              source={{ uri: watch('avatar').uri, width: 140, height: 140 }}
+              source={{
+                uri: `${watch('avatar').uri}?time=${new Date().getTime()}`,
+                width: 140,
+                height: 140,
+              }}
               borderRadius={100}
             />
           ) : (
-            <EmptyProfile />
+            <FontAwesome name="user-circle" size={150} color="black" />
           )}
           <Styled.EditPen />
         </Styled.ProfilePictureContainer>
