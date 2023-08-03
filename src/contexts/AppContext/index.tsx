@@ -71,6 +71,7 @@ export const AppProvider = ({ children }) => {
         .then((res) => {
           const userInfo = {
             ...res.data,
+            avatar: `${res.data.avatar}?time=${new Date().getTime()}`,
             gender: res.data?.gender,
           }
           setUser((prev) => {
@@ -91,13 +92,21 @@ export const AppProvider = ({ children }) => {
             filter: `id=eq.${data?.user?.id}`,
           },
           (updatedData) => {
-            setUser((prev) => ({
-              ...prev,
+            console.log({
               user_metadata: {
+                ...(updatedData.new as UserMetaData),
                 avatar: `${
                   updatedData.new.avatar
                 }?time=${new Date().getTime()}`,
+              },
+            })
+            setUser((prev) => ({
+              ...prev,
+              user_metadata: {
                 ...(updatedData.new as UserMetaData),
+                avatar: `${
+                  updatedData.new.avatar
+                }?time=${new Date().getTime()}`,
               },
             }))
           }

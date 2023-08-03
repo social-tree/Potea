@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Session, SupabaseClient } from '@supabase/supabase-js'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { AppState } from 'react-native'
