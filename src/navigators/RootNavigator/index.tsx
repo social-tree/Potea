@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Session, SupabaseClient } from '@supabase/supabase-js'
 
 import { AppContext } from 'src/contexts/AppContext'
 import { AppState } from 'react-native'
@@ -6,7 +7,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import AuthNavigator from '../AuthNavigator'
 import { Loading } from 'src/assets/animations/Loading'
 import { NavigationContainer } from '@react-navigation/native'
-import { Session } from '@supabase/supabase-js'
 import { SplashScreen } from 'src/pages/SplashScreen'
 import { ThemeConsumer } from 'styled-components'
 import UserNavigator from '../UserNavigator'
@@ -17,9 +17,7 @@ import { theme } from 'src/styles/theme'
 export const RootNavigator = () => {
   const navigationRef = React.createRef<any>()
   const [navigationIsReady, setNavigationIsReady] = useState(false)
-
-  const [session, setSession] = useState<Session | null>(null)
-  const { resetPassword } = useContext(AppContext)
+  const { resetPassword, session, setSession } = useContext(AppContext)
   const { user, loading, setSplashLoading, splashLoading } =
     useContext(AppContext)
 

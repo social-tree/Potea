@@ -6,9 +6,14 @@ import { Home as HomeIcon } from 'src/assets/svg/Home'
 import HomeNavigator from '../HomeNavigator'
 import OrdersNavigator from '../OrdersNavigator'
 import { Platform } from 'react-native'
+import ProfileNavigator from '../ProfileNavigator'
 import React from 'react'
 import { ResetPassword } from 'src/pages/User/ResetPassword'
 import { UserBottomStackParamList } from './UserNavigator.types'
+import { User as UserIcon } from 'src/assets/svg/User'
+import { Wallet } from 'src/pages/User/Wallet'
+import { Wallet as WalletIcon } from 'src/assets/svg/Wallet'
+import WalletNavigator from '../WalletNavigator'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { theme } from 'src/styles/theme'
 
@@ -20,6 +25,7 @@ const UserNavIconProps = ({ focused, color }) => ({
   width: 19,
   height: 20,
   stroke: color,
+  transparentColor: theme.darkColors.dark1,
 })
 
 export const UserTabBarStyle = {
@@ -35,11 +41,10 @@ export const UserTabBarStyle = {
 const UserNavigator = () => {
   return (
     <Navigator
-      initialRouteName="OrdersNav"
+      initialRouteName="HomeNav"
       screenOptions={({ route }) => {
         const toExclude: (typeof route.name)[] = [
           'ResetPassword',
-          'FillProfile',
           'FillProfile',
         ]
         return {
@@ -105,10 +110,19 @@ const UserNavigator = () => {
         options={{
           headerShown: false,
           title: 'Wallet',
-          tabBarIcon: (props) => <Cart {...UserNavIconProps(props)} />,
+          tabBarIcon: (props) => <WalletIcon {...UserNavIconProps(props)} />,
         }}
         name="WalletNav"
-        component={OrdersNavigator}
+        component={WalletNavigator}
+      />
+      <Screen
+        options={{
+          headerShown: false,
+          title: 'Profile',
+          tabBarIcon: (props) => <UserIcon {...UserNavIconProps(props)} />,
+        }}
+        name="ProfileNav"
+        component={ProfileNavigator}
       />
     </Navigator>
   )

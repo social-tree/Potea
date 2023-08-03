@@ -31,7 +31,7 @@ export const PaymentMethods = ({
     PaymentMethodType[] | []
   >([])
 
-  const [successModalIsOpen, setSuccessModalIsOpen] = useState(true)
+  const [successModalIsOpen, setSuccessModalIsOpen] = useState(false)
 
   const { setModalErrorText } = useContext(AppContext)
 
@@ -60,7 +60,7 @@ export const PaymentMethods = ({
         const newPaymentMethods = data.map((paymentMethod) =>
           paymentMethod.title.toLowerCase().includes('wallet')
             ? {
-                balance: userBalanceInfo?.data?.balance || '0',
+                balance: `${userBalanceInfo?.data?.balance}` || '0',
                 ...paymentMethod,
               }
             : paymentMethod
@@ -91,14 +91,6 @@ export const PaymentMethods = ({
             >
               View Order
             </Styled.ModalViewOrderButton>
-            <Styled.ModalViewReceiptButton
-              onPress={() => {
-                const parent = navigation.getParent()
-                parent.navigate('OrdersNav')
-              }}
-            >
-              View E-Receipt
-            </Styled.ModalViewReceiptButton>
           </Styled.ModalButtons>
         </Styled.ModalContainer>
       </Modal>

@@ -10,6 +10,7 @@ import { OrdersStackParamList } from 'src/navigators/OrdersNavigator/OrdersNavig
 import { StackScreenProps } from '@react-navigation/stack'
 import { getOrders } from 'src/api/orders'
 import { productWithQuantityType } from 'src/types/product'
+import { usePagination } from 'src/hooks/usePagination'
 
 export const Orders = ({
   navigation,
@@ -18,16 +19,12 @@ export const Orders = ({
     'Active'
   )
 
-  const [orders, setOrders] = useState<OrderType[] | []>([])
+  const { data, hasMore, nextPage, offset, onPageRefresh, loading, fetchData } =
+    usePagination(getOrders)
 
   useEffect(() => {
-    if (selectedTab === 'Completed') return setOrders([])
-    const getAllOrders = async () => {
-      const { data, error } = await getOrders()
-      setOrders(data as OrderType[])
-    }
-    getAllOrders()
-  }, [selectedTab])
+    fetchData({ type: selectedTab })
+  }, [selectedTab, offset])
 
   return (
     <>
@@ -49,7 +46,7 @@ export const Orders = ({
           </Styled.TopNavText>
         </Styled.TopNavItem>
       </Styled.TopNavContainer>
-      {orders.length <= 0 ? (
+      {data.length <= 0 ? (
         <Styled.NoOrdersContainer>
           <ClipBoards />
           <Styled.NoOrdersInfo>
@@ -68,7 +65,9 @@ export const Orders = ({
             gap: 20,
             paddingVertical: 20,
           }}
-          data={orders}
+          onEndReached={() => nextPage()}
+          onEndReachedThreshold={0.1}
+          data={data}
           renderItem={({ item }) => (
             <Order
               productInfo={item.product}
